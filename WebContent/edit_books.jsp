@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/theme.css" type="text/css">
+  <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
 </head>
 <body >
@@ -16,8 +16,6 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
-   <div class="col-md-12"><a class="btn btn-primary" href="#create_book.jsp" style="float: right;">Create Book</a></div>
-  
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -32,11 +30,11 @@
     <th class="text-center">Edit</th>
     <th class="text-center">Delete</th>
     </tr>
-    <%-- <c:forEach items="${books}" var="book"> --%>
+    <%-- <c:forEach items="${users}" var="user"> --%>
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Yo</td>
-                    <td><a data-bookid="ISBN" title="Add this item" class="btn btn-link" href="#editModal" data-toggle="modal">Edit</a></td>
-                    <td><a href="#" class="btn btn-link">Delete</a></td>
+                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="ID 2019" data-book-title="Great Expectations" data-book-isbn="910921" data-book-author="Charles Dickens" data-book-genre="Fiction" data-book-publisher="Penguin Classics" data-book-copies="10" >Edit</button></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteBook" data-book-title="Aastha">Delete</button></td>
                 </tr>
             <%-- </c:forEach> --%>
    
@@ -47,19 +45,47 @@
     </tr>
     </tbody>
     </table>
-    <div class="modal fade" id="editModal" role="dialog">
+    <div class="modal fade" id="editBook" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Details for: </h5>
+          <h5 class="modal-title" id="editModalLabel">Edit Details for: </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-         
-        <input type="text" name="bookId" id="bookId" value="" />
-     
+         <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Book ID:</label>
+            <input type="text" class="form-control" id="id" value="" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ISBN:</label>
+            <input type="text" class="form-control" id="isbn" value="" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="title" value="">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Author:</label>
+            <input type="text" class="form-control" id="author" value="">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Genre:</label>
+            <input type="text" class="form-control" id="genre" value="">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Publisher:</label>
+            <input type="text" class="form-control" id="publisher" value="">
+          </div>
+          
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Total Copies:</label>
+            <input type="number" class="form-control" id="copies" value="" min="1" max="25"/>
+          </div>
+        </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -68,33 +94,67 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript">
-  $(document).on("click", ".open-editModal", function (e) {
-
-		e.preventDefault();
-
-		var _self = $(this);
-
-		var myBookId = _self.data('bookid');
-		$("#bookId").val(myBookId);
-
-		$(_self.attr('href')).modal('show');
-	});
-  /* $('#editModal').on('show.bs.modal', function (event) {
-	  var button = $(event.relatedTarget) // Button that triggered the modal
-	  var recipient = button.data('book-id') // Extract info from data-* attributes
-	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-	  var modal = $(this)
-	  modal.find('.modal-title').text('Edit Details for:' + "ok")
-	  modal.find('.modal-body input').val(recipient)
-	}) */
-</script>
+  <div class="modal fade" id="deleteBook" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+         <h5 class="message" id="message">Are you sure you want to delete member </h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+           <button type="button" class="btn btn-danger">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script>
+  $('#editBook').on('show.bs.modal', function (event) {
+	  
+	  var button = $(event.relatedTarget)
+	  var bookId = button.data('book-id')
+	  var title = button.data('book-title')
+	  var genre = button.data('book-genre')
+	  var publisher = button.data('book-publisher')
+	  var isbn = button.data('book-isbn')
+	  var author = button.data('book-author')
+	  var copies = button.data('book-copies')
+	  
+	  var modal = $(this)
+	  modal.find('.modal-title').text('Edit Details for: ' + title)
+	  modal.find('input[id="id"]').val(bookId)
+	  modal.find('input[id="isbn"]').val(isbn)
+	  modal.find('input[id="title"]').val(title)
+	  modal.find('input[id="author"]').val(author)
+	  modal.find('input[id="genre"]').val(genre)
+	  modal.find('input[id="publisher"]').val(publisher)
+	  modal.find('input[id="author"]').val(author)
+	  modal.find('input[id="copies"]').val(copies)
+	})
+</script>
+<script>
+  $('#deleteBook').on('show.bs.modal', function (event) {
+	  
+	  var button = $(event.relatedTarget)
+	  
+	  var title = button.data('book-title')
+	  var modal = $(this)
+	  
+	  modal.find('.modal-body').text('Are you sure you want to delete '+title+'?')
+	  
+	  
+	})
+</script>
 
 </body>
 
