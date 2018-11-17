@@ -58,18 +58,10 @@ public class DBConnector {
 		List<Book> books = new ArrayList<Book>();
 		try {
 			conn = dbUtil.getConnection();
-			 String query = "SELECT * FROM books";
-			 String getNoOfBooks= "SELECT COUNT(*) FROM books";
-		        
-		      Statement st = conn.createStatement();
-		     
-		      ResultSet bookNoSet = st.executeQuery(getNoOfBooks);
-		      
-		      int noOfBooks = bookNoSet.getInt(0);
-		     	      
-		      ResultSet bookSet = st.executeQuery(query);
-		      
-		      for(int i=0;i<noOfBooks;i++) {
+			 String query = "SELECT * FROM books";		        
+		      Statement st = conn.createStatement();	     	      
+		      ResultSet bookSet = st.executeQuery(query);		      
+		      while(bookSet.next()) {
 		    	  
 		    	  Book book = new Book();
 		    	  
@@ -96,7 +88,28 @@ public class DBConnector {
 		return books;
 		
 	}
-
+	
+	
+	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
+		
+		Connection conn;
+		List<Book> books = browseBooks();
+		List<Book> matchingBooks= new ArrayList<Book>();
+		int size = books.size();
+		
+		for (int i=0;i<size;i++) {
+			
+			Book book = books.get(i);
+			
+			if((book.getTitle().contains(title) && (!title.equals(""))) && (book.getAuthor().contains(author) && (!author.equals("")))&& (book.getGenre().contains(genre) && (!genre.equals(""))) && (book.getPublisher().contains(publisher) && (!publisher.equals(""))) && (book.getISBN().contains(Integer.toString(ISBN)) && (ISBN!=0))) {
+				
+				matchingBooks.add(book);
+			}
+		}
+		
+		return matchingBooks;
+	}
+		
 	
 	
 	boolean borrowBook(int user_id, int bookId)
