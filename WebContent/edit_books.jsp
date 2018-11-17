@@ -33,7 +33,7 @@
     <%-- <c:forEach items="${users}" var="user"> --%>
                 <tr>
                     <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="ID 2019" data-book-title="Great Expectations" data-book-isbn="910921" data-book-author="Charles Dickens" data-book-genre="Fiction" data-book-publisher="Penguin Classics" data-book-copies="10" >Edit</button></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="IDhere" data-book-title="Great Expectations" data-book-isbn="910921" data-book-author="Charles Dickens" data-book-genre="Fiction" data-book-publisher="Penguin Classics" data-book-copies="10" >Edit</button></td>
                     <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteBook" data-book-title="Aastha">Delete</button></td>
                 </tr>
             <%-- </c:forEach> --%>
