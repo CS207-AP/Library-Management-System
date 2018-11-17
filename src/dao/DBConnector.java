@@ -105,6 +105,39 @@ public class DBConnector {
 		    
 		    while(userSet.next()) {
 		    	
+		    	Object [] issueData = new Object[3];
+		    	issueData[0]=userSet.getString("user_id");
+		    	issueData[1]=userSet.getDate("issue_date");
+		    	issueData[2]=userSet.getDate("return_date");
+		    	issues.add(issueData);
+
+		    }
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return issues;
+		
+	}
+	
+List<Object[]> getUserIssueHistory(String user_id){
+		
+		List<Object[]> issues = new ArrayList<Object[]>();
+		
+		Connection conn;
+		PreparedStatement ps;
+		
+		try {
+			conn = dbUtil.getConnection();
+			String query = "SELECT FROM issueHistory WHERE user_id ="+user_id;			
+		    Statement st = conn.createStatement();	     	      
+		    ResultSet userSet = st.executeQuery(query);
+		    
+		    while(userSet.next()) {
+		    	
 		    	Object [] issueData = new Object[4];
 		    	issueData[0]=userSet.getString("book_id");
 		    	issueData[1]=userSet.getString("user_id");
