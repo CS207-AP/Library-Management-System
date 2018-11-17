@@ -21,7 +21,7 @@ public class DBConnector {
 		User user = new User();
 		try {
             Connection conn = dbUtil.getConnection();
-            String query = "SELECT memberId, email, memberType, name, password FROM member_list WHERE email = " + email+";";
+            String query = "SELECT user_id, user_type, user_email, user_name, user_password FROM users WHERE email = "+email+";";
             
             Statement st = conn.createStatement();
            
@@ -29,16 +29,18 @@ public class DBConnector {
             
             
             while (rs.next()) {
-            	String em = rs.getString("email");
-            	String pw = rs.getString("password");
-                if (em.equals(email)
-                        && pw.equals(password) )
+            	String em = rs.getString("user_email");
+            	String pw = rs.getString("user_password");
+            	
+                if (em.equals(email)&& pw.equals(password) ) {
                 
-                    user.setMemId(rs.getInt("memId"));
+                    user.setMemId(rs.getString("user_id"));
                     user.setEmail(em);
                     user.setPassword(pw);
-                    user.setType(rs.getString("type"));
-                    user.setName(rs.getString("name"));
+                    user.setType(rs.getString("user_type"));
+                    user.setName(rs.getString("user_name"));
+                    
+                	}
                 }
             }
             
@@ -55,8 +57,8 @@ public class DBConnector {
 		Book [] books=null;
 		try {
 			conn = dbUtil.getConnection();
-			 String query = "SELECT * FROM book_list";
-			 String getNoOfBooks= "SELECT COUNT(*) FROM book_list";
+			 String query = "SELECT * FROM books";
+			 String getNoOfBooks= "SELECT COUNT(*) FROM books";
 		        
 		      Statement st = conn.createStatement();
 		     
@@ -78,7 +80,11 @@ public class DBConnector {
 		    	  books[i].setAvailable(bookSet.getInt("book_available"));
 		    	  books[i].setQuantity(bookSet.getInt("book_quantity"));
 		    	  books[i].setGenre(bookSet.getString("book_genre"));
-		    	  books[i].setid(bookSet.getInt("book_id"));
+		    	  books[i].setid(bookSet.getString("book_id"));
+		    	  books[i].setISBN(bookSet.getString("book_ISBN"));
+		    	  books[i].setPublisher(bookSet.getString("book_publisher"));
+
+
 		    	  
 		      }
 		      
@@ -96,7 +102,7 @@ public class DBConnector {
 
 	
 	
-	boolean borrowBook(int memId, int bookId)
+	boolean borrowBook(int user_id, int bookId)
 	{
 	
 		
@@ -106,7 +112,7 @@ public class DBConnector {
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
-			String query="SELECT COUNT(memId) FROM lms_db.currentissues";			
+			String query="SELECT COUNT(user_id) FROM currentlyIssued";			
 			 Statement st = connection.createStatement();         
 	         ResultSet rs = st.executeQuery(query);
 	         int noOfBooks=rs.getInt(0);
@@ -115,16 +121,16 @@ public class DBConnector {
 	        	 System.out.println("Only two books bro");
 	         }
 	         
-			ps = connection.prepareStatement("UPDATE lms_db.book_list SET available_copies = (available_copies +1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE bookId = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-			ps = connection.prepareStatement("DELETE from lms_db.waiting_list WHERE memId=? AND bookId=?;");
-			ps.setInt(1, memId);
+			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
+			ps.setInt(1, user_id);
 			ps.setInt(2, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("INSERT INTO lms_db.current_issues (bookId, memId, issue_date, due_date) VALUES (?, ?, ?, ?);");
+	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
             ps.setInt(1, bookId);
-	        ps.setInt(2, memId);
+	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
 	        ps.setDate(3, java.sql.Date.valueOf(idate));
@@ -145,23 +151,23 @@ public class DBConnector {
             return false;
 	}
 	
-	double returnBook(int memId, int bookId) 
+	double returnBook(int user_id, int bookId) 
 	{
 		Connection connection;
 		int i = 0;
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = connection.prepareStatement("UPDATE lms_db.book_list SET available_copies = (available_copies + 1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("DELETE FROM lms_db.current_issues WHERE memId=? AND bookId=?;");
-            ps.setInt(1, memId);
+	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND bookId=?;");
+            ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        
-	        ps = connection.prepareStatement("INSERT INTO lms_db.past_issues (bookId, memId, num) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
+	        ps = connection.prepareStatement("INSERT INTO lms_db.past_issues (bookId, user_id, num) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
 	        ps.setInt(1, bookId);
-	        ps.setInt(2, memId);
+	        ps.setInt(2, user_id);
 	        i = ps.executeUpdate();
 	        
 	        
@@ -172,18 +178,18 @@ public class DBConnector {
 			e.printStackTrace();
 			System.err.println("Got an exception in returnbook in dbconnector");
 		}
-		return calcFine(memId, bookId);
+		return calcFine(user_id, bookId);
 	}
 	
-	boolean currentlyIssued(int bookId, int memId)
+	boolean getCurrentlyIssued(String book_id, String user_id)
 	{
 		Connection conn;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT book_Id, mem_Id, issue_date, due_date FROM lms_db.current_issues WHERE bookId = ? AND memId = ?;");
-	        ps.setInt(1, bookId);
-	        ps.setInt(2, memId);
+			ps = conn.prepareStatement("SELECT book_id, user_Id, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
+	        ps.setString(1, book_id);
+	        ps.setString(2, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        while(rs.next())
 	        {
@@ -205,7 +211,7 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("DELETE from lms_db.book_list WHERE bookId = ?;");
+			ps = conn.prepareStatement("DELETE from books WHERE book_id = ?;");
 	        ps.setInt(1, bookId);
 	        x = ps.executeUpdate();
 	        
@@ -221,27 +227,27 @@ public class DBConnector {
             return false;
 	}
 	
-	double deleteMember(int memId)
+	double deleteMember(int user_id)
 	{
 		Connection conn; int x=0;
 		double fine=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("DELETE from lms_db.member_list WHERE memId = ?;");
-	        ps.setInt(1, memId);
+			ps = conn.prepareStatement("DELETE from lms_db.member_list WHERE user_id = ?;");
+	        ps.setInt(1, user_id);
 	        x = ps.executeUpdate();
-	        ps = conn.prepareStatement("SELECT book_Id, mem_Id FROM lms_db.current_issues WHERE memId = ?;");
+	        ps = conn.prepareStatement("SELECT book_Id, mem_Id FROM currentlyIssued WHERE user_id = ?;");
 	        ResultSet rs = ps.executeQuery();
 	        //int bookId = rs.getInt(1);
 	        if(rs.next()) {
-	        	PreparedStatement ps2 = conn.prepareStatement("UPDATE lms_db.book_list SET available_copies = (available_copies + 1) WHERE bookId = ?;");
+	        	PreparedStatement ps2 = conn.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?;");
 	        	ps2.setInt(1, rs.getInt(1));
 	        	ps2.executeUpdate();
-	            fine = calcFine(memId, rs.getInt(1));
+	            fine = calcFine(user_id, rs.getInt(1));
 	        }
-	        ps = conn.prepareStatement("DELETE from lms_db.current_issues WHERE memId = ?;");
-	        ps.setInt(1, memId);
+	        ps = conn.prepareStatement("DELETE from currentlyIssued WHERE user_id = ?;");
+	        ps.setInt(1, user_id);
 	        x = ps.executeUpdate();
 	       
 	        
@@ -253,19 +259,21 @@ public class DBConnector {
 		 return fine;
 	}
 	
-	public boolean addBook(int bookId, String title, String genre, String author, String ISBN, int total_copies)
+	public boolean addBook(int bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("INSERT into book_list (bookId, title, genre, author, ISBN, publisher total_copies, available_copies, waitlist) values (NULL, ?, ?, ?, ?, ?, ?, 0);");
-	        ps.setString(2, title);
-	        ps.setString(3, genre);
+			ps = conn.prepareStatement("INSERT into books (book_id, book_ISBN, book_title, book_author,book_publisher,book_genre,book_quantity,book_available) values (NULL, ?, ?, ?, ?, ?, ?, 0);");
+	        //generate an ID
+			ps.setString(2, ISBN);
+	        ps.setString(3, title);
 	        ps.setString(4, author);
-	        ps.setString(5, ISBN);
-	        ps.setInt(6, total_copies);
-	        //ps.setInt(7, available_copies);
+	        ps.setString(5, publisher);
+	        ps.setString(6, genre);
+	        ps.setInt(7, total_copies);
+	        ps.setInt(8, total_copies);
 	        x = ps.executeUpdate();
 	        
 	        
@@ -286,7 +294,7 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("INSERT into member_list (memId, type, email, name, password) values (0, ?, ?, ?, ?);");
+			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
 	        ps.setString(2, type);
 	        ps.setString(3, email);
 	        ps.setString(4, name);
@@ -306,18 +314,18 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editBook(int memId, String type, String email, String name, String password)
+	boolean editBook(int user_id, String type, String email, String name, String password)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE book_list SET type=?, email=?, name=?, password=? WHERE memId=?;");
+			ps = conn.prepareStatement("UPDATE book_list SET user_type=?, user_email=?, user_name=?, user_password=? WHERE user_id=?;");
 	        ps.setString(1, type);
 	        ps.setString(2, email);
 	        ps.setString(3, name);
 	        ps.setString(4, password);
-	        ps.setInt(5, memId);
+	        ps.setInt(5, user_id);
 	        
 	        x = ps.executeUpdate();
 	        
@@ -333,27 +341,25 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editMember(int bookId, String title, String genre, String author, String ISBN, String publisher, int total_copies, int available_copies)
+	boolean editUser(String user_id,String user_type,String user_name, String user_email, String user_password)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE book_list SET title=?, genre=?, author=?, ISBN=?, publisher=?, total_copies=?, available_copies=? WHERE bookId=?;");
-	        ps.setString(1, title);
-	        ps.setString(2, genre);
-	        ps.setString(3, author);
-	        ps.setString(4, ISBN);
-	        ps.setInt(5, total_copies);
-	        ps.setInt(6, available_copies);
-	        ps.setInt(7,  bookId);
+			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?,user_password=?  WHERE user_id=?;");
+	        ps.setString(1, user_type);
+	        ps.setString(2, user_name);
+	        ps.setString(3, user_email);
+	        ps.setString(4, user_password);
+	        ps.setString(5, user_id);
 	        x = ps.executeUpdate();
 	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in editmemebr in dbconnector");
+			System.err.println("Got an exception in editmember in dbconnector");
 		}
 		if (x == 1) 
             return true;
@@ -361,14 +367,14 @@ public class DBConnector {
             return false;
 	}
 	
-	double calcFine(int memId, int bookId) {
+	double calcFine(int user_id, int bookId) {
 		Connection conn; int x=0;
 		double fine=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT issue_date, due_date FROM lms_db.current_issues WHERE memId =? AND bookId=?;");
-	        ps.setInt(1, memId);
+			ps = conn.prepareStatement("SELECT issue_date, due_date FROM currentlyIssued WHERE user_id =? AND bookId=?;");
+	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        ResultSet rs = ps.executeQuery();
 	        while(rs.next()) {
