@@ -24,16 +24,16 @@ public class AddBook extends HttpServlet {
 		
 		String title=request.getParameter("title");
 		String author=request.getParameter("author");
+		String publisher = request.getParameter("publisher");
 		String genre=request.getParameter("genre");
 		String ISBN=request.getParameter("ISBN");
-		String sbookID=request.getParameter("sbookID");
-		int bookID=Integer.parseInt(sbookID);
+		String bookID=request.getParameter("sbookID");
 		String squantity=request.getParameter("quantity");
 		int quantity=Integer.parseInt(squantity);
 		String savailable=request.getParameter("savailable");
 		int available=Integer.parseInt(savailable);
 		DBConnector db=new DBConnector();
-		boolean save=db.addBook(bookID, title,genre,author,ISBN, quantity);
+		boolean save=db.addBook(bookID,title,genre,author,publisher,ISBN, quantity);
 		if(save==true)
 		{
 			out.println("Book Added Successfully");
