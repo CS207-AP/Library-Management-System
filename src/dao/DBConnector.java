@@ -191,6 +191,41 @@ public class DBConnector {
 	}
 	
 	
+	List<Object[]> getUserCurrentIssue(String user_id){
+		
+		List<Object[]> issues = new ArrayList<Object[]>();
+		
+		Connection conn;
+		PreparedStatement ps;
+		
+		try {
+			conn = dbUtil.getConnection();
+			String query = "SELECT FROM currentlyIssued WHERE user_id ="+user_id;			
+		    Statement st = conn.createStatement();	     	      
+		    ResultSet userSet = st.executeQuery(query);
+		    
+		    while(userSet.next()) {
+		    	
+		    	Object [] issueData = new Object[3];
+		    	issueData[0]=userSet.getString("book_id");
+		    	issueData[1]=userSet.getDate("issue_date");
+		    	issueData[2]=userSet.getDate("due_date");
+		    	issues.add(issueData);
+		    	
+
+		    }
+			conn.close();			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return issues;
+		
+	}
+	
+	
+	
 	
 	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
 		
