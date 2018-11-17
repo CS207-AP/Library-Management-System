@@ -90,9 +90,46 @@ public class DBConnector {
 	}
 	
 	
-	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
+	List<Object[]> getBookIssueHistory(String book_id){
+		
+		List<Object[]> issues = new ArrayList<Object[]>();
 		
 		Connection conn;
+		PreparedStatement ps;
+		
+		try {
+			conn = dbUtil.getConnection();
+			String query = "SELECT FROM issueHistory WHERE book_id ="+book_id;			
+		    Statement st = conn.createStatement();	     	      
+		    ResultSet userSet = st.executeQuery(query);
+		    
+		    while(userSet.next()) {
+		    	
+		    	Object [] issueData = new Object[4];
+		    	issueData[0]=userSet.getString("book_id");
+		    	issueData[1]=userSet.getString("user_id");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("return_id");
+		    	issues.add(issueData);
+
+		    }
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return issues;
+		
+	}
+	
+	
+	
+	
+	
+	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
+		
 		List<Book> books = browseBooks();
 		List<Book> matchingBooks= new ArrayList<Book>();
 		int size = books.size();
@@ -109,13 +146,11 @@ public class DBConnector {
 		
 		return matchingBooks;
 	}
-		
+	  
 	
 	
 	boolean borrowBook(int user_id, int bookId)
 	{
-	
-		
 		
 		Connection connection;
 		int i = 0;
