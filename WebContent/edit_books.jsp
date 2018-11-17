@@ -55,7 +55,7 @@
         </button>
         </div>
         <div class="modal-body">
-         <form>
+         <form id="edit-book-form" action="" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Book ID:</label>
             <input type="text" class="form-control" id="id" value="" readonly>
@@ -89,7 +89,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-           <button type="button" class="btn btn-primary">Save Changes</button>
+           <input type="submit" form="edit-book-form" value="Save Changes"/>
         </div>
       </div>
     </div>
@@ -107,8 +107,8 @@
          <h5 class="message" id="message">Are you sure you want to delete member </h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
-           <button type="button" class="btn btn-danger">No</button>
+          <button type="button" class="btn btn-default">Yes</button>
+           <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         </div>
       </div>
     </div>
@@ -138,8 +138,14 @@
 	  modal.find('input[id="author"]').val(author)
 	  modal.find('input[id="genre"]').val(genre)
 	  modal.find('input[id="publisher"]').val(publisher)
-	  modal.find('input[id="author"]').val(author)
 	  modal.find('input[id="copies"]').val(copies)
+	  modal.find('input[id="book-to-change"]').val(bookId)
+	  //modal.find('input[id="isbn"]').val(isbn)
+	  modal.find('input[id="change-title"]').val(title)
+	  modal.find('input[id="change-author"]').val(author)
+	  modal.find('input[id="change-genre"]').val(genre)
+	  modal.find('input[id="change-publisher"]').val(publisher)
+	  modal.find('input[id="change-copies"]').val(copies)
 	})
 </script>
 <script>
