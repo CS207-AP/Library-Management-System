@@ -63,7 +63,7 @@ input[type="submit"]{
         </button>
         </div>
         <div class="modal-body">
-         <form>
+         <form id="edit-account-form" action="" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Member ID:</label>
             <input type="text" class="form-control" id="member-id" value="" readonly>
@@ -80,16 +80,12 @@ input[type="submit"]{
             <label for="recipient-name" class="col-form-label">Member Type:</label>
             <input type="text" class="form-control" id="member-type" value="">
           </div>
+          
         </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-           <form id="edit-account-form" action="" method="post">
-           <input type="hidden" id="change-name" value=""/>
-           <input type="hidden" id="change-email" value=""/>
-           <input type="hidden" id="change-type" value=""/>
-           <input type="submit" value="Save Changes"/>
-           </form>
+           <input type="submit" form="edit-account-form" value="Save Changes"/>
         </div>
       </div>
     </div>
@@ -136,6 +132,7 @@ input[type="submit"]{
 	  modal.find('input[id="member-name"]').val(name)
 	  modal.find('input[id="member-email"]').val(email)
 	  modal.find('input[id="member-type"]').val(type)
+	  modal.find('input[id="account-to-change"]').val(memId)
 	  modal.find('input[id="change-name"]').val(name)
 	  modal.find('input[id="change-email"]').val(email)
 	  modal.find('input[id="change-type"]').val(type)
