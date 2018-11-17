@@ -3,6 +3,9 @@ package dao;
 import util.DButil;
 import objects.Book;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import objects.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -51,10 +54,10 @@ public class DBConnector {
 		return user;
 	}
 	
-	Book[] browseBooks() {
+	List<Book> browseBooks() {
 		
 		Connection conn;
-		Book [] books=null;
+		List<Book> books = new ArrayList<Book>();
 		try {
 			conn = dbUtil.getConnection();
 			 String query = "SELECT * FROM books";
@@ -65,26 +68,22 @@ public class DBConnector {
 		      ResultSet bookNoSet = st.executeQuery(getNoOfBooks);
 		      
 		      int noOfBooks = bookNoSet.getInt(0);
-		      
-		      books = new Book [noOfBooks];
-		      
-		      
+		     	      
 		      ResultSet bookSet = st.executeQuery(query);
 		      
 		      for(int i=0;i<noOfBooks;i++) {
 		    	  
-		    	  books[i]= new Book();
+		    	  Book book = new Book();
 		    	  
-		    	  books[i].setTitle(bookSet.getString("book_title"));
-		    	  books[i].setAuthor(bookSet.getString("book_author"));
-		    	  books[i].setAvailable(bookSet.getInt("book_available"));
-		    	  books[i].setQuantity(bookSet.getInt("book_quantity"));
-		    	  books[i].setGenre(bookSet.getString("book_genre"));
-		    	  books[i].setid(bookSet.getString("book_id"));
-		    	  books[i].setISBN(bookSet.getString("book_ISBN"));
-		    	  books[i].setPublisher(bookSet.getString("book_publisher"));
-
-
+		    	  book.setTitle(bookSet.getString("book_title"));
+		    	  book.setAuthor(bookSet.getString("book_author"));
+		    	  book.setAvailable(bookSet.getInt("book_available"));
+		    	  book.setQuantity(bookSet.getInt("book_quantity"));
+		    	  book.setGenre(bookSet.getString("book_genre"));
+		    	  book.setid(bookSet.getString("book_id"));
+		    	  book.setISBN(bookSet.getString("book_ISBN"));
+		    	  book.setPublisher(bookSet.getString("book_publisher"));
+		    	  books.add(book);
 		    	  
 		      }
 		      
