@@ -110,10 +110,10 @@ public class DBConnector {
 		    	issueData[1]=userSet.getDate("issue_date");
 		    	issueData[2]=userSet.getDate("return_date");
 		    	issues.add(issueData);
+		    	
 
 		    }
-			
-			
+			conn.close();			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -138,14 +138,14 @@ List<Object[]> getUserIssueHistory(String user_id){
 		    
 		    while(userSet.next()) {
 		    	
-		    	Object [] issueData = new Object[4];
+		    	Object [] issueData = new Object[3];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getString("user_id");
-		    	issueData[2]=userSet.getDate("issue_date");
-		    	issueData[3]=userSet.getDate("return_id");
+		    	issueData[1]=userSet.getDate("issue_date");
+		    	issueData[2]=userSet.getDate("return_date");
 		    	issues.add(issueData);
 
 		    }
+		    conn.close();
 			
 			
 		} catch (SQLException e) {
