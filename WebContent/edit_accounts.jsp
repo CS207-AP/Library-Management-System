@@ -9,6 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+input[type="submit"]{
+    /* change these properties to whatever you want */
+    background-color: #555;
+    color: #fff;
+    border-radius: 10px;
+}
+</style>
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
@@ -34,7 +42,7 @@
                 <tr>
                     <td><%-- <c:out value="${book.getTitle()}" /> --%>User 1</td>
                     <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editAccount" data-mem-id="ID 2019" data-mem-name="Aastha" data-mem-email="ok@gmail.com" data-mem-type="regular">Edit</button></td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteAccount" data-mem-name="Aastha">Delete</button></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteAccount" data-mem-id="123" data-mem-name="Aastha">Delete</button></td>
                 </tr>
             <%-- </c:forEach> --%>
    
@@ -76,7 +84,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-           <button type="button" class="btn btn-primary">Save Changes</button>
+           <form id="edit-account-form" action="" method="post">
+           <input type="hidden" id="change-name" value=""/>
+           <input type="hidden" id="change-email" value=""/>
+           <input type="hidden" id="change-type" value=""/>
+           <input type="submit" value="Save Changes"/>
+           </form>
         </div>
       </div>
     </div>
@@ -94,8 +107,12 @@
          <h5 class="message" id="message">Are you sure you want to delete member </h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
-           <button type="button" class="btn btn-danger">No</button>
+          <form id="delete-account-form" action="" method="post">
+          <input type="hidden" id="deleteAcc" value=""/>
+          <input type="submit" value="Yes"/>
+          
+          </form >
+           <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         </div>
       </div>
     </div>
@@ -119,17 +136,22 @@
 	  modal.find('input[id="member-name"]').val(name)
 	  modal.find('input[id="member-email"]').val(email)
 	  modal.find('input[id="member-type"]').val(type)
+	  modal.find('input[id="change-name"]').val(name)
+	  modal.find('input[id="change-email"]').val(email)
+	  modal.find('input[id="change-type"]').val(type)
+	  
 	})
 </script>
 <script>
   $('#deleteAccount').on('show.bs.modal', function (event) {
 	  
 	  var button = $(event.relatedTarget)
-	  
+	  var memId = button.data('mem-id')
 	  var name = button.data('mem-name')
 	  var modal = $(this)
 	  
 	  modal.find('.modal-body').text('Are you sure you want to delete member '+name+'?')
+	  modal.find('input[id="deleteAcc"]').val(memId)
 	  
 	  
 	})
