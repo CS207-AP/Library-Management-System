@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ public class AddBook extends HttpServlet {
 		String publisher = request.getParameter("publisher");
 		String genre=request.getParameter("genre");
 		String ISBN=request.getParameter("ISBN");
-		String bookID=request.getParameter("bookID");
+		String bookID=request.getParameter("sbookID");
 		String squantity=request.getParameter("quantity");
 		int quantity=Integer.parseInt(squantity);
 		String savailable=request.getParameter("savailable");
