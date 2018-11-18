@@ -403,7 +403,7 @@ public class DBConnector {
 		 return fine;
 	}
 	
-	public boolean addBook(int bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
+	public boolean addBook(String bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
 	{
 		Connection conn; int x=0;
 		try {
