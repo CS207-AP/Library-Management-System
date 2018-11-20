@@ -35,7 +35,7 @@ public class DBConnector {
             	
                 if (em.equals(email)&& pw.equals(password) ) {
                 
-                    user.setMemId(rs.getString("user_id"));
+                    user.setMemId(rs.getInt("user_id"));
                     user.setEmail(em);
                     user.setPassword(pw);
                     user.setType(rs.getString("user_type"));
@@ -248,7 +248,7 @@ public class DBConnector {
 	  
 	
 	
-	public boolean borrowBook(String user_id, int bookId)
+	public boolean borrowBook(int user_id, int bookId)
 	{
 		
 		Connection connection;
@@ -269,12 +269,12 @@ public class DBConnector {
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
-			ps.setString(1, user_id);
+			ps.setInt(1, user_id);
 			ps.setInt(2, bookId);
 			ps.executeUpdate();
 	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
             ps.setInt(1, bookId);
-	        ps.setString(2, user_id);
+	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
 	        ps.setDate(3, java.sql.Date.valueOf(idate));
@@ -295,7 +295,7 @@ public class DBConnector {
             return false;
 	}
 	
-	double returnBook(int user_id, int bookId) 
+	public double returnBook(int user_id, int bookId) 
 	{
 		Connection connection;
 		int i = 0;
