@@ -55,7 +55,7 @@
         </button>
         </div>
         <div class="modal-body">
-         <form id="edit-book-form" action="" method="post">
+         <form id="edit-book-form" action="ControllerServlet" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Book ID:</label>
             <input type="text" class="form-control" id="id" value="" readonly>
@@ -85,6 +85,7 @@
             <label for="recipient-name" class="col-form-label">Total Copies:</label>
             <input type="number" class="form-control" id="copies" value="" min="1" max="25"/>
           </div>
+          <input type="hidden" id="action" value="edit_book"/>
         </form>
         </div>
         <div class="modal-footer">
@@ -104,10 +105,14 @@
         </button>
         </div>
         <div class="modal-body">
-         <h5 class="message" id="message">Are you sure you want to delete member </h5>
+         <h5 class="message" id="message">Are you sure you want to delete book </h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default">Yes</button>
+          <form id="delete-book-form" action="ControllerServlet" method="post">
+          <input type="hidden" id="action" value="delete_book"/>
+          <input type="submit" value="Yes"/>
+          
+          </form >
            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
         </div>
       </div>

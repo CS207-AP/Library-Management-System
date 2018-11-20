@@ -63,7 +63,7 @@ input[type="submit"]{
         </button>
         </div>
         <div class="modal-body">
-         <form id="edit-account-form" action="" method="post">
+         <form id="edit-account-form" action="ControllerServlet" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Member ID:</label>
             <input type="text" class="form-control" id="member-id" value="" readonly>
@@ -80,7 +80,7 @@ input[type="submit"]{
             <label for="recipient-name" class="col-form-label">Member Type:</label>
             <input type="text" class="form-control" id="member-type" value="">
           </div>
-          
+          <input type="hidden" id="action" value="edit_user"/>
         </form>
         </div>
         <div class="modal-footer">
@@ -103,8 +103,8 @@ input[type="submit"]{
          <h5 class="message" id="message">Are you sure you want to delete member </h5>
         </div>
         <div class="modal-footer">
-          <form id="delete-account-form" action="" method="post">
-          <input type="hidden" id="deleteAcc" value=""/>
+          <form id="delete-account-form" action="ControllerServlet" method="post">
+          <input type="hidden" id="action" value="delete_user"/>
           <input type="submit" value="Yes"/>
           
           </form >
