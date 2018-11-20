@@ -70,7 +70,7 @@ public class DBConnector {
 		    	  book.setAvailable(bookSet.getInt("book_available"));
 		    	  book.setQuantity(bookSet.getInt("book_quantity"));
 		    	  book.setGenre(bookSet.getString("book_genre"));
-		    	  book.setid(bookSet.getString("book_id"));
+		    	  book.setid(bookSet.getInt("book_id"));
 		    	  book.setISBN(bookSet.getString("book_ISBN"));
 		    	  book.setPublisher(bookSet.getString("book_publisher"));
 		    	  books.add(book);
@@ -90,7 +90,7 @@ public class DBConnector {
 	}
 	
 	
-	List<Object[]> getBookIssueHistory(String book_id){
+	List<Object[]> getBookIssueHistory(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -157,7 +157,7 @@ public class DBConnector {
 		
 	}
 	
-	List<Object[]> getBookCurrentIssue(String book_id){
+	List<Object[]> getBookCurrentIssue(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -248,7 +248,7 @@ public class DBConnector {
 	  
 	
 	
-	public boolean borrowBook(String user_id, String bookId)
+	public boolean borrowBook(String user_id, int bookId)
 	{
 		
 		Connection connection;
@@ -266,14 +266,14 @@ public class DBConnector {
 	         }
 	         
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE bookId = ?");
-			ps.setString(1, bookId);
+			ps.setInt(1, bookId);
 			ps.executeUpdate();
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
 			ps.setString(1, user_id);
-			ps.setString(2, bookId);
+			ps.setInt(2, bookId);
 			ps.executeUpdate();
 	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
-            ps.setString(1, bookId);
+            ps.setInt(1, bookId);
 	        ps.setString(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
@@ -325,14 +325,14 @@ public class DBConnector {
 		return calcFine(user_id, bookId);
 	}
 	
-	boolean getCurrentlyIssued(String book_id, String user_id)
+	boolean getCurrentlyIssued(int book_id, String user_id)
 	{
 		Connection conn;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("SELECT book_id, user_Id, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
-	        ps.setString(1, book_id);
+	        ps.setInt(1, book_id);
 	        ps.setString(2, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        while(rs.next())
@@ -403,7 +403,7 @@ public class DBConnector {
 		 return fine;
 	}
 	
-	public boolean addBook(String bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
+	public boolean addBook(int bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
 	{
 		Connection conn; int x=0;
 		try {
