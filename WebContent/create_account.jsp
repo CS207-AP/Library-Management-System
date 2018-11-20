@@ -19,32 +19,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form id="create_book" class="" action="ControllerServlet" method="post">
-            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Title</label>
+          <form id="create_user" class="" action="ControllerServlet" method="post">
+            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="create_book" type="text" class="form-control" id="title" placeholder="Macbeth"> </div>
+                <input form="create_user" type="text" class="form-control" id="name" placeholder="Aastha"> </div>
             </div>
-            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Author</label>
+            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Type</label>
               <div class="col-10">
-                <input form="create_book" type="text" class="form-control" id="author" placeholder="William Shakespeare"> </div>
+                <input form="create_user" type="text" class="form-control" id="type" placeholder="Member"> </div>
             </div>
-            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">ISBN</label>
+            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="create_book" type="text" class="form-control" id="isbn" placeholder="978-3-16-148410-0"> </div>
+                <input form="create_user" type="text" class="form-control" id="email" placeholder="aastha@gmail.com"> </div>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Genre</label>
               <div class="col-10">
-                <input form="create_book" type="text" class="form-control" id="genre" placeholder="Fiction"> </div>
+                <input form="create_user" type="password" class="form-control" id="password" placeholder="****"> </div>
             </div>
-            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Publisher</label>
-              <div class="col-10">
-                <input form="create_book" type="text" class="form-control" id="publisher" placeholder="Oxford"> </div>
-            </div>
-            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Number of Copies</label>
-              <div class="col-10">
-                <input form="create_book" type="number" class="form-control" id="number_of_copies" placeholder="10" min="1" max="20"> </div>
-            </div>
-            <input type="hidden" id="action" value="create_book"/>
+            
+            <input type="hidden" id="action" value="create_user"/>
             <button type="submit" class="btn btn-primary">Place Order</button>
             
           </form>

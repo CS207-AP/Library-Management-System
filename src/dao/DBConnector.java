@@ -403,7 +403,7 @@ public class DBConnector {
 		 return fine;
 	}
 	
-	public boolean addBook(int bookId, String title, String genre, String author,String publisher, String ISBN, int total_copies)
+	public boolean addBook(Book book)
 	{
 		Connection conn; int x=0;
 		try {
@@ -411,13 +411,13 @@ public class DBConnector {
 			PreparedStatement ps;
 			ps = conn.prepareStatement("INSERT into books (book_id, book_ISBN, book_title, book_author,book_publisher,book_genre,book_quantity,book_available) values (NULL, ?, ?, ?, ?, ?, ?, 0);");
 	        //generate an ID
-			ps.setString(2, ISBN);
-	        ps.setString(3, title);
-	        ps.setString(4, author);
-	        ps.setString(5, publisher);
-	        ps.setString(6, genre);
-	        ps.setInt(7, total_copies);
-	        ps.setInt(8, total_copies);
+			ps.setString(2, book.getISBN());
+	        ps.setString(3, book.getTitle());
+	        ps.setString(4, book.getAuthor());
+	        ps.setString(5, book.getPublisher());
+	        ps.setString(6, book.getGenre());
+	        ps.setInt(7, book.getQuantity());
+	        ps.setInt(8, book.getAvailable());
 	        x = ps.executeUpdate();
 	        
 	        

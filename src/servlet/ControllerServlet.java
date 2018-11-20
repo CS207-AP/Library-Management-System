@@ -1,12 +1,19 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Servlet.Model_View_Controller_Pattern;
+import dao.DBConnector;
+import objects.Book;
+import objects.User;
 
 /**
  * Servlet implementation class ControllerServlet
@@ -15,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	DBConnector mydbConnect = new DBConnector();
+	Book book=new Book();
+	User user = new User();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,7 +49,29 @@ public class ControllerServlet extends HttpServlet {
 		doGet(request, response);
 		
 		// form id="login_form", email id="login_email", password id="login_password"
-		
+		String action = request.getParameter("action");
+		if(action.equalsIgnoreCase("create_book"))
+		{
+			book.setTitle(request.getParameter("title"));
+			//same for author etc.
+			try {
+				boolean result1;
+				result1 = mydbConnect.addBook(book);
+				
+			} catch (Exception ex) {
+				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			
+		}
+		else if(action.equalsIgnoreCase("create_user"))
+		{
+			user.setName(request.getParameter("name"));
+			
+		}
+		else if(action.equalsIgnoreCase("edit_book")) {}
+		else if(action.equalsIgnoreCase("edit_user")) {}
+		else if(action.equalsIgnoreCase("delete_book")) {}
+		else if(action.equalsIgnoreCase("delete_user")) {}
 		
 	}
 
