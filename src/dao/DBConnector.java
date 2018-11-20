@@ -248,7 +248,7 @@ public class DBConnector {
 	  
 	
 	
-	boolean borrowBook(int user_id, int bookId)
+	public boolean borrowBook(String user_id, String bookId)
 	{
 		
 		Connection connection;
@@ -266,15 +266,15 @@ public class DBConnector {
 	         }
 	         
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE bookId = ?");
-			ps.setInt(1, bookId);
+			ps.setString(1, bookId);
 			ps.executeUpdate();
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
-			ps.setInt(1, user_id);
-			ps.setInt(2, bookId);
+			ps.setString(1, user_id);
+			ps.setString(2, bookId);
 			ps.executeUpdate();
 	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
-            ps.setInt(1, bookId);
-	        ps.setInt(2, user_id);
+            ps.setString(1, bookId);
+	        ps.setString(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
 	        ps.setDate(3, java.sql.Date.valueOf(idate));
