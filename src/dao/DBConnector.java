@@ -432,17 +432,17 @@ public class DBConnector {
             return false;
 	}
 	
-	public boolean addMember(String type, String email, String name, String password)
+	public boolean addUser(User user)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
-	        ps.setString(2, type);
-	        ps.setString(3, email);
-	        ps.setString(4, name);
-	        ps.setString(5, password);
+	        ps.setString(2, user.getType());
+	        ps.setString(3, user.getEmail());
+	        ps.setString(4, user.getName());
+	        ps.setString(5, user.getPassword());
 	       
 	        x = ps.executeUpdate();
 	        
