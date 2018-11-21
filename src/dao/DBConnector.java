@@ -485,18 +485,18 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editUser(String user_id,String user_type,String user_name, String user_email, String user_password)
+	public boolean editUser(int user_id,String user_type,String user_name, String user_email)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?,user_password=?  WHERE user_id=?;");
+			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?  WHERE user_id=?;");
 	        ps.setString(1, user_type);
 	        ps.setString(2, user_name);
 	        ps.setString(3, user_email);
-	        ps.setString(4, user_password);
-	        ps.setString(5, user_id);
+	       // ps.setString(4, user_password); admin shouldnt change password. User should be allowed to do that
+	        ps.setInt(4, user_id);
 	        x = ps.executeUpdate();
 	        
 	        
