@@ -356,7 +356,7 @@ public class DBConnector {
 		return false;
         
 	}
-	boolean deleteBook(int bookId)
+  public boolean deleteBook(int bookId)
 	{
 		Connection conn; int x=0;
 		try {
@@ -378,7 +378,7 @@ public class DBConnector {
             return false;
 	}
 	
-	double deleteMember(int user_id)
+	public double deleteMember(int user_id)
 	{
 		Connection conn; int x=0;
 		double fine=0;

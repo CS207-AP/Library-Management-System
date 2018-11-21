@@ -25,7 +25,7 @@ public class ControllerServlet extends HttpServlet {
        
 	DBConnector mydbConnect = new DBConnector();
 	Book book=new Book();
-	User user = new User();
+	User u = new User();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -91,13 +91,17 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("create_user"))
 		{
 			String user_type=request.getParameter("User Type");
+			u.setType(user_type);
 			String Name=request.getParameter("Name");
+			u.setName(Name);
 			String Email=request.getParameter("Email");
+			u.setEmail(Email);
 			String Password=request.getParameter("Password");
+			u.setPassword(Password);
 			DBConnector db=new DBConnector();
 			try {
 			boolean save;
-			save=db.addMember(user_type,Name,Email,Password);
+			save=db.addUser(u);
 			if(save==true)
 			{
 			out.println("Member added successfully");
@@ -108,7 +112,23 @@ public class ControllerServlet extends HttpServlet {
 				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
-		else if(action.equalsIgnoreCase("edit_book")) {}
+		else if(action.equalsIgnoreCase("edit_book")) {
+			
+			int book_ID=Integer.parseInt(request.getParameter("BOOK ID"));
+			String Title=request.getParameter("Title");
+			String Author=request.getParameter("Author");
+			String ISBN=request.getParameter("ISBN");
+			String Publisher=request.getParameter("Publisher");
+			int quantity=Integer.parseInt(request.getParameter("Quantity"));
+			DBConnector db=new DBConnector();
+			boolean save=true;//=db.editBook(memID,user_type,Name,Email); will change accordingly to editbook method
+			if(save==true)
+			{
+				out.println("Edited Book Successfully");
+			}
+			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			
+		}
 		else if(action.equalsIgnoreCase("edit_user")) {
 			
 			String user_type=request.getParameter("User Type");
@@ -119,12 +139,39 @@ public class ControllerServlet extends HttpServlet {
 			boolean save=db.editUser(memID,user_type,Name,Email);
 			if(save==true)
 			{
-				out.println("Edited Book Successfully");
+				out.println("Edited User details Successfully");
 			}
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 		}
-		else if(action.equalsIgnoreCase("delete_book")) {}
-		else if(action.equalsIgnoreCase("delete_user")) {}
+		else if(action.equalsIgnoreCase("delete_book")) {
+			
+			int book_id=Integer.parseInt(request.getParameter("BOOK ID")); //will get from jsp either this way or by attribute way like issue book
+			DBConnector db= new DBConnector();
+			boolean remove=db.deleteBook(book_id);
+			if(remove==true)
+			{
+				out.println("BOOK DELETED SUCCESSFULLY!");
+			}
+			
+			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+		}
+		else if(action.equalsIgnoreCase("delete_user")) {
+			
+			int user_id=Integer.parseInt(request.getParameter("Member ID")); //will get from jsp either this way or by attribute way like issue book
+			DBConnector db=new DBConnector();
+			double delete=db.deleteMember(user_id);
+			if (delete>0)
+			{
+				out.println("Fine Due is :"+ delete);
+			}
+			else
+			{
+				out.println("Removed User from Database.");
+			}
+			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+
+			
+		}
 		
 	}
 
