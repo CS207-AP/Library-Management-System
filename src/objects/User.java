@@ -10,7 +10,7 @@ public class User {
     private String password;
     private String type;
     private String name;
-    private String memId;
+    private int memId;
     
     
 	public String getEmail() {
@@ -45,11 +45,11 @@ public class User {
 		this.name = name;
 	}
 	
-	public String getMemId() {
+	public int getMemId() {
 		return memId;
 	}
 	
-	public void setMemId(String memId) {
+	public void setMemId(int memId) {
 		this.memId = memId;
 	}
     

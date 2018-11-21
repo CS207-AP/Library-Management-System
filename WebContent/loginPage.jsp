@@ -28,7 +28,7 @@
               <div class="col-10">
                 <input form="login_form" type="password" class="form-control" id="login_password" placeholder="Password"> </div>
             </div>
-            <input type="hidden" id="login"/>
+            <input type="hidden" id="action" value="login"/>
             <button type="submit" class="btn btn-primary">Submit</button>
             
           </form>

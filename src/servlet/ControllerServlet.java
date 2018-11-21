@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.io.PrintWriter;
 import dao.DBConnector;
 import objects.Book;
 import objects.User;
@@ -45,20 +45,44 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
+		//doGet(request, response);
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
 		// form id="login_form", email id="login_email", password id="login_password"
 		String action = request.getParameter("action");
 		if(action.equalsIgnoreCase("create_book"))
 		{
-			book.setTitle(request.getParameter("title"));
-			//same for author etc.
+			String title=request.getParameter("title");
+			book.setTitle("title");
+			String author=request.getParameter("author");
+			book.setAuthor("author");
+			String publisher = request.getParameter("publisher");
+			book.setPublisher("publisher");
+			String genre=request.getParameter("genre");
+			book.setGenre("author");
+			String ISBN=request.getParameter("ISBN");
+			book.setISBN("ISBN");
+			String sbookID=request.getParameter("sbookID");
+			int bookID=Integer.parseInt(sbookID);
+			book.setid(bookID);
+			String squantity=request.getParameter("quantity");
+			int quantity=Integer.parseInt(squantity);
+			book.setQuantity(quantity);
+			String savailable=request.getParameter("savailable");
+			int available=Integer.parseInt(savailable);
+			book.setAvailable(available);
+			
+			DBConnector db=new DBConnector();
 			try {
-				boolean result1;
-				result1 = mydbConnect.addBook(book);
-				
-			} catch (Exception ex) {
-				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+			boolean save=db.addBook(book);
+			if(save==true)
+			{
+				out.println("Book Added Successfully");
+			}
+			request.getRequestDispatcher("Add Book WebPage").include(request, response);
+			}
+			catch (Exception ex) {
+			Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
 			}
 			
 		}

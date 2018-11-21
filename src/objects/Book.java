@@ -5,7 +5,7 @@ public class Book {
 	private String author;
 	private String genre;
 	private String ISBN;
-	private String ID;
+	private int ID;
 	private String publisher;
 	private int quantity;
 	private int available;
@@ -42,11 +42,11 @@ public class Book {
 		this.ISBN=ISBN;
 	}
 		
-	public String getid() {
+	public int getid() {
 		return this.ID;
 	}
 
-	public void setid(String ID) {
+	public void setid(int ID) {
 		this.ID = ID;
 	}
 

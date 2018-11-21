@@ -17,14 +17,14 @@
   <div class="py-3">
     <div class="container">
       <div class="row">
-      <div class="col-md-12"><a class="btn btn-link" href="#" style="float: right;">Log Out</a></div>
+      <div class="col-md-12"><a class="btn btn-link" href="loginPage.jsp" style="float: right;">Log Out</a></div>
         <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center">
           <ul class="nav d-flex justify-content-center">
             <li class="nav-item"> <a class="btn btn-primary btn-lg" href="browse_books.jsp">Browse Books</a> </li>
             <li class="nav-item"> <a class="btn btn-primary btn-lg" href="edit_books.jsp">Edit Book Details</a> </li>
             <li class="nav-item"> <a class="btn btn-primary btn-lg" href="edit_accounts.jsp">Edit Member Account Details</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="current_issues.jsp" contenteditable="true" >View Current Issues</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="past_issues.jsp" contenteditable="true" >View Past Issues</a> </li>
+            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="current_issues_page.jsp" contenteditable="true" >View Current Issues</a> </li>
+            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="view-history.jsp" contenteditable="true" >View Past Issues</a> </li>
           </ul>
         </div>
       </div>
