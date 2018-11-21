@@ -19,6 +19,14 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+        <%
+    if(request.getAttribute("loginResult") != null && request.getAttribute("loginResult") == "true"){
+%>
+ <h5 style="color:red"> Login Failed. Please try again. </h5>
+<%
+}
+%>
+
           <form id="login_form" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">E-mail</label>
               <div class="col-10">

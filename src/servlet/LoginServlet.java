@@ -45,20 +45,24 @@ public class LoginServlet extends HttpServlet {
 		//doGet(request, response);
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String email = request.getParameter("email");  //email and pass depend on what keyword is present on the login html page code
-        String pass = request.getParameter("pass");
+        String email = request.getParameter("login_email");  //email and pass depend on what keyword is present on the login html page code
+        String pass = request.getParameter("login_password");
         
         	DBConnector db= new DBConnector();
         	User obj = db.checkCredentials(email, pass);
         	if (obj==null)
         	{
            out.println("Username or Password is incorrect");
+           request.setAttribute("loginResult", true);
            RequestDispatcher rs = request.getRequestDispatcher("index.html"); //instead of index whatever is our login page html name
-           rs.include(request, response);
+           rs.include(request, response);//Not sure what is to be done but you need to forward it back to loginPage.jsp so I can display the error message there.
         }
         	else
-        	{
-        		RequestDispatcher rs = request.getRequestDispatcher("New Web Page"); //webpage where its supposed to direct to
+        	{   String type=obj.getType();
+        		if(type.equalsIgnoreCase("admin"));
+        		RequestDispatcher rs = request.getRequestDispatcher("admin_login.jsp"); //webpage where its supposed to direct to
+        		rs.forward(request, response);
+        		rs = request.getRequestDispatcher("member_login.jsp"); //webpage where its supposed to direct to
         		rs.forward(request, response);
         	}
 	}
