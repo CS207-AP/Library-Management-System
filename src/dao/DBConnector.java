@@ -17,6 +17,13 @@ public class DBConnector {
 	
 	DButil dbUtil = new DButil();
 	
+	/**
+	 * This method returns a User object with its member variables after checking if login details are valid.
+	 * 
+	 * @param email Contains the email address entered by the user
+	 * @param password Contains the password entered by the user
+	 * @return returns a <code>User</code> object with its appropriate details of the user.
+	 */
 	public User checkCredentials(String email, String password)
 	{
 		User user = new User();
@@ -227,7 +234,7 @@ public class DBConnector {
 	
 	
 	
-	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
+	List<Book> searchBook(Book toSearch){
 		
 		List<Book> books = browseBooks();
 		List<Book> matchingBooks= new ArrayList<Book>();
@@ -237,7 +244,7 @@ public class DBConnector {
 			
 			Book book = books.get(i);
 			
-			if((book.getTitle().contains(title) && (!title.equals(""))) && (book.getAuthor().contains(author) && (!author.equals("")))&& (book.getGenre().contains(genre) && (!genre.equals(""))) && (book.getPublisher().contains(publisher) && (!publisher.equals(""))) && (book.getISBN().contains(Integer.toString(ISBN)) && (ISBN!=0))) {
+			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && (Integer.parseInt(toSearch.getISBN())!=0))) {
 				
 				matchingBooks.add(book);
 			}
@@ -432,17 +439,17 @@ public class DBConnector {
             return false;
 	}
 	
-	public boolean addMember(String type, String email, String name, String password)
+	public boolean addUser(User user)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
-	        ps.setString(2, type);
-	        ps.setString(3, email);
-	        ps.setString(4, name);
-	        ps.setString(5, password);
+	        ps.setString(2, user.getType());
+	        ps.setString(3, user.getEmail());
+	        ps.setString(4, user.getName());
+	        ps.setString(5, user.getPassword());
 	       
 	        x = ps.executeUpdate();
 	        
@@ -485,18 +492,18 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editUser(String user_id,String user_type,String user_name, String user_email, String user_password)
+	public boolean editUser(int user_id,String user_type,String user_name, String user_email)
 	{
 		Connection conn; int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?,user_password=?  WHERE user_id=?;");
+			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?  WHERE user_id=?;");
 	        ps.setString(1, user_type);
 	        ps.setString(2, user_name);
 	        ps.setString(3, user_email);
-	        ps.setString(4, user_password);
-	        ps.setString(5, user_id);
+	       // ps.setString(4, user_password); admin shouldnt change password. User should be allowed to do that
+	        ps.setInt(4, user_id);
 	        x = ps.executeUpdate();
 	        
 	        

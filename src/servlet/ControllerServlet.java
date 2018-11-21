@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import java.io.PrintWriter;
 import dao.DBConnector;
 import objects.Book;
 import objects.User;
+
 
 /**
  * Servlet implementation class ControllerServlet
@@ -50,6 +52,7 @@ public class ControllerServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		// form id="login_form", email id="login_email", password id="login_password"
 		String action = request.getParameter("action");
+		
 		if(action.equalsIgnoreCase("create_book"))
 		{
 			book.setTitle(request.getParameter("title"));
@@ -87,11 +90,39 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("create_user"))
 		{
-			user.setName(request.getParameter("name"));
-			
+			String user_type=request.getParameter("User Type");
+			String Name=request.getParameter("Name");
+			String Email=request.getParameter("Email");
+			String Password=request.getParameter("Password");
+			DBConnector db=new DBConnector();
+			try {
+			boolean save;
+			save=db.addMember(user_type,Name,Email,Password);
+			if(save==true)
+			{
+			out.println("Member added successfully");
+			}
+			request.getRequestDispatcher("add member html page").include(request, response); //form for member add.
+			}
+			catch (Exception ex) {
+				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+				}
 		}
 		else if(action.equalsIgnoreCase("edit_book")) {}
-		else if(action.equalsIgnoreCase("edit_user")) {}
+		else if(action.equalsIgnoreCase("edit_user")) {
+			
+			String user_type=request.getParameter("User Type");
+			int memID=Integer.parseInt(request.getParameter("Member ID"));
+			String Name=request.getParameter("Name");
+			String Email=request.getParameter("Email");
+			DBConnector db=new DBConnector();
+			boolean save=db.editUser(memID,user_type,Name,Email);
+			if(save==true)
+			{
+				out.println("Edited Book Successfully");
+			}
+			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+		}
 		else if(action.equalsIgnoreCase("delete_book")) {}
 		else if(action.equalsIgnoreCase("delete_user")) {}
 		
