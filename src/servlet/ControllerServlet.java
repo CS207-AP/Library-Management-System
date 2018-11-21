@@ -52,8 +52,7 @@ public class ControllerServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if(action.equalsIgnoreCase("create_book"))
 		{
-			String title=request.getParameter("title");
-			book.setTitle("title");
+			book.setTitle(request.getParameter("title"));
 			String author=request.getParameter("author");
 			book.setAuthor("author");
 			String publisher = request.getParameter("publisher");

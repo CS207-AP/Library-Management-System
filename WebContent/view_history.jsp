@@ -34,6 +34,7 @@
                     <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
                     <td><form id="view-history" action="" method="post">
                     <input type="submit" value="View History"/>
+                    <input type="hidden" id="bookid" value=""/>
                     <input type="hidden" id="action" value="view_history"/>
                     
                     </form>
