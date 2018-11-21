@@ -17,6 +17,13 @@ public class DBConnector {
 	
 	DButil dbUtil = new DButil();
 	
+	/**
+	 * This method returns a User object with its member variables after checking if login details are valid.
+	 * 
+	 * @param email Contains the email address entered by the user
+	 * @param password Contains the password entered by the user
+	 * @return returns a <code>User</code> object with its appropriate details of the user.
+	 */
 	public User checkCredentials(String email, String password)
 	{
 		User user = new User();
