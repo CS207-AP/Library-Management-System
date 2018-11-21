@@ -227,7 +227,7 @@ public class DBConnector {
 	
 	
 	
-	List<Book> searchBook(String title,String author,String genre, int ISBN, String publisher){
+	List<Book> searchBook(Book toSearch){
 		
 		List<Book> books = browseBooks();
 		List<Book> matchingBooks= new ArrayList<Book>();
@@ -237,7 +237,7 @@ public class DBConnector {
 			
 			Book book = books.get(i);
 			
-			if((book.getTitle().contains(title) && (!title.equals(""))) && (book.getAuthor().contains(author) && (!author.equals("")))&& (book.getGenre().contains(genre) && (!genre.equals(""))) && (book.getPublisher().contains(publisher) && (!publisher.equals(""))) && (book.getISBN().contains(Integer.toString(ISBN)) && (ISBN!=0))) {
+			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && (Integer.parseInt(toSearch.getISBN())!=0))) {
 				
 				matchingBooks.add(book);
 			}
