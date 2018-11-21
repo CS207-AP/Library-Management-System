@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Servlet.Model_View_Controller_Pattern;
 import dao.DBConnector;
 import objects.Book;
 import objects.User;
