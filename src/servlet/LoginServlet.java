@@ -58,7 +58,8 @@ public class LoginServlet extends HttpServlet {
            rs.include(request, response);//Not sure what is to be done but you need to forward it back to loginPage.jsp so I can display the error message there.
         }
         	else
-        	{   String type=obj.getType();
+        	{   login=obj;
+        		String type=obj.getType();
         		if(type.equalsIgnoreCase("admin"));
         		RequestDispatcher rs = request.getRequestDispatcher("admin_login.jsp"); //webpage where its supposed to direct to
         		rs.forward(request, response);

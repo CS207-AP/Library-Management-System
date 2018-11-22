@@ -2,8 +2,11 @@ package servlet;
 
 import java.io.IOException;
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -112,6 +115,16 @@ public class ControllerServlet extends HttpServlet {
 				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
+		
+		else if(action.equalsIgnoreCase("calling edit_book")) {
+			DBConnector db=new DBConnector();
+			List<Book> booklist = new ArrayList<Book>();
+			booklist=db.browseBooks();
+			request.setAttribute("book_list",booklist);//set list as attribute
+			
+			request.getRequestDispatcher("edit-books.jsp").include(request, response);
+			
+		}
 		else if(action.equalsIgnoreCase("edit_book")) {
 			
 			int book_ID=Integer.parseInt(request.getParameter("BOOK ID"));
@@ -129,6 +142,15 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 			
 		}
+		else if(action.equalsIgnoreCase("calling edit_user")) {
+			DBConnector db=new DBConnector();
+			List<Object[]> memberlist = new ArrayList<Object[]>();
+			//memberlist=db.getAllMembers();
+			request.setAttribute("Member_list",memberlist);//set list as attribute
+			
+			request.getRequestDispatcher("edit-user.jsp").include(request, response);
+		}
+		
 		else if(action.equalsIgnoreCase("edit_user")) {
 			
 			String user_type=request.getParameter("User Type");
@@ -172,7 +194,88 @@ public class ControllerServlet extends HttpServlet {
 
 			
 		}
+		else if(action.equalsIgnoreCase("Current_Issues_Book_Admin")) {
+			DBConnector db=new DBConnector();
+			int bookid=0; //get from jsp for individual books whose current issue needs to be seen
+			List<Object[]> getIssues = new ArrayList<Object[]>();
+			getIssues=db.getBookCurrentIssue(bookid);
+			request.setAttribute("getIssues",getIssues);//set list as attribute
+			request.getRequestDispatcher("individual-book-currentIssues.jsp").include(request, response);
+			
+		}
+		
+		else if(action.equalsIgnoreCase("View_History_Admin")) {
+			DBConnector db=new DBConnector();
+			int bookid=0; //get from jsp for individual books whose current issue needs to be seen
+			List<Object[]> getHistory = new ArrayList<Object[]>();
+			getHistory=db.getBookCurrentIssue(bookid);
+			request.setAttribute("getHistory",getHistory);//set list as attribute
+			request.getRequestDispatcher("individual-book-history.jsp").include(request, response);
+			
+		}
+		
+		else if(action.equalsIgnoreCase("Current_Issues_Book_User")) {
+			DBConnector db=new DBConnector();
+			int memberID=u.getMemId(); 
+			List<Object[]> getCIssues = new ArrayList<Object[]>();
+			getCIssues=db.getUserCurrentIssue(memberID);
+			request.setAttribute("getCIssues",getCIssues);//set list as attribute
+			request.getRequestDispatcher("view_your_books.jsp").include(request, response);
+			
+		}
+		
+		else if(action.equalsIgnoreCase("edit_details")) { //if user wants to change something
+			
+			int memID=Integer.parseInt(request.getParameter("Member ID"));
+			String Name=request.getParameter("Name");
+			String Email=request.getParameter("Email");
+			String Password=request.getParameter("password");
+			DBConnector db=new DBConnector();
+			/*boolean save=db.editDetails(memID,Name,Email,Password);
+			if(save==true)
+			{
+				out.println("Edited User details Successfully");
+			}*/
+			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+		}
+		
+		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
+		{
+			int userID=u.getMemId();
+			int bookID=0; //will get as attribute from jsp
+			DBConnector db=new DBConnector();
+			boolean issue=db.borrowBook(userID,bookID);
+			if(issue==true)
+			{
+				out.println("Book Issued Successfully");
+			}
+			else
+			{
+				out.println("Unable to Issue the Book. Try again later!");
+			}
+			request.getRequestDispatcher("issue-books.jsp").include(request, response); //to connect the next page, check name of jsp.
+		}
+		
+		else if(action.equalsIgnoreCase("Return"))
+		{
+			int userID=u.getMemId();
+			int bookID=0; //will get as attribute from jsp
+			DBConnector db=new DBConnector();
+			double fine=db.returnBook(userID,bookID);
+			if(fine>0)
+			{
+				out.println("You have to pay a fine of Rs. :" + fine);
+			}
+			else
+			{
+				out.println("Returned Book Successfully!");
+			}
+			
+			request.getRequestDispatcher("return-book.jsp").include(request, response); //to connect the next page,check name of jsp.
+		}
+		
 		
 	}
-
+		
 }
+

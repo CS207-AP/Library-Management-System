@@ -59,29 +59,10 @@ public class DBConnector {
 		return user;
 	}
 	
-	boolean hasThisBook(User user,Book book) {
-		
-		List<Object[]> books = getUserCurrentIssues(user.getMemId());
-		
-		if(books.isEmpty()) return false;
-		
-		for(int i=0;i<books.size();i++) {
-			
-			Object[] array =books.get(i);
-			
-			if(book.getid()==(int)array[0]) {
-				return true;
-			}
-		}
-		return false;
-		
-	}
-	
-	List<Book> browseBooks(User user) {
+	public List<Book> browseBooks() {
 		
 		Connection conn;
 		List<Book> books = new ArrayList<Book>();
-		
 		try {
 			conn = dbUtil.getConnection();
 			 String query = "SELECT * FROM books";		        
@@ -183,7 +164,7 @@ public class DBConnector {
 		
 	}
 	
-	List<Object[]> getBookCurrentIssue(int book_id){
+	public List<Object[]> getBookCurrentIssue(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -217,7 +198,7 @@ public class DBConnector {
 	}
 	
 	
-	List<Object[]> getUserCurrentIssues(int user_id){
+	public List<Object[]> getUserCurrentIssue(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -233,7 +214,7 @@ public class DBConnector {
 		    while(userSet.next()) {
 		    	
 		    	Object [] issueData = new Object[3];
-		    	issueData[0]=userSet.getInt("book_id");
+		    	issueData[0]=userSet.getString("book_id");
 		    	issueData[1]=userSet.getDate("issue_date");
 		    	issueData[2]=userSet.getDate("due_date");
 		    	issues.add(issueData);
