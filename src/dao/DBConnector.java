@@ -470,6 +470,27 @@ public class DBConnector {
 		}
 		 return fine;
 	}
+
+	public void editUserDetails(User user) {
+		
+		Connection conn; 
+		try {
+			conn = dbUtil.getConnection();
+			PreparedStatement ps;
+			ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=?");
+			ps.setString(1,user.getName());
+			ps.setString(2,user.getEmail());
+			ps.setString(3,user.getPassword());
+			ps.executeQuery();
+	        
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Got an exception in editUserDetails in dbconnector");
+		}
+		
+	}
 	
 	public boolean addBook(Book book)
 	{
