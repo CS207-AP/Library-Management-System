@@ -471,7 +471,7 @@ public class DBConnector {
 		 return fine;
 	}
 
-	public void editUserDetails(User user) {
+	public boolean editUserDetails(User user) {
 		
 		Connection conn; 
 		try {
@@ -482,12 +482,14 @@ public class DBConnector {
 			ps.setString(2,user.getEmail());
 			ps.setString(3,user.getPassword());
 			ps.executeQuery();
+			return true;
 	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Got an exception in editUserDetails in dbconnector");
+			return false;
 		}
 		
 	}
