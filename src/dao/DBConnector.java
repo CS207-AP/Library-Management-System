@@ -62,6 +62,7 @@ public class DBConnector {
 	public List<Book> browseBooks() {
 		
 		Connection conn;
+		List<Object[]> combinedList= new ArrayList<Object[]>();
 		List<Book> books = new ArrayList<Book>();
 		try {
 			conn = dbUtil.getConnection();
@@ -332,7 +333,7 @@ public class DBConnector {
 		return calcFine(user_id, bookId);
 	}
 	
-	boolean getCurrentlyIssued(int book_id, String user_id)
+	boolean hasIssuedThisBook(int book_id, String user_id)
 	{
 		Connection conn;
 		try {
@@ -356,6 +357,40 @@ public class DBConnector {
 		return false;
         
 	}
+	
+	int posInWaitlist(int book_id,String user_id) {
+		
+		Connection conn;
+		try {
+			conn = dbUtil.getConnection();
+			PreparedStatement ps;
+			ps = conn.prepareStatement("SELECT * FROM waitlist WHERE book_id = ?");
+	        ps.setInt(1, book_id);
+	        ps.setString(2, user_id);
+	        ResultSet rs = ps.executeQuery();
+	        for(int i=0;rs.next();i++)
+	        {
+	        	if(rs.getString("user_id").equals(user_id)) return i;
+	        	
+	        }
+	        
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Got an exception in currentlyissued in dbconnector");
+		}
+		return false;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
   public boolean deleteBook(int bookId)
 	{
 		Connection conn; int x=0;
