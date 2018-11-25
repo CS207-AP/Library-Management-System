@@ -59,20 +59,23 @@ public class DBConnector {
 		return user;
 	}
 	
-	public List<Book> browseBooks() {
+	public List<Object[]> browseBooks(String user_id) {
 		
 		Connection conn;
 		List<Object[]> combinedList= new ArrayList<Object[]>();
-		List<Book> books = new ArrayList<Book>();
 		try {
 			conn = dbUtil.getConnection();
-			 String query = "SELECT * FROM books";		        
+			
+			  String query = "SELECT * FROM books";		        
 		      Statement st = conn.createStatement();	     	      
 		      ResultSet bookSet = st.executeQuery(query);		      
+		      
 		      while(bookSet.next()) {
 		    	  
-		    	  Book book = new Book();
+		    	  Object[] array= new Object[2];
+		    	  boolean[] buttons= new boolean[4];
 		    	  
+		    	  Book book = new Book();
 		    	  book.setTitle(bookSet.getString("book_title"));
 		    	  book.setAuthor(bookSet.getString("book_author"));
 		    	  book.setAvailable(bookSet.getInt("book_available"));
@@ -81,7 +84,30 @@ public class DBConnector {
 		    	  book.setid(bookSet.getInt("book_id"));
 		    	  book.setISBN(bookSet.getString("book_ISBN"));
 		    	  book.setPublisher(bookSet.getString("book_publisher"));
-		    	  books.add(book);
+		    	  
+		    	  if(hasIssuedThisBook(book.getid(),user_id)==true) {
+		    		  
+		    		  buttons[1]=true;// set return button to true
+		    	  }else {
+		    		  if(book.getAvailable()>0) {
+		    			  
+		    			  buttons[0]=true;// set borrow button to true
+		    		  }
+		    		  
+		    		  if(book.getAvailable()==0 && posInWaitlist(book.getid(),user_id)==-1) {
+		    			  
+		    			  buttons[2]=true;//set add to WL true
+		    		  }
+		    		  
+		    		  if(posInWaitlist(book.getid(),user_id)!=-1) {
+		    			  
+		    			  buttons[3]=true;// set rem from WL to true
+		    		  }
+		    	  }
+		    	  
+		    	  array[0]=book;
+		    	  array[1]=buttons;
+		    	  combinedList.add(array);
 		    	  
 		      }
 		      
@@ -93,7 +119,7 @@ public class DBConnector {
 			e.printStackTrace();
 		}
 		
-		return books;
+		return combinedList;
 		
 	}
 	
