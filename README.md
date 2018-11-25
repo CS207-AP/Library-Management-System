@@ -69,7 +69,7 @@ Add additional notes about how to deploy this on a live system
 * **Nandini Agrawal** - *Servlets* - [Nandini Agrawal](https://github.com/Nandini18)
 * **Reuel John** - *Database Management* - [Reuel John](https://github.com/mojoman11)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/CS207-AP/Library-Management-system/graphs/contributors) who participated in this project.
 
 ## License
 
