@@ -616,7 +616,7 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editBook(Book book)
+	public boolean editBook(Book book)
 	{
 		Connection conn;
 		int x=0;
@@ -649,7 +649,7 @@ public class DBConnector {
 	}
 	
 	
-	List<User> getAllUsers(){
+	public List<User> getAllUsers(){
 		
 		List<User> users= new ArrayList<User>();
 		Connection conn;

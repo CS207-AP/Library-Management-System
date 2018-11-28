@@ -29,6 +29,7 @@ public class ControllerServlet extends HttpServlet {
 	DBConnector mydbConnect = new DBConnector();
 	Book book=new Book();
 	User u = new User();
+	final User currentuser=LoginServlet.login;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -152,8 +153,8 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("calling edit_accounts")) {
 			DBConnector db=new DBConnector();
-			List<Object[]> memberlist = new ArrayList<Object[]>();
-			//memberlist=db.getAllMembers();
+			List<User> memberlist= new ArrayList<User>();
+			memberlist=db.getAllUsers();
 			request.setAttribute("Member_list",memberlist);//set list as attribute
 			
 			request.getRequestDispatcher("edit-user.jsp").include(request, response);
@@ -170,7 +171,7 @@ public class ControllerServlet extends HttpServlet {
 			String Email=request.getParameter("Email");
 			u.setEmail(Email);
 			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(u);
+			boolean save=db.editUserDetails(currentuser,u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
@@ -179,7 +180,9 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
-			int book_id=Integer.parseInt(request.getParameter("BOOK ID")); //will get from jsp either this way or by attribute way like issue book
+			String bookid;
+			request.getAttribute(bookid);
+			int book_id=Integer.parseInt(bookid); 
 			DBConnector db= new DBConnector();
 			boolean remove=db.deleteBook(book_id);
 			if(remove==true)
@@ -191,7 +194,9 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
-			int user_id=Integer.parseInt(request.getParameter("Member ID")); //will get from jsp either this way or by attribute way like issue book
+			String userid;
+			request.getAttribute(userid);
+			int user_id=Integer.parseInt(userid);
 			DBConnector db=new DBConnector();
 			double delete=db.deleteMember(user_id);
 			if (delete>0)
@@ -215,7 +220,7 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		
-		else if(action.equalsIgnoreCase("View_History_Admin")) {
+		else if(action.equalsIgnoreCase("calling_individual_book_history")) {
 			DBConnector db=new DBConnector();
 			String bookid;
 			request.getAttribute(bookid);
@@ -229,7 +234,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_view_your_books")) {
 			DBConnector db=new DBConnector();
-			int memberID=u.getMemId(); 
+			int memberID=currentuser.getMemId(); 
 			List<Object[]> getCIssues = new ArrayList<Object[]>();
 			getCIssues=db.getUserCurrentIssue(memberID);
 			request.setAttribute("getCIssues",getCIssues);//set list as attribute
@@ -248,7 +253,7 @@ public class ControllerServlet extends HttpServlet {
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
 			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(u);
+			boolean save=db.editUserDetails(currentuser,u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
@@ -258,7 +263,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
 		{
-			int userID=u.getMemId();
+			int userID=currentuser.getMemId();
 			String bookid;
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
@@ -277,7 +282,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("Return"))
 		{
-			int userID=u.getMemId();
+			int userID=currentuser.getMemId();
 			
 			String bookid;
 			request.getAttribute(bookid);
