@@ -512,21 +512,40 @@ public class DBConnector {
 		 return fine;
 	}
 
-	public boolean editUserDetails(User user) {
+	public boolean editUserDetails(User currentUser,User user) {
 		
 		Connection conn; 
 		try {
 			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=?");
-			ps.setString(1,user.getName());
-			ps.setString(2,user.getEmail());
-			ps.setString(3,user.getPassword());
-			ps.executeQuery();
 			
-			conn.close();
+			if(currentUser.getType().equals("admin")) {
+				
+				PreparedStatement ps;
+				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,type=? WHERE user_id=?");
+				ps.setString(1,user.getName());
+				ps.setString(2,user.getEmail());
+				ps.setString(3,user.getPassword());
+				ps.setString(4,user.getType());
+				ps.executeQuery();
 			
-			return true;
+				conn.close();
+				return true;
+				
+			}else {
+				PreparedStatement ps;
+				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=? WHERE user_id=?");
+				ps.setString(1,user.getName());
+				ps.setString(2,user.getEmail());
+				ps.setString(3,user.getPassword());
+				ps.setInt(4,user.getMemId());
+				ps.executeQuery();
+			
+				conn.close();
+				return true;
+				
+				
+			}
+			
 	        
 	        
 		} catch (SQLException e) {
@@ -629,32 +648,6 @@ public class DBConnector {
             return false;
 	}
 	
-	public boolean editUser(int user_id,String user_type,String user_name, String user_email)
-	{
-		Connection conn; int x=0;
-		try {
-			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?  WHERE user_id=?;");
-	        ps.setString(1, user_type);
-	        ps.setString(2, user_name);
-	        ps.setString(3, user_email);
-	       // ps.setString(4, user_password); admin shouldnt change password. User should be allowed to do that
-	        ps.setInt(4, user_id);
-	        x = ps.executeUpdate();
-	        conn.close();
-	        
-	        
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.err.println("Got an exception in editmember in dbconnector");
-		}
-		if (x == 1) 
-            return true;
-         else 
-            return false;
-	}
 	
 	List<User> getAllUsers(){
 		
