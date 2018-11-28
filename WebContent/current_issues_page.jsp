@@ -38,7 +38,7 @@
                     <td><c:out value="${book[1]}" /></td>
                     <td class="idate"><c:out value="${book[2]}" /></td>
                     <td class="ddate"><c:out value="${book[3]}" /></td>
-                </tr>
+                </tr>  
             </c:forEach>
    </c:forEach>
    
