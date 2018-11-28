@@ -1,5 +1,5 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,19 +32,20 @@ input[type="submit"]{
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-10">Book Title</th>
- 
+    <th class="col-md-2">Member ID</th>
+    <th class="col-md-8">Member Name</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Edit</th>
     <th class="text-center">Delete</th>
     </tr>
-    <%-- <c:forEach items="${users}" var="user"> --%>
+    <c:forEach items="${users}" var="user"> 
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>User 1</td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editAccount" data-mem-id="ID 2019" data-mem-name="Aastha" data-mem-email="ok@gmail.com" data-mem-type="regular">Edit</button></td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteAccount" data-mem-id="123" data-mem-name="Aastha">Delete</button></td>
+                    <td><c:out value="${user.getMemId()}" /></td>
+                    <td><c:out value="${user.getName()}" /></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editAccount" data-mem-id="${user.getMemId()}" data-mem-name="${user.getName()}" data-mem-email="${user.getEmail()}" data-mem-type="${user.getType()}">Edit</button></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteAccount" data-mem-id="${user.getMemId()}" data-mem-name="${user.getName()}">Delete</button></td>
                 </tr>
-            <%-- </c:forEach> --%>
+            </c:forEach> 
    
     <tr>
     <td><a href="#"></a></td>
@@ -105,6 +106,7 @@ input[type="submit"]{
         <div class="modal-footer">
           <form id="delete-account-form" action="ControllerServlet" method="post">
           <input type="hidden" id="action" value="delete_user"/>
+          <input type="hidden" id="memId" value=""/>
           <input type="submit" value="Yes"/>
           
           </form >
@@ -148,7 +150,7 @@ input[type="submit"]{
 	  var modal = $(this)
 	  
 	  modal.find('.modal-body').text('Are you sure you want to delete member '+name+'?')
-	  modal.find('input[id="deleteAcc"]').val(memId)
+	  modal.find('input[id="memId"]').val(memId)
 	  
 	  
 	})

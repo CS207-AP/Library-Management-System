@@ -1,5 +1,5 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,13 +30,13 @@
     <th class="text-center">Edit</th>
     <th class="text-center">Delete</th>
     </tr>
-    <%-- <c:forEach items="${users}" var="user"> --%>
+    <c:forEach items="${books}" var="book">
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="IDhere" data-book-title="Great Expectations" data-book-isbn="910921" data-book-author="Charles Dickens" data-book-genre="Fiction" data-book-publisher="Penguin Classics" data-book-copies="10" >Edit</button></td>
-                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteBook" data-book-title="Aastha">Delete</button></td>
+                    <td><c:out value="${book.getTitle()}" /></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="${book.getid()}" data-book-title="${book.getTitle()}" data-book-isbn="${book.getISBN()}" data-book-author="${book.getAuthor()}" data-book-genre="${book.getGenre()}" data-book-publisher="${book.getPublisher()}" data-book-copies="${book.getQuantity()}" >Edit</button></td>
+                    <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteBook" data-book-title="${book.getTitle()}" data-book-id="${book.getid()}">Delete</button></td>
                 </tr>
-            <%-- </c:forEach> --%>
+             </c:forEach> 
    
     <tr>
     <td><a href="#"></a></td>
@@ -110,6 +110,7 @@
         <div class="modal-footer">
           <form id="delete-book-form" action="ControllerServlet" method="post">
           <input type="hidden" id="action" value="delete_book"/>
+          <input type="hidden" id="bookId" value=""/>
           <input type="submit" value="Yes"/>
           
           </form >
@@ -159,9 +160,11 @@
 	  var button = $(event.relatedTarget)
 	  
 	  var title = button.data('book-title')
+	  var bookId = button.data('book-id')
 	  var modal = $(this)
 	  
 	  modal.find('.modal-body').text('Are you sure you want to delete '+title+'?')
+	  modal.find('input[id="bookId"]').val(bookId)
 	  
 	  
 	})

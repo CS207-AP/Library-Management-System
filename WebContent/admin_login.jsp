@@ -20,11 +20,21 @@
       <div class="col-md-12"><a class="btn btn-link" href="loginPage.jsp" style="float: right;">Log Out</a></div>
         <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center">
           <ul class="nav d-flex justify-content-center">
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="browse_books.jsp">Browse Books</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="edit_books.jsp">Edit Book Details</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="edit_accounts.jsp">Edit Member Account Details</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="current_issues_page.jsp" contenteditable="true" >View Current Issues</a> </li>
-            <li class="nav-item"> <a class="btn btn-primary btn-lg" href="view-history.jsp" contenteditable="true" >View Past Issues</a> </li>
+            <li class="nav-item"> <form action="ControllerServlet" method="post">
+            							<input type="hidden" id="action" value="calling_browse_books"/>
+                                        <input type="submit" value="Browse Books"/> </form> </li> 
+            <li class="nav-item"> <form action="ControllerServlet" method="post">
+            							<input type="hidden" id="action" value="calling_edit_books"/>
+                                        <input type="submit" value="Edit Books"/> </form> </li>
+            <li class="nav-item"> <form action="ControllerServlet" method="post">
+            							<input type="hidden" id="action" value="calling_edit_accounts"/>
+                                        <input type="submit" value="Edit Account Details"/> </form> </li>
+            <li class="nav-item"> <form action="ControllerServlet" method="post">
+            							<input type="hidden" id="action" value="calling_current_issues"/>
+                                        <input type="submit" value="View Current Issues"/> </form> </li>
+            <li class="nav-item"> <form action="ControllerServlet" method="post">
+            							<input type="hidden" id="action" value="calling_past_issues"/>
+                                        <input type="submit" value="View Past Issues"/> </form> </li>
           </ul>
         </div>
       </div>

@@ -52,11 +52,11 @@ public class LoginServlet extends HttpServlet {
         	User obj = db.checkCredentials(email, pass);
         	if (obj==null)
         	{
-           out.println("Username or Password is incorrect");
+           //out.println("Username or Password is incorrect");
            request.setAttribute("loginResult", true);
-           RequestDispatcher rs = request.getRequestDispatcher("index.html"); //instead of index whatever is our login page html name
-           rs.include(request, response);//Not sure what is to be done but you need to forward it back to loginPage.jsp so I can display the error message there.
-        }
+           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); //instead of index whatever is our login page html name
+           rs.include(request, response);
+           }
         	else
         	{   login=obj;
         		String type=obj.getType();
