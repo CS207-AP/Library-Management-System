@@ -32,13 +32,13 @@
               <div class="col-10">
                 <input form="create_user" type="text" class="form-control" id="email" placeholder="aastha@gmail.com"> </div>
             </div>
-            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Genre</label>
+            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
                 <input form="create_user" type="password" class="form-control" id="password" placeholder="****"> </div>
             </div>
             
             <input type="hidden" id="action" value="create_user"/>
-            <button type="submit" class="btn btn-primary">Place Order</button>
+            <button type="submit" class="btn btn-primary">Create Account</button>
             
           </form>
           </div>
