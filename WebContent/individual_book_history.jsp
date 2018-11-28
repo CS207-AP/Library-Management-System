@@ -1,5 +1,5 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +16,7 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  <h5>Viewing history for: <%=request.getAttribute("bookId")%></h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -24,19 +25,21 @@
     <tr>
  
   
-    <th class="col-md-5">Book Title</th>
-    <th class="col-md-5">Member Name</th>
-    
+    <th class="col-md-5">Member ID</th>
+    <!-- Use text alignment like text-center or text-right -->
+    <th class="text-center">Issue Date</th>
+    <th class="text-center">Due Date</th>
     
     </tr>
-    <%-- <c:forEach items="${users}" var="user"> --%>
+   <c:forEach items="${issues}" var="issueList"> 
+    <c:forEach items="${issueList}" var="issueData"> 
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
-                    <td>User 1
-                    </td>
-                    
+                    <td><c:out value="${issueData[0]}" /></td>
+                    <td class="idate"><c:out value="${issueData[1]}" /></td>
+                    <td class="ddate"><c:out value="${issueData[2]}" /></td>
                 </tr>
-            <%-- </c:forEach> --%>
+            </c:forEach>
+   </c:forEach>
    
         </tbody>
     </table>
