@@ -123,7 +123,7 @@ public class DBConnector {
 		
 	}
 	
-	 List<Object[]> getAllBooksCurrentlyIssued(){
+	 public List<Object[]> getAllBooksCurrentlyIssued(){
 		
 		List <Object[]> allBooks = new ArrayList<Object[]>();
 		Connection conn;
@@ -157,7 +157,7 @@ public class DBConnector {
 	}
 	
 	
-	List<Object[]> getBookIssueHistory(int book_id){
+	public List<Object[]> getBookIssueHistory(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		

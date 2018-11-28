@@ -116,7 +116,7 @@ public class ControllerServlet extends HttpServlet {
 				}
 		}
 		
-		else if(action.equalsIgnoreCase("calling edit_book")) {
+		else if(action.equalsIgnoreCase("calling_edit_books")) {
 			DBConnector db=new DBConnector();
 			List<Book> booklist = new ArrayList<Book>();
 			booklist=db.browseBooks();
@@ -128,13 +128,21 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("edit_book")) {
 			
 			int book_ID=Integer.parseInt(request.getParameter("BOOK ID"));
+			book.setid(book_ID);
 			String Title=request.getParameter("Title");
+			book.setTitle(Title);
 			String Author=request.getParameter("Author");
+			book.setAuthor(Author);
 			String ISBN=request.getParameter("ISBN");
+			book.setISBN(ISBN);
 			String Publisher=request.getParameter("Publisher");
+			book.setPublisher(Publisher);
+			String Genre=request.getParameter("Genre");
+			book.setGenre(Genre);
 			int quantity=Integer.parseInt(request.getParameter("Quantity"));
+			book.setQuantity(quantity);
 			DBConnector db=new DBConnector();
-			boolean save=true;//=db.editBook(memID,user_type,Name,Email); will change accordingly to editbook method
+			boolean save=db.editBook(book);
 			if(save==true)
 			{
 				out.println("Edited Book Successfully");
@@ -142,7 +150,7 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 			
 		}
-		else if(action.equalsIgnoreCase("calling edit_user")) {
+		else if(action.equalsIgnoreCase("calling edit_accounts")) {
 			DBConnector db=new DBConnector();
 			List<Object[]> memberlist = new ArrayList<Object[]>();
 			//memberlist=db.getAllMembers();
@@ -154,11 +162,15 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("edit_user")) {
 			
 			String user_type=request.getParameter("User Type");
+			u.setType(user_type);
 			int memID=Integer.parseInt(request.getParameter("Member ID"));
+			u.setMemId(memID);
 			String Name=request.getParameter("Name");
+			u.setName(Name);
 			String Email=request.getParameter("Email");
+			u.setEmail(Email);
 			DBConnector db=new DBConnector();
-			boolean save=db.editUser(memID,user_type,Name,Email);
+			boolean save=db.editUserDetails(u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
@@ -194,27 +206,28 @@ public class ControllerServlet extends HttpServlet {
 
 			
 		}
-		else if(action.equalsIgnoreCase("Current_Issues_Book_Admin")) {
+		else if(action.equalsIgnoreCase("calling_current_issues")) {
 			DBConnector db=new DBConnector();
-			int bookid=0; //get from jsp for individual books whose current issue needs to be seen
 			List<Object[]> getIssues = new ArrayList<Object[]>();
-			getIssues=db.getBookCurrentIssue(bookid);
+			getIssues=db.getAllBooksCurrentlyIssued();
 			request.setAttribute("getIssues",getIssues);//set list as attribute
-			request.getRequestDispatcher("individual-book-currentIssues.jsp").include(request, response);
+			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
 			
 		}
 		
 		else if(action.equalsIgnoreCase("View_History_Admin")) {
 			DBConnector db=new DBConnector();
-			int bookid=0; //get from jsp for individual books whose current issue needs to be seen
+			String bookid;
+			request.getAttribute(bookid);
+			int bookID=Integer.parseInt(bookid);
 			List<Object[]> getHistory = new ArrayList<Object[]>();
-			getHistory=db.getBookCurrentIssue(bookid);
+			getHistory=db.getBookIssueHistory(bookID);
 			request.setAttribute("getHistory",getHistory);//set list as attribute
-			request.getRequestDispatcher("individual-book-history.jsp").include(request, response);
+			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
 			
 		}
 		
-		else if(action.equalsIgnoreCase("Current_Issues_Book_User")) {
+		else if(action.equalsIgnoreCase("calling_view_your_books")) {
 			DBConnector db=new DBConnector();
 			int memberID=u.getMemId(); 
 			List<Object[]> getCIssues = new ArrayList<Object[]>();
@@ -227,22 +240,28 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("edit_details")) { //if user wants to change something
 			
 			int memID=Integer.parseInt(request.getParameter("Member ID"));
+			u.setMemId(memID);
 			String Name=request.getParameter("Name");
+			u.setName(Name);
 			String Email=request.getParameter("Email");
+			u.setEmail(Email);
 			String Password=request.getParameter("password");
+			u.setPassword(Password);
 			DBConnector db=new DBConnector();
-			/*boolean save=db.editDetails(memID,Name,Email,Password);
+			boolean save=db.editUserDetails(u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
-			}*/
+			}
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 		}
 		
 		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
 		{
 			int userID=u.getMemId();
-			int bookID=0; //will get as attribute from jsp
+			String bookid;
+			request.getAttribute(bookid);
+			int bookID=Integer.parseInt(bookid);
 			DBConnector db=new DBConnector();
 			boolean issue=db.borrowBook(userID,bookID);
 			if(issue==true)
@@ -259,7 +278,10 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("Return"))
 		{
 			int userID=u.getMemId();
-			int bookID=0; //will get as attribute from jsp
+			
+			String bookid;
+			request.getAttribute(bookid);
+			int bookID=Integer.parseInt(bookid);
 			DBConnector db=new DBConnector();
 			double fine=db.returnBook(userID,bookID);
 			if(fine>0)
