@@ -16,7 +16,7 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <h5>Viewing history for: <%=request.getAttribute("bookId")%></h5>
+  <h5>Viewing history for: <%=request.getAttribute("bookId")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
