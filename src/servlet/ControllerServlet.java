@@ -119,8 +119,15 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_edit_books")) {
 			DBConnector db=new DBConnector();
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			int user_id=currentuser.getMemId();
+			objectlist=db.browseBooks(user_id+"");
 			List<Book> booklist = new ArrayList<Book>();
-			booklist=db.browseBooks();
+			
+			for(int i=0;i<objectlist.size();i++) {		
+				Object []array=objectlist.get(i);
+				booklist.add((Book)array[0]);
+			}
 			request.setAttribute("book_list",booklist);//set list as attribute
 			
 			request.getRequestDispatcher("edit-books.jsp").include(request, response);
