@@ -123,6 +123,39 @@ public class DBConnector {
 		
 	}
 	
+	 List<Object[]> getAllBooksCurrentlyIssued(){
+		
+		List <Object[]> allBooks = new ArrayList<Object[]>();
+		Connection conn;
+		
+		try {
+			conn = dbUtil.getConnection();
+			String query = "SELECT * FROM currentlyIssued";			
+		    Statement st = conn.createStatement();	     	      
+		    ResultSet bookSet = st.executeQuery(query);
+		    
+		    while(bookSet.next()) {
+		    	
+		    	Object [] book = new Object[4];
+		    	book[0]=bookSet.getString("book_id");
+		    	book[1]=bookSet.getString("user_id");
+		    	book[2]=bookSet.getDate("issue_date");
+		    	book[3]=bookSet.getDate("return_date");
+		    	allBooks.add(book);
+
+		    }
+		    
+			conn.close();			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return allBooks;
+		
+		
+	}
+	
 	
 	List<Object[]> getBookIssueHistory(int book_id){
 		
@@ -406,7 +439,7 @@ public class DBConnector {
 			e.printStackTrace();
 			System.err.println("Got an exception in currentlyissued in dbconnector");
 		}
-		return false;
+		return -1;
 		
 	}
 	
