@@ -59,6 +59,14 @@ public class DBConnector {
 		return user;
 	}
 	
+	
+	
+	/**
+	 * This method returns all the books in the catalogue and enables
+	 * 
+	 * @param user_id user id of the current user in session
+	 * @return returns a List with each element as an Object[] where object[0]=book,object[1]= buttons[]
+	 */
 	public List<Object[]> browseBooks(String user_id) {
 		
 		Connection conn;
