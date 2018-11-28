@@ -1,5 +1,5 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,19 +29,19 @@
     
     
     </tr>
-    <%-- <c:forEach items="${users}" var="user"> --%>
+    <c:forEach items="${books}" var="book"> 
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
-                    <td><form id="view-history" action="" method="post">
+                    <td> <c:out value="${book.getTitle()}" /></td>
+                    <td><form id="view-history" action="ControllerServlet" method="post">
                     <input type="submit" value="View History"/>
-                    <input type="hidden" id="bookid" value=""/>
-                    <input type="hidden" id="action" value="view_history"/>
+                    <input type="hidden" id="bookid" value="${book.getid()}"/>
+                    <input type="hidden" id="action" value="calling_individual_view_history"/>
                     
                     </form>
                     </td>
                     
                 </tr>
-            <%-- </c:forEach> --%>
+           </c:forEach> 
    
         </tbody>
     </table>

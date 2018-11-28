@@ -1,5 +1,5 @@
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +16,7 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -24,20 +25,22 @@
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-5">Book Title</th>
+    <th class="col-md-5">Book ID</th>
     <th class="col-md-5">Member ID</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
     </tr>
-    <%-- <c:forEach items="${users}" var="user"> --%>
+    <c:forEach items="${allBooks}" var="bookList"> 
+    <c:forEach items="${bookList}" var="book"> 
                 <tr>
-                    <td><%-- <c:out value="${book.getTitle()}" /> --%>Book 1</td>
-                    <td>User 1</td>
-                    <td class="idate">2018-02-13</td>
-                    <td class="ddate">2018-02-12</td>
-                </tr>
-            <%-- </c:forEach> --%>
+                    <td><c:out value="${book[0]}" /></td>
+                    <td><c:out value="${book[1]}" /></td>
+                    <td class="idate"><c:out value="${book[2]}" /></td>
+                    <td class="ddate"><c:out value="${book[3]}" /></td>
+                </tr>  
+            </c:forEach>
+   </c:forEach>
    
         </tbody>
     </table>

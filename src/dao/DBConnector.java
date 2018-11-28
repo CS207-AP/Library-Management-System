@@ -50,9 +50,9 @@ public class DBConnector {
                     
                 	}
                 }
-            }
+            conn.close();
             
-         catch (SQLException e) {
+	}catch (SQLException e) {
             System.err.println("Got an exception in checkcredentials in dbconnector");
             System.err.println(e.getMessage());
         }
@@ -110,6 +110,8 @@ public class DBConnector {
 		    	  combinedList.add(array);
 		    	  
 		      }
+		      
+		      conn.close();
 		      
 		   	      
 		      
@@ -349,6 +351,8 @@ public class DBConnector {
 	        
 	        i = ps.executeUpdate();
 	        
+	        connection.close();
+	        
 	        
 		
 		} catch (SQLException e) {
@@ -381,8 +385,7 @@ public class DBConnector {
 	        ps.setInt(2, user_id);
 	        i = ps.executeUpdate();
 	        
-	        
-	        
+	        connection.close();
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -407,6 +410,8 @@ public class DBConnector {
 	        	return true;
 	        }
 	        
+	        conn.close();
+	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -416,6 +421,7 @@ public class DBConnector {
 		return false;
         
 	}
+	
 	
 	int posInWaitlist(int book_id,String user_id) {
 		
@@ -432,6 +438,7 @@ public class DBConnector {
 	        	if(rs.getString("user_id").equals(user_id)) return i;
 	        	
 	        }
+	        conn.close();
 	        
 	        
 		} catch (SQLException e) {
@@ -459,7 +466,7 @@ public class DBConnector {
 			ps = conn.prepareStatement("DELETE from books WHERE book_id = ?;");
 	        ps.setInt(1, bookId);
 	        x = ps.executeUpdate();
-	        
+	        conn.close(); 
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -494,6 +501,7 @@ public class DBConnector {
 	        ps = conn.prepareStatement("DELETE from currentlyIssued WHERE user_id = ?;");
 	        ps.setInt(1, user_id);
 	        x = ps.executeUpdate();
+	        conn.close();
 	       
 	        
 		} catch (SQLException e) {
@@ -504,18 +512,40 @@ public class DBConnector {
 		 return fine;
 	}
 
-	public boolean editUserDetails(User user) {
+	public boolean editUserDetails(User currentUser,User user) {
 		
 		Connection conn; 
 		try {
 			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=?");
-			ps.setString(1,user.getName());
-			ps.setString(2,user.getEmail());
-			ps.setString(3,user.getPassword());
-			ps.executeQuery();
-			return true;
+			
+			if(currentUser.getType().equals("admin")) {
+				
+				PreparedStatement ps;
+				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,type=? WHERE user_id=?");
+				ps.setString(1,user.getName());
+				ps.setString(2,user.getEmail());
+				ps.setString(3,user.getPassword());
+				ps.setString(4,user.getType());
+				ps.executeQuery();
+			
+				conn.close();
+				return true;
+				
+			}else {
+				PreparedStatement ps;
+				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=? WHERE user_id=?");
+				ps.setString(1,user.getName());
+				ps.setString(2,user.getEmail());
+				ps.setString(3,user.getPassword());
+				ps.setInt(4,user.getMemId());
+				ps.executeQuery();
+			
+				conn.close();
+				return true;
+				
+				
+			}
+			
 	        
 	        
 		} catch (SQLException e) {
@@ -544,6 +574,8 @@ public class DBConnector {
 	        ps.setInt(8, book.getAvailable());
 	        x = ps.executeUpdate();
 	        
+	        conn.close();
+	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -570,6 +602,8 @@ public class DBConnector {
 	       
 	        x = ps.executeUpdate();
 	        
+	        conn.close();
+	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -582,20 +616,24 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editBook(int user_id, String type, String email, String name, String password)
+	boolean editBook(Book book)
 	{
-		Connection conn; int x=0;
+		Connection conn;
+		int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE book_list SET user_type=?, user_email=?, user_name=?, user_password=? WHERE user_id=?;");
-	        ps.setString(1, type);
-	        ps.setString(2, email);
-	        ps.setString(3, name);
-	        ps.setString(4, password);
-	        ps.setInt(5, user_id);
+			ps = conn.prepareStatement("UPDATE books SET ISBN=?, title=?, author=?, publisher=?, genre=?, quantity=?,available=? WHERE user_id=?;");
+	        ps.setString(1,book.getISBN() );
+	        ps.setString(2, book.getTitle());
+	        ps.setString(3, book.getAuthor());
+	        ps.setString(4, book.getPublisher());
+	        ps.setString(5, book.getGenre());
+	        ps.setInt(6, book.getQuantity());
+	        ps.setInt(7, book.getAvailable());
 	        
 	        x = ps.executeUpdate();
+	        conn.close();
 	        
 	        
 		} catch (SQLException e) {
@@ -603,36 +641,50 @@ public class DBConnector {
 			e.printStackTrace();
 			System.err.println("Got an exception in editbook in dbconnector");
 		}
+		
 		if (x == 1) 
             return true;
          else 
             return false;
 	}
 	
-	public boolean editUser(int user_id,String user_type,String user_name, String user_email)
-	{
-		Connection conn; int x=0;
-		try {
-			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE users SET user_type=?,user_name=?,user_email=?  WHERE user_id=?;");
-	        ps.setString(1, user_type);
-	        ps.setString(2, user_name);
-	        ps.setString(3, user_email);
-	       // ps.setString(4, user_password); admin shouldnt change password. User should be allowed to do that
-	        ps.setInt(4, user_id);
-	        x = ps.executeUpdate();
-	        
-	        
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.err.println("Got an exception in editmember in dbconnector");
-		}
-		if (x == 1) 
-            return true;
-         else 
-            return false;
+	
+	List<User> getAllUsers(){
+		
+		List<User> users= new ArrayList<User>();
+		Connection conn;
+			try {
+				conn = dbUtil.getConnection();
+				
+			  String query = "SELECT * FROM users";		        
+		      Statement st = conn.createStatement();	     	      
+		      ResultSet userSet = st.executeQuery(query);		      
+		      
+		      while(userSet.next()) {
+		    	  User user = new User();
+		    	  
+		    	 user.setEmail(userSet.getString("user_email")); 
+		    	 user.setMemId(userSet.getInt("user_id")); 
+		    	 user.setName(userSet.getString("user_email")); 
+		    	 user.setPassword(userSet.getString("user_password")); 
+		    	 
+		    	 users.add(user);
+		    	  
+		      }
+		      
+		      conn.close();
+		      
+		      
+		      
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return users;
+			
+		
+		
 	}
 	
 	double calcFine(int user_id, int bookId) {
@@ -657,6 +709,7 @@ public class DBConnector {
 	        }
 	       
 	        x = ps.executeUpdate();
+	        conn.close();
 	        
 	        
 		} catch (SQLException e) {
