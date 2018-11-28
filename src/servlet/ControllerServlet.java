@@ -201,7 +201,7 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
-			String userid;
+			String userid ="";
 			request.getAttribute(userid);
 			int user_id=Integer.parseInt(userid);
 			DBConnector db=new DBConnector();
