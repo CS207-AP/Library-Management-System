@@ -187,7 +187,7 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
-			String bookid;
+			String bookid="";
 			request.getAttribute(bookid);
 			int book_id=Integer.parseInt(bookid); 
 			DBConnector db= new DBConnector();
@@ -229,7 +229,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_individual_book_history")) {
 			DBConnector db=new DBConnector();
-			String bookid;
+			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
 			List<Object[]> getHistory = new ArrayList<Object[]>();
@@ -271,7 +271,7 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
 		{
 			int userID=currentuser.getMemId();
-			String bookid;
+			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
 			DBConnector db=new DBConnector();
@@ -291,7 +291,7 @@ public class ControllerServlet extends HttpServlet {
 		{
 			int userID=currentuser.getMemId();
 			
-			String bookid;
+			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
 			DBConnector db=new DBConnector();
