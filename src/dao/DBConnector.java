@@ -200,7 +200,7 @@ public class DBConnector {
 		
 	}
 	
-	List<Object[]> getUserIssueHistory(String user_id){
+	public List<Object[]> getUserIssueHistory(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		

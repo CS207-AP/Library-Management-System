@@ -151,10 +151,10 @@ public class ControllerServlet extends HttpServlet {
 			book.setQuantity(quantity);
 			DBConnector db=new DBConnector();
 			boolean save=db.editBook(book);
-			if(save==true)
-			{
-				out.println("Edited Book Successfully");
-			}
+			//if(save==true)
+			//{
+			//	out.println("Edited Book Successfully");
+			//}
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 			
 		}
@@ -220,8 +220,14 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("calling_current_issues")) {
 			DBConnector db=new DBConnector();
-			List<Object[]> getIssues = new ArrayList<Object[]>();
-			getIssues=db.getAllBooksCurrentlyIssued();
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			objectlist=db.getAllBooksCurrentlyIssued();
+			List<Book> getIssues = new ArrayList<Book>();
+			
+			for(int i=0;i<objectlist.size();i++) {		
+				Object []array=objectlist.get(i);
+				getIssues.add((Book)array[0]);
+			}
 			request.setAttribute("getIssues",getIssues);//set list as attribute
 			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
 			
@@ -232,8 +238,14 @@ public class ControllerServlet extends HttpServlet {
 			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
-			List<Object[]> getHistory = new ArrayList<Object[]>();
-			getHistory=db.getBookIssueHistory(bookID);
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			objectlist=db.getBookIssueHistory(bookID);
+			List<Book> getHistory = new ArrayList<Book>();
+			
+			for(int i=0;i<objectlist.size();i++) {		
+				Object []array=objectlist.get(i);
+				getHistory.add((Book)array[0]);
+			}
 			request.setAttribute("getHistory",getHistory);//set list as attribute
 			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
 			
@@ -242,9 +254,25 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("calling_view_your_books")) {
 			DBConnector db=new DBConnector();
 			int memberID=currentuser.getMemId(); 
-			List<Object[]> getCIssues = new ArrayList<Object[]>();
-			getCIssues=db.getUserCurrentIssue(memberID);
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			objectlist=db.getUserCurrentIssue(memberID);
+			List<Book> getCIssues = new ArrayList<Book>();
+			
+			for(int i=0;i<objectlist.size();i++) {		
+				Object []array=objectlist.get(i);
+				getCIssues.add((Book)array[0]);
+			}
+			
 			request.setAttribute("getCIssues",getCIssues);//set list as attribute
+			List<Object[]> objectlist1 = new ArrayList<Object[]>();
+			objectlist1=db.getUserIssueHistory(memberID);
+			List<Book> getPIssues = new ArrayList<Book>();
+			
+			for(int i=0;i<objectlist1.size();i++) {		
+				Object []array=objectlist1.get(i);
+				getPIssues.add((Book)array[0]);
+			}
+			request.setAttribute("getPIssues",getPIssues);//set list as attribute
 			request.getRequestDispatcher("view_your_books.jsp").include(request, response);
 			
 		}
