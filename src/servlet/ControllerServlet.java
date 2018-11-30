@@ -296,6 +296,21 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
 		}
 		
+		else if(action.equalsIgnoreCase("calling_edit_your_details"))
+		{
+			int user_id=currentuser.getMemId();
+			request.setAttribute("userid", user_id);
+			String name=currentuser.getName();
+			request.setAttribute("name", name);
+			String email=currentuser.getEmail();
+			request.setAttribute("email", email);
+			String password=currentuser.getPassword();
+			request.setAttribute("password", password);
+			String type=currentuser.getType();
+			request.setAttribute("type",type);
+			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
+		}
+		
 		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
 		{
 			int userID=currentuser.getMemId();
