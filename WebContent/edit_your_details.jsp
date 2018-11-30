@@ -19,26 +19,24 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form id="create_user" class="" action="ControllerServlet" method="post">
+        
+          <form id="edit_details" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="name" placeholder="Aastha"> </div>
+                <input form="create_user" type="text" class="form-control" name="name" value=<%=request.getAttribute("name")%>> </div>
             </div>
-            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Type</label>
-              <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="type" placeholder="Member"> </div>
-            </div>
+            
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="email" placeholder="aastha@gmail.com"> </div>
+                <input form="create_user" type="text" class="form-control" name="email" value=<%=request.getAttribute("email")%>"> </div>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="create_user" type="password" class="form-control" id="password" placeholder="****"> </div>
+                <input form="create_user" type="password" class="form-control" name="password" placeholder="***"> </div>
             </div>
             
-            <input type="hidden" id="action" value="create_user"/>
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <input type="hidden" id="action" value="edit_your_details"/>
+            <button type="submit" class="btn btn-primary">Edit Details</button>
             
           </form>
           </div>
