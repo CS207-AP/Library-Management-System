@@ -200,6 +200,33 @@ public class DBConnector {
 		
 	}
 	
+	public User getUserDetails(int user_id) {
+		
+		Connection conn;
+	    User user= new User();
+		try {
+			conn = dbUtil.getConnection();
+			String query= "SELECT * FROM users WHERE user_id = "+user_id;
+			Statement st = conn.createStatement();
+		    ResultSet userSet = st.executeQuery(query);
+		    	
+		    user.setMemId(userSet.getInt("user_id"));
+		   	user.setType(userSet.getString("user_type"));
+		   	user.setName(userSet.getString("user_name"));
+	    	user.setEmail(userSet.getString("user_email"));		    		 
+	    	user.setPassword(userSet.getString("user_password"));		    		 
+	    	conn.close();			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return user;
+		
+	}
+	
+	
 	public List<Object[]> getUserIssueHistory(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -209,7 +236,7 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT FROM issueHistory WHERE user_id ="+user_id;			
+			String query = "SELECT * FROM issueHistory WHERE user_id ="+user_id;			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
@@ -217,8 +244,9 @@ public class DBConnector {
 		    	
 		    	Object [] issueData = new Object[3];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getDate("issue_date");
-		    	issueData[2]=userSet.getDate("return_date");
+		    	issueData[1]=userSet.getString("book_name");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("return_date");
 		    	issues.add(issueData);
 
 		    }
@@ -285,10 +313,10 @@ public class DBConnector {
 		    	
 		    	Object [] issueData = new Object[3];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getDate("issue_date");
-		    	issueData[2]=userSet.getDate("due_date");
+		    	issueData[1]=userSet.getString("book_name");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("due_date");
 		    	issues.add(issueData);
-		    	
 
 		    }
 			conn.close();			
@@ -520,26 +548,11 @@ public class DBConnector {
 		 return fine;
 	}
 
-	public boolean editUserDetails(User currentUser,User user) {
+	public boolean editUserDetails(User user) {
 		
 		Connection conn; 
 		try {
 			conn = dbUtil.getConnection();
-			
-			if(currentUser.getType().equals("admin")) {
-				
-				PreparedStatement ps;
-				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,type=? WHERE user_id=?");
-				ps.setString(1,user.getName());
-				ps.setString(2,user.getEmail());
-				ps.setString(3,user.getPassword());
-				ps.setString(4,user.getType());
-				ps.executeQuery();
-			
-				conn.close();
-				return true;
-				
-			}else {
 				PreparedStatement ps;
 				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=? WHERE user_id=?");
 				ps.setString(1,user.getName());
@@ -547,14 +560,8 @@ public class DBConnector {
 				ps.setString(3,user.getPassword());
 				ps.setInt(4,user.getMemId());
 				ps.executeQuery();
-			
 				conn.close();
 				return true;
-				
-				
-			}
-			
-	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
