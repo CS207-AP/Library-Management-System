@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,8 +56,30 @@ public class ControllerServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		// form id="login_form", email id="login_email", password id="login_password"
 		String action = request.getParameter("action");
-		
-		if(action.equalsIgnoreCase("create_book"))
+		if(action.equalsIgnoreCase("login"))
+		{
+			 String email = request.getParameter("login_email"); 
+		     String pass = request.getParameter("login_password");
+		     User obj = mydbConnect.checkCredentials(email, pass);
+	        	if (obj==null)
+	        	{
+	           //out.println("Username or Password is incorrect");
+	           request.setAttribute("loginResult", true);
+	           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); 
+	           rs.include(request, response);
+	           }
+	        	else
+	        	{   u=obj;
+	        		String type=obj.getType();
+	        		request.setAttribute("memberid", obj.getMemId());
+	        		if(type.equalsIgnoreCase("admin"));
+	        		RequestDispatcher rs = request.getRequestDispatcher("admin_login.jsp");
+	        		rs.forward(request, response);
+	        		rs = request.getRequestDispatcher("member_login.jsp");
+	        		rs.forward(request, response);
+	        	}
+		}
+		else if(action.equalsIgnoreCase("create_book"))
 		{
 			book.setTitle(request.getParameter("title"));
 			String author=request.getParameter("author");
