@@ -67,7 +67,7 @@ public class DBConnector {
 	 * @param user_id user id of the current user in session
 	 * @return returns a List with each element as an Object[] where object[0]=book,object[1]= buttons[]
 	 */
-	public List<Object[]> browseBooks(String user_id) {
+	public List<Object[]> browseBooks(int user_id) {
 		
 		Connection conn;
 		List<Object[]> combinedList= new ArrayList<Object[]>();
@@ -146,11 +146,12 @@ public class DBConnector {
 		    
 		    while(bookSet.next()) {
 		    	
-		    	Object [] book = new Object[4];
+		    	Object [] book = new Object[5];
 		    	book[0]=bookSet.getString("book_id");
 		    	book[1]=bookSet.getString("user_id");
-		    	book[2]=bookSet.getDate("issue_date");
-		    	book[3]=bookSet.getDate("return_date");
+		    	book[2]=bookSet.getString("book_name");
+		    	book[3]=bookSet.getDate("issue_date");
+		    	book[4]=bookSet.getDate("return_date");
 		    	allBooks.add(book);
 
 		    }
@@ -329,12 +330,49 @@ public class DBConnector {
 		
 	}
 	
+	List<Book> getAllBooks(){
+		
+		Connection conn;
+		List<Book> combinedList= new ArrayList<Book>();
+		try {
+			conn = dbUtil.getConnection();
+			
+			  String query = "SELECT * FROM books";		        
+		      Statement st = conn.createStatement();	     	      
+		      ResultSet bookSet = st.executeQuery(query);		      
+		      
+		      while(bookSet.next()) {
+		    	  
+		    	  Book book = new Book();
+		    	  book.setTitle(bookSet.getString("book_title"));
+		    	  book.setAuthor(bookSet.getString("book_author"));
+		    	  book.setAvailable(bookSet.getInt("book_available"));
+		    	  book.setQuantity(bookSet.getInt("book_quantity"));
+		    	  book.setGenre(bookSet.getString("book_genre"));
+		    	  book.setid(bookSet.getInt("book_id"));
+		    	  book.setISBN(bookSet.getString("book_ISBN"));
+		    	  book.setPublisher(bookSet.getString("book_publisher"));
+		    	  combinedList.add(book);
+		    	  
+		      }
+		      
+		      conn.close();
+		      
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Error while getting books");
+			e.printStackTrace();
+		}
+		return combinedList;
 	
+	}
+		
+		
 	
 	
 	List<Book> searchBook(Book toSearch){
 		
-		List<Book> books = browseBooks();
+		List<Book> books = getAllBooks();;
 		List<Book> matchingBooks= new ArrayList<Book>();
 		int size = books.size();
 		
@@ -431,7 +469,7 @@ public class DBConnector {
 		return calcFine(user_id, bookId);
 	}
 	
-	boolean hasIssuedThisBook(int book_id, String user_id)
+	boolean hasIssuedThisBook(int book_id, int user_id)
 	{
 		Connection conn;
 		try {
@@ -439,7 +477,7 @@ public class DBConnector {
 			PreparedStatement ps;
 			ps = conn.prepareStatement("SELECT book_id, user_Id, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
 	        ps.setInt(1, book_id);
-	        ps.setString(2, user_id);
+	        ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        while(rs.next())
 	        {
@@ -459,7 +497,7 @@ public class DBConnector {
 	}
 	
 	
-	int posInWaitlist(int book_id,String user_id) {
+	int posInWaitlist(int book_id,int user_id) {
 		
 		Connection conn;
 		try {
@@ -467,7 +505,7 @@ public class DBConnector {
 			PreparedStatement ps;
 			ps = conn.prepareStatement("SELECT * FROM waitlist WHERE book_id = ?");
 	        ps.setInt(1, book_id);
-	        ps.setString(2, user_id);
+	        ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        for(int i=0;rs.next();i++)
 	        {
