@@ -133,7 +133,7 @@ public class DBConnector {
 		
 	}
 	
-	 List<Object[]> getAllBooksCurrentlyIssued(){
+	 public List<Object[]> getAllBooksCurrentlyIssued(){
 		
 		List <Object[]> allBooks = new ArrayList<Object[]>();
 		Connection conn;
@@ -167,7 +167,7 @@ public class DBConnector {
 	}
 	
 	
-	List<Object[]> getBookIssueHistory(int book_id){
+	public List<Object[]> getBookIssueHistory(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -200,7 +200,7 @@ public class DBConnector {
 		
 	}
 	
-	List<Object[]> getUserIssueHistory(String user_id){
+	public List<Object[]> getUserIssueHistory(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
 		
@@ -624,7 +624,7 @@ public class DBConnector {
             return false;
 	}
 	
-	boolean editBook(Book book)
+	public boolean editBook(Book book)
 	{
 		Connection conn;
 		int x=0;
@@ -657,7 +657,7 @@ public class DBConnector {
 	}
 	
 	
-	List<User> getAllUsers(){
+	public List<User> getAllUsers(){
 		
 		List<User> users= new ArrayList<User>();
 		Connection conn;

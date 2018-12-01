@@ -18,7 +18,7 @@ import objects.User;
  */
 @WebServlet("/UserServlet")
 public class LoginServlet extends HttpServlet {
-	User login=new User();
+	 static User login=new User();
 	private static final long serialVersionUID = 1L;
        
     /**
