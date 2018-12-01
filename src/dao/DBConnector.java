@@ -217,8 +217,9 @@ public class DBConnector {
 		    	
 		    	Object [] issueData = new Object[3];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getDate("issue_date");
-		    	issueData[2]=userSet.getDate("return_date");
+		    	issueData[1]=userSet.getString("book_name");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("return_date");
 		    	issues.add(issueData);
 
 		    }
@@ -285,10 +286,10 @@ public class DBConnector {
 		    	
 		    	Object [] issueData = new Object[3];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getDate("issue_date");
-		    	issueData[2]=userSet.getDate("due_date");
+		    	issueData[1]=userSet.getString("book_name");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("due_date");
 		    	issues.add(issueData);
-		    	
 
 		    }
 			conn.close();			
