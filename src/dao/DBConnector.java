@@ -520,26 +520,11 @@ public class DBConnector {
 		 return fine;
 	}
 
-	public boolean editUserDetails(User currentUser,User user) {
+	public boolean editUserDetails(User user) {
 		
 		Connection conn; 
 		try {
 			conn = dbUtil.getConnection();
-			
-			if(currentUser.getType().equals("admin")) {
-				
-				PreparedStatement ps;
-				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,type=? WHERE user_id=?");
-				ps.setString(1,user.getName());
-				ps.setString(2,user.getEmail());
-				ps.setString(3,user.getPassword());
-				ps.setString(4,user.getType());
-				ps.executeQuery();
-			
-				conn.close();
-				return true;
-				
-			}else {
 				PreparedStatement ps;
 				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=? WHERE user_id=?");
 				ps.setString(1,user.getName());
@@ -547,14 +532,8 @@ public class DBConnector {
 				ps.setString(3,user.getPassword());
 				ps.setInt(4,user.getMemId());
 				ps.executeQuery();
-			
 				conn.close();
 				return true;
-				
-				
-			}
-			
-	        
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
