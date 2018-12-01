@@ -200,6 +200,33 @@ public class DBConnector {
 		
 	}
 	
+	public User getUserDetails(int user_id) {
+		
+		Connection conn;
+	    User user= new User();
+		try {
+			conn = dbUtil.getConnection();
+			String query= "SELECT * FROM users WHERE user_id = "+user_id;
+			Statement st = conn.createStatement();
+		    ResultSet userSet = st.executeQuery(query);
+		    	
+		    user.setMemId(userSet.getInt("user_id"));
+		   	user.setType(userSet.getString("user_type"));
+		   	user.setName(userSet.getString("user_name"));
+	    	user.setEmail(userSet.getString("user_email"));		    		 
+	    	user.setPassword(userSet.getString("user_password"));		    		 
+	    	conn.close();			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return user;
+		
+	}
+	
+	
 	public List<Object[]> getUserIssueHistory(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -209,7 +236,7 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT FROM issueHistory WHERE user_id ="+user_id;			
+			String query = "SELECT * FROM issueHistory WHERE user_id ="+user_id;			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
