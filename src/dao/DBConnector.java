@@ -330,7 +330,7 @@ public class DBConnector {
 		
 	}
 	
-	List<Book> getAllBooks(){
+	public List<Book> getAllBooks(){
 		
 		Connection conn;
 		List<Book> combinedList= new ArrayList<Book>();
