@@ -11,7 +11,7 @@
 
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="admin_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
@@ -26,7 +26,9 @@
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Type</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="type" placeholder="Member"> </div>
+                <input form="create_user" type="radio" class="form-control" name="type" id="type" value="admin">Admin<br></div>
+                <div class="col-10">
+                <input form="create_user" type="radio" class="form-control" name="type" id="type" value="member">Regular Member<br></div>
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">

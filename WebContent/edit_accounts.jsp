@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn"      uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,10 +21,11 @@ input[type="submit"]{
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="admin_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  <div class="col-md-12"><a class="btn btn-link" href="create_accounts.jsp" style="float: right;">Create Accounts</a></div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     

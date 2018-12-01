@@ -117,18 +117,19 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("create_user"))
 		{
+			User obj = new User();
 			String user_type=request.getParameter("User Type");
-			u.setType(user_type);
+			obj.setType(user_type);
 			String Name=request.getParameter("Name");
-			u.setName(Name);
+			obj.setName(Name);
 			String Email=request.getParameter("Email");
-			u.setEmail(Email);
+			obj.setEmail(Email);
 			String Password=request.getParameter("Password");
-			u.setPassword(Password);
+			obj.setPassword(Password);
 			DBConnector db=new DBConnector();
 			try {
 			boolean save;
-			save=db.addUser(u);
+			save=db.addUser(obj);
 			if(save==true)
 			{
 			out.println("Member added successfully");
@@ -143,7 +144,7 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("calling_edit_books")) {
 			DBConnector db=new DBConnector();
 			List<Object[]> objectlist = new ArrayList<Object[]>();
-			int user_id=currentuser.getMemId();
+			int user_id=u.getMemId();
 			objectlist=db.browseBooks(user_id+"");
 			List<Book> booklist = new ArrayList<Book>();
 			
@@ -153,65 +154,63 @@ public class ControllerServlet extends HttpServlet {
 			}
 			request.setAttribute("book_list",booklist);//set list as attribute
 			
-			request.getRequestDispatcher("edit-books.jsp").include(request, response);
+			request.getRequestDispatcher("edit_books.jsp").include(request, response);
 			
 		}
 		else if(action.equalsIgnoreCase("edit_book")) {
 			
-			int book_ID=Integer.parseInt(request.getParameter("BOOK ID"));
+			int book_ID=Integer.parseInt(request.getParameter("id"));
 			book.setid(book_ID);
-			String Title=request.getParameter("Title");
+			String Title=request.getParameter("title");
 			book.setTitle(Title);
-			String Author=request.getParameter("Author");
+			String Author=request.getParameter("author");
 			book.setAuthor(Author);
-			String ISBN=request.getParameter("ISBN");
+			String ISBN=request.getParameter("isbn");
 			book.setISBN(ISBN);
-			String Publisher=request.getParameter("Publisher");
+			String Publisher=request.getParameter("publisher");
 			book.setPublisher(Publisher);
-			String Genre=request.getParameter("Genre");
+			String Genre=request.getParameter("genre");
 			book.setGenre(Genre);
-			int quantity=Integer.parseInt(request.getParameter("Quantity"));
+			int quantity=Integer.parseInt(request.getParameter("copies"));
 			book.setQuantity(quantity);
 			DBConnector db=new DBConnector();
 			boolean save=db.editBook(book);
-			//if(save==true)
-			//{
-			//	out.println("Edited Book Successfully");
-			//}
-			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			if(save==true)
+			{
+				out.println("Edited Book Successfully");
+			}
+			request.getRequestDispatcher("edit_books.jsp").include(request, response); //wherever it has to get redirected.
 			
 		}
-		else if(action.equalsIgnoreCase("calling edit_accounts")) {
+		else if(action.equalsIgnoreCase("calling_edit_accounts")) {
 			DBConnector db=new DBConnector();
 			List<User> memberlist= new ArrayList<User>();
 			memberlist=db.getAllUsers();
-			request.setAttribute("Member_list",memberlist);//set list as attribute
+			request.setAttribute("users",memberlist);//set list as attribute
 			
-			request.getRequestDispatcher("edit-user.jsp").include(request, response);
+			request.getRequestDispatcher("edit_user.jsp").include(request, response);
 		}
 		
 		else if(action.equalsIgnoreCase("edit_user")) {
-			
-			String user_type=request.getParameter("User Type");
-			u.setType(user_type);
-			int memID=Integer.parseInt(request.getParameter("Member ID"));
-			u.setMemId(memID);
-			String Name=request.getParameter("Name");
-			u.setName(Name);
-			String Email=request.getParameter("Email");
-			u.setEmail(Email);
+			User userToEdit = getUserDetails(request.getParameter("member-id"));
+			String user_type=request.getParameter("member-type");
+			userToEdit.setType(user_type);
+			String Name=request.getParameter("member-name");
+			userToEdit.setName(Name);
+			String Email=request.getParameter("member-email");
+			userToEdit.setEmail(Email);
 			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(currentuser,u);
+			boolean save=db.editUserDetails(userToEdit);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
 			}
-			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
 			String bookid="";
-			request.getAttribute(bookid);
+			bookid = request.getParameter("bookId");
 			int book_id=Integer.parseInt(bookid); 
 			DBConnector db= new DBConnector();
 			boolean remove=db.deleteBook(book_id);
@@ -220,12 +219,12 @@ public class ControllerServlet extends HttpServlet {
 				out.println("BOOK DELETED SUCCESSFULLY!");
 			}
 			
-			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("edit_books.jsp").include(request, response); //wherever it has to get redirected.
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
 			String userid ="";
-			request.getAttribute(userid);
+			userid = request.getParameter("memId");
 			int user_id=Integer.parseInt(userid);
 			DBConnector db=new DBConnector();
 			double delete=db.deleteMember(user_id);
@@ -237,7 +236,7 @@ public class ControllerServlet extends HttpServlet {
 			{
 				out.println("Removed User from Database.");
 			}
-			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 
 			
 		}
@@ -276,7 +275,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_view_your_books")) {
 			DBConnector db=new DBConnector();
-			int memberID=currentuser.getMemId(); 
+			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=db.getUserCurrentIssue(memberID);
 			List<Book> getCIssues = new ArrayList<Book>();
@@ -300,37 +299,37 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		
-		else if(action.equalsIgnoreCase("edit_details")) { //if user wants to change something
+		else if(action.equalsIgnoreCase("edit_your_details")) { //if user wants to change something
 			
-			int memID=Integer.parseInt(request.getParameter("Member ID"));
-			u.setMemId(memID);
-			String Name=request.getParameter("Name");
+//			int memID=Integer.parseInt(request.getParameter("Member ID"));
+//			u.setMemId(memID);
+			String Name=request.getParameter("name");
 			u.setName(Name);
-			String Email=request.getParameter("Email");
+			String Email=request.getParameter("email");
 			u.setEmail(Email);
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
 			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(currentuser,u);
+			boolean save=db.editUserDetails(u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
 			}
-			request.getRequestDispatcher("next page").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("member_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
 		
 		else if(action.equalsIgnoreCase("calling_edit_your_details"))
 		{
-			int user_id=currentuser.getMemId();
-			request.setAttribute("userid", user_id);
-			String name=currentuser.getName();
+			//int user_id=currentuser.getMemId();
+			//request.setAttribute("userid", user_id);
+			String name=u.getName();
 			request.setAttribute("name", name);
-			String email=currentuser.getEmail();
+			String email=u.getEmail();
 			request.setAttribute("email", email);
-			String password=currentuser.getPassword();
-			request.setAttribute("password", password);
-			String type=currentuser.getType();
-			request.setAttribute("type",type);
+			//String password=currentuser.getPassword();
+			//request.setAttribute("password", password);
+			//String type=currentuser.getType();
+			//request.setAttribute("type",type);
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		

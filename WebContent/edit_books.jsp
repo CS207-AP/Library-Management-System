@@ -12,10 +12,11 @@
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="admin_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  <div class="col-md-12"><a class="btn btn-link" href="create_book.jsp" style="float: right;">Create Book</a></div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -30,7 +31,7 @@
     <th class="text-center">Edit</th>
     <th class="text-center">Delete</th>
     </tr>
-    <c:forEach items="${books}" var="book">
+    <c:forEach items="${book_list}" var="book">
                 <tr>
                     <td><c:out value="${book.getTitle()}" /></td>
                     <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#editBook" data-book-id="${book.getid()}" data-book-title="${book.getTitle()}" data-book-isbn="${book.getISBN()}" data-book-author="${book.getAuthor()}" data-book-genre="${book.getGenre()}" data-book-publisher="${book.getPublisher()}" data-book-copies="${book.getQuantity()}" >Edit</button></td>

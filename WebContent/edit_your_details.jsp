@@ -11,7 +11,7 @@
 
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="member_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
