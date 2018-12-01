@@ -244,31 +244,53 @@ public class ControllerServlet extends HttpServlet {
 			DBConnector db=new DBConnector();
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=db.getAllBooksCurrentlyIssued();
-			List<Book> getIssues = new ArrayList<Book>();
-			
-			for(int i=0;i<objectlist.size();i++) {		
-				Object []array=objectlist.get(i);
-				getIssues.add((Book)array[0]);
-			}
-			request.setAttribute("getIssues",getIssues);//set list as attribute
+//			List<Book> getIssues = new ArrayList<Book>();
+//			
+//			for(int i=0;i<objectlist.size();i++) {		
+//				Object []array=objectlist.get(i);
+//				getIssues.add((Book)array[0]);
+//			}
+			request.setAttribute("currentIssues",objectlist);//set list as attribute
 			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
 			
 		}
+		else if(action.equalsIgnoreCase("calling_past_issues")) {
+			DBConnector db=new DBConnector();
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			objectlist=db.getAllBooksCurrentlyIssued();
+			
+			List<Object[]> allObjects=db.browseBooks(user_id);
+			List<Book> allBooks=new ArrayList<Book>();
+			
+			for(int i=0;i<allObjects.size();i++) {
+				
+				Object [] object=allObjects.get(i);
+				Book book = new Book();
+				
+				book=(Book)object[0];
+				allBooks.add(book);
+			}
+			
+			request.setAttribute("books",allBooks);//set list as attribute
+			request.getRequestDispatcher("view_history.jsp").include(request, response);
+			
+		}
 		
-		else if(action.equalsIgnoreCase("calling_individual_book_history")) {
+		else if(action.equalsIgnoreCase("calling_individual_view_history")) {
 			DBConnector db=new DBConnector();
 			String bookid="";
-			request.getAttribute(bookid);
+			bookid = request.getParameter("bookid");
 			int bookID=Integer.parseInt(bookid);
-			List<Object[]> objectlist = new ArrayList<Object[]>();
-			objectlist=db.getBookIssueHistory(bookID);
-			List<Book> getHistory = new ArrayList<Book>();
-			
-			for(int i=0;i<objectlist.size();i++) {		
-				Object []array=objectlist.get(i);
-				getHistory.add((Book)array[0]);
-			}
-			request.setAttribute("getHistory",getHistory);//set list as attribute
+			List<Object[]> issues = new ArrayList<Object[]>();
+			issues=db.getBookIssueHistory(bookID);
+//			List<Book> getHistorey = new ArrayList<Book>();
+//			
+//			for(int i=0;i<objectlist.size();i++) {		
+//				Object []array=objectlist.get(i);
+//				getHistory.add((Book)array[0]);
+//			}
+			request.setAttribute("bookId", bookid);
+			request.setAttribute("history",issues);//set list as attribute
 			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
 			
 		}
@@ -278,23 +300,23 @@ public class ControllerServlet extends HttpServlet {
 			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=db.getUserCurrentIssue(memberID);
-			List<Book> getCIssues = new ArrayList<Book>();
+//			List<Book> getCIssues = new ArrayList<Book>();
+//			
+//			for(int i=0;i<objectlist.size();i++) {		
+//				Object []array=objectlist.get(i);
+//				getCIssues.add((Book)array[0]);
+//			}
 			
-			for(int i=0;i<objectlist.size();i++) {		
-				Object []array=objectlist.get(i);
-				getCIssues.add((Book)array[0]);
-			}
-			
-			request.setAttribute("getCIssues",getCIssues);//set list as attribute
+			request.setAttribute("current_issues",objectlist);//set list as attribute
 			List<Object[]> objectlist1 = new ArrayList<Object[]>();
 			objectlist1=db.getUserIssueHistory(memberID);
-			List<Book> getPIssues = new ArrayList<Book>();
-			
-			for(int i=0;i<objectlist1.size();i++) {		
-				Object []array=objectlist1.get(i);
-				getPIssues.add((Book)array[0]);
-			}
-			request.setAttribute("getPIssues",getPIssues);//set list as attribute
+//			List<Book> getPIssues = new ArrayList<Book>();
+//			
+//			for(int i=0;i<objectlist1.size();i++) {		
+//				Object []array=objectlist1.get(i);
+//				getPIssues.add((Book)array[0]);
+//			}
+			request.setAttribute("past_issues",objectlist1);//set list as attribute
 			request.getRequestDispatcher("view_your_books.jsp").include(request, response);
 			
 		}
