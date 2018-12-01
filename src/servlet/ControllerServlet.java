@@ -143,15 +143,15 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_edit_books")) {
 			DBConnector db=new DBConnector();
-			List<Object[]> objectlist = new ArrayList<Object[]>();
-			int user_id=u.getMemId();
-			objectlist=db.browseBooks(user_id+"");
+//			List<Object[]> objectlist = new ArrayList<Object[]>();
+//			int user_id=u.getMemId();
+//			objectlist=db.browseBooks(user_id+"");
 			List<Book> booklist = new ArrayList<Book>();
-			
-			for(int i=0;i<objectlist.size();i++) {		
-				Object []array=objectlist.get(i);
-				booklist.add((Book)array[0]);
-			}
+			booklist = db.getAllBooks();
+//			for(int i=0;i<objectlist.size();i++) {		
+//				Object []array=objectlist.get(i);
+//				booklist.add((Book)array[0]);
+//			}
 			request.setAttribute("book_list",booklist);//set list as attribute
 			
 			request.getRequestDispatcher("edit_books.jsp").include(request, response);
@@ -256,20 +256,22 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("calling_past_issues")) {
 			DBConnector db=new DBConnector();
-			List<Object[]> objectlist = new ArrayList<Object[]>();
-			objectlist=db.getAllBooksCurrentlyIssued();
-			
-			List<Object[]> allObjects=db.browseBooks(1);
+//			List<Object[]> objectlist = new ArrayList<Object[]>();
+//			objectlist=db.getAllBooksCurrentlyIssued();
+//			
+//			List<Object[]> allObjects=db.browseBooks(1);
 			List<Book> allBooks=new ArrayList<Book>();
+			allBooks = db.getAllBooks();
+//			
+//			for(int i=0;i<allObjects.size();i++) {
+//				
+//				Object [] object=allObjects.get(i);
+//				Book book = new Book();
+//				
+//				book=(Book)object[0];
+//				allBooks.add(book);
+//			}
 			
-			for(int i=0;i<allObjects.size();i++) {
-				
-				Object [] object=allObjects.get(i);
-				Book book = new Book();
-				
-				book=(Book)object[0];
-				allBooks.add(book);
-			}
 			
 			request.setAttribute("books",allBooks);//set list as attribute
 			request.getRequestDispatcher("view_history.jsp").include(request, response);
