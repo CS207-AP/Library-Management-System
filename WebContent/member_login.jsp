@@ -14,6 +14,7 @@
         <b> Library Management System</b>
       </a> </div>
   </nav>
+  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
   <div class="py-3">
     <div class="container">
       <div class="row">

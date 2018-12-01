@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/theme.css" type="text/css">
+  <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
 </head>
 
@@ -37,6 +37,7 @@
                 <input form="login_form" type="password" class="form-control" id="login_password" placeholder="Password"> </div>
             </div>
             <input type="hidden" id="action" value="login"/>
+           
             <button type="submit" class="btn btn-primary">Submit</button>
             
           </form>

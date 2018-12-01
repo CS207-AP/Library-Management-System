@@ -16,7 +16,8 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><a class="btn btn-link" href="create_book.jsp" style="float: right;">Create Book</a></div>
+  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <div class="col-md-12"><a class="btn btn-link" href="create_book.jsp" style="float: right;">Order Books</a></div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -39,11 +40,6 @@
                 </tr>
              </c:forEach> 
    
-    <tr>
-    <td><a href="#"></a></td>
-    <td><a href="#" class="btn btn-link">Edit</a></td>
-    <td>Delete</td>
-    </tr>
     </tbody>
     </table>
     <div class="modal fade" id="editBook" role="dialog">

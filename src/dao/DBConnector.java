@@ -568,9 +568,10 @@ public class DBConnector {
 	        //int bookId = rs.getInt(1);
 	        if(rs.next()) {
 	        	PreparedStatement ps2 = conn.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?;");
-	        	ps2.setInt(1, rs.getInt(1));
+	        	int id = rs.getInt(1);
+	        	ps2.setInt(1, id);
 	        	ps2.executeUpdate();
-	            fine = calcFine(user_id, rs.getInt(1));
+	            fine = calcFine(user_id, id);
 	        }
 	        ps = conn.prepareStatement("DELETE from currentlyIssued WHERE user_id = ?;");
 	        ps.setInt(1, user_id);

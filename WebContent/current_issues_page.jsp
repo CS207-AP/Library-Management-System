@@ -16,6 +16,7 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
   
   <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -25,19 +26,21 @@
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-5">Book ID</th>
-    <th class="col-md-5">Member ID</th>
+    <th class="col-md-3">Book ID</th>
+    <th class="col-md-3">Member ID</th>
+    <th class="col-md-3">Book Title</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
     </tr>
-    <c:forEach items="${allBooks}" var="bookList"> 
-    <c:forEach items="${bookList}" var="book"> 
+    <c:forEach items="${currentIssues}" var="books"> 
+    <c:forEach items="${books}" var="book"> 
                 <tr>
                     <td><c:out value="${book[0]}" /></td>
                     <td><c:out value="${book[1]}" /></td>
-                    <td class="idate"><c:out value="${book[2]}" /></td>
-                    <td class="ddate"><c:out value="${book[3]}" /></td>
+                    <td><c:out value="${book[2]}" /></td>
+                    <td class="idate"><c:out value="${book[3]}" /></td>
+                    <td class="ddate"><c:out value="${book[4]}" /></td>
                 </tr>  
             </c:forEach>
    </c:forEach>

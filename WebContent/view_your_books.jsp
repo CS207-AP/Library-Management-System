@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,41 +12,70 @@
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="member_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
   <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
-    
+    <h5>Current Issues:</h5>
     </thead>
     <tbody>
     <tr>
  
-  
-    <th class="col-md-10">Book Title</th>
-    <th class="col-md-5"></th>
-    
-    
+    <!-- You can adjust the width of table columns as well -->
+    <th class="col-md-2">Book ID</th>
+   
+    <th class="col-md-5">Book Title</th>
+    <!-- Use text alignment like text-center or text-right -->
+    <th class="text-center">Issue Date</th>
+    <th class="text-center">Due Date</th>
     </tr>
+    <c:forEach items="${objectlist}" var="books"> 
     <c:forEach items="${books}" var="book"> 
                 <tr>
-                    <td> <c:out value="${book.getTitle()}" /></td>
-                    <td><form id="view-history" action="ControllerServlet" method="post">
-                    <input type="submit" value="View History"/>
-                    <input type="hidden" id="booktitle" value="${book.getTitle()}"/>
-                    <input type="hidden" id="bookid" value="${book.getid()}"/>
-                    <input type="hidden" id="action" value="calling_individual_view_history"/>
-                    
-                    </form>
-                    </td>
-                    
-                </tr>
-           </c:forEach> 
+                    <td><c:out value="${book[0]}" /></td>
+                   
+                    <td><c:out value="${book[2]}" /></td>
+                    <td class="idate"><c:out value="${book[3]}" /></td>
+                    <td class="ddate"><c:out value="${book[4]}" /></td>
+                </tr>  
+            </c:forEach>
+   </c:forEach>
    
         </tbody>
     </table>
+    <table class="table table-bordered table-striped table-hover">
+    <thead>
+    <h5>Past Issues:</h5>
+    </thead>
+    <tbody>
+    <tr>
+ 
+    <!-- You can adjust the width of table columns as well -->
+    <th class="col-md-2">Book ID</th>
+    
+    <th class="col-md-5">Book Title</th>
+    <!-- Use text alignment like text-center or text-right -->
+    <th class="text-center">Issue Date</th>
+    <th class="text-center">Due Date</th>
+    </tr>
+    <c:forEach items="${objectlist1}" var="books"> 
+    <c:forEach items="${books}" var="book"> 
+                <tr>
+                    <td><c:out value="${book[0]}" /></td>
+                    
+                    <td><c:out value="${book[2]}" /></td>
+                    <td class="idate"><c:out value="${book[3]}" /></td>
+                    <td class="ddate"><c:out value="${book[4]}" /></td>
+                </tr>  
+            </c:forEach>
+   </c:forEach>
+   
+        </tbody>
+    </table>
+    
     
        
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

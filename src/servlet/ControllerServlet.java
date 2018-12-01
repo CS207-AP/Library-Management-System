@@ -101,9 +101,9 @@ public class ControllerServlet extends HttpServlet {
 			int available=Integer.parseInt(savailable);
 			book.setAvailable(available);
 			
-			DBConnector db=new DBConnector();
+			
 			try {
-			boolean save=db.addBook(book);
+			boolean save=mydbConnect.addBook(book);
 			if(save==true)
 			{
 				out.println("Book Added Successfully");
@@ -126,10 +126,10 @@ public class ControllerServlet extends HttpServlet {
 			obj.setEmail(Email);
 			String Password=request.getParameter("Password");
 			obj.setPassword(Password);
-			DBConnector db=new DBConnector();
+			
 			try {
 			boolean save;
-			save=db.addUser(obj);
+			save=mydbConnect.addUser(obj);
 			if(save==true)
 			{
 			out.println("Member added successfully");
@@ -142,12 +142,12 @@ public class ControllerServlet extends HttpServlet {
 		}
 		
 		else if(action.equalsIgnoreCase("calling_edit_books")) {
-			DBConnector db=new DBConnector();
+			
 //			List<Object[]> objectlist = new ArrayList<Object[]>();
 //			int user_id=u.getMemId();
-//			objectlist=db.browseBooks(user_id+"");
+//			objectlist=mydbConnect.browseBooks(user_id+"");
 			List<Book> booklist = new ArrayList<Book>();
-			booklist = db.getAllBooks();
+			booklist = mydbConnect.getAllBooks();
 //			for(int i=0;i<objectlist.size();i++) {		
 //				Object []array=objectlist.get(i);
 //				booklist.add((Book)array[0]);
@@ -173,8 +173,8 @@ public class ControllerServlet extends HttpServlet {
 			book.setGenre(Genre);
 			int quantity=Integer.parseInt(request.getParameter("copies"));
 			book.setQuantity(quantity);
-			DBConnector db=new DBConnector();
-			boolean save=db.editBook(book);
+			
+			boolean save=mydbConnect.editBook(book);
 			if(save==true)
 			{
 				out.println("Edited Book Successfully");
@@ -183,9 +183,9 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		else if(action.equalsIgnoreCase("calling_edit_accounts")) {
-			DBConnector db=new DBConnector();
+			
 			List<User> memberlist= new ArrayList<User>();
-			memberlist=db.getAllUsers();
+			memberlist=mydbConnect.getAllUsers();
 			request.setAttribute("users",memberlist);//set list as attribute
 			
 			request.getRequestDispatcher("edit_user.jsp").include(request, response);
@@ -199,8 +199,8 @@ public class ControllerServlet extends HttpServlet {
 			userToEdit.setName(Name);
 			String Email=request.getParameter("member-email");
 			userToEdit.setEmail(Email);
-			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(userToEdit);
+		
+			boolean save=mydbConnect.editUserDetails(userToEdit);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
@@ -209,11 +209,10 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
-			String bookid="";
-			bookid = request.getParameter("bookId");
+			String bookid=request.getParameter("bookId");
 			int book_id=Integer.parseInt(bookid); 
-			DBConnector db= new DBConnector();
-			boolean remove=db.deleteBook(book_id);
+			
+			boolean remove=mydbConnect.deleteBook(book_id);
 			if(remove==true)
 			{
 				out.println("BOOK DELETED SUCCESSFULLY!");
@@ -223,27 +222,28 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
-			String userid ="";
-			userid = request.getParameter("memId");
+			String userid =request.getParameter("memId");
 			int user_id=Integer.parseInt(userid);
-			DBConnector db=new DBConnector();
-			double delete=db.deleteMember(user_id);
-			if (delete>0)
+			double fine=0.0;
+			fine=mydbConnect.deleteMember(user_id);
+			if (fine>0)
 			{
-				out.println("Fine Due is :"+ delete);
+				out.println("Fine Due is :"+ fine);
 			}
 			else
 			{
 				out.println("Removed User from Database.");
 			}
+			request.setAttribute("user", user_id);
+			request.setAttribute("fine", fine);
 			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 
 			
 		}
 		else if(action.equalsIgnoreCase("calling_current_issues")) {
-			DBConnector db=new DBConnector();
+			
 			List<Object[]> objectlist = new ArrayList<Object[]>();
-			objectlist=db.getAllBooksCurrentlyIssued();
+			objectlist=mydbConnect.getAllBooksCurrentlyIssued();
 //			List<Book> getIssues = new ArrayList<Book>();
 //			
 //			for(int i=0;i<objectlist.size();i++) {		
@@ -255,13 +255,13 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		else if(action.equalsIgnoreCase("calling_past_issues")) {
-			DBConnector db=new DBConnector();
+			
 //			List<Object[]> objectlist = new ArrayList<Object[]>();
-//			objectlist=db.getAllBooksCurrentlyIssued();
+//			objectlist=mydbConnect.getAllBooksCurrentlyIssued();
 //			
-//			List<Object[]> allObjects=db.browseBooks(1);
+//			List<Object[]> allObjects=mydbConnect.browseBooks(1);
 			List<Book> allBooks=new ArrayList<Book>();
-			allBooks = db.getAllBooks();
+			allBooks = mydbConnect.getAllBooks();
 //			
 //			for(int i=0;i<allObjects.size();i++) {
 //				
@@ -279,29 +279,30 @@ public class ControllerServlet extends HttpServlet {
 		}
 		
 		else if(action.equalsIgnoreCase("calling_individual_view_history")) {
-			DBConnector db=new DBConnector();
-			String bookid="";
-			bookid = request.getParameter("bookid");
+			
+			String bookid=request.getParameter("bookid");
 			int bookID=Integer.parseInt(bookid);
+			String title = request.getParameter("booktitle");
 			List<Object[]> issues = new ArrayList<Object[]>();
-			issues=db.getBookIssueHistory(bookID);
+			issues=mydbConnect.getBookIssueHistory(bookID);
 //			List<Book> getHistorey = new ArrayList<Book>();
 //			
 //			for(int i=0;i<objectlist.size();i++) {		
 //				Object []array=objectlist.get(i);
 //				getHistory.add((Book)array[0]);
 //			}
-			request.setAttribute("bookId", bookid);
+			//request.setAttribute("bookd", bookid);
+			request.setAttribute("booktitle", title);
 			request.setAttribute("history",issues);//set list as attribute
 			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
 			
 		}
 		
 		else if(action.equalsIgnoreCase("calling_view_your_books")) {
-			DBConnector db=new DBConnector();
+			
 			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
-			objectlist=db.getUserCurrentIssue(memberID);
+			objectlist=mydbConnect.getUserCurrentIssue(memberID);
 //			List<Book> getCIssues = new ArrayList<Book>();
 //			
 //			for(int i=0;i<objectlist.size();i++) {		
@@ -311,7 +312,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			request.setAttribute("current_issues",objectlist);//set list as attribute
 			List<Object[]> objectlist1 = new ArrayList<Object[]>();
-			objectlist1=db.getUserIssueHistory(memberID);
+			objectlist1=mydbConnect.getUserIssueHistory(memberID);
 //			List<Book> getPIssues = new ArrayList<Book>();
 //			
 //			for(int i=0;i<objectlist1.size();i++) {		
@@ -333,8 +334,8 @@ public class ControllerServlet extends HttpServlet {
 			u.setEmail(Email);
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
-			DBConnector db=new DBConnector();
-			boolean save=db.editUserDetails(u);
+			
+			boolean save=mydbConnect.editUserDetails(u);
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
@@ -363,8 +364,8 @@ public class ControllerServlet extends HttpServlet {
 			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
-			DBConnector db=new DBConnector();
-			boolean issue=db.borrowBook(userID,bookID);
+			
+			boolean issue=mydbConnect.borrowBook(userID,bookID);
 			if(issue==true)
 			{
 				out.println("Book Issued Successfully");
@@ -383,8 +384,8 @@ public class ControllerServlet extends HttpServlet {
 			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
-			DBConnector db=new DBConnector();
-			double fine=db.returnBook(userID,bookID);
+			
+			double fine=mydbConnect.returnBook(userID,bookID);
 			if(fine>0)
 			{
 				out.println("You have to pay a fine of Rs. :" + fine);

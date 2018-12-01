@@ -16,7 +16,8 @@
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <h5>Viewing history for: <%=request.getAttribute("bookId")%> </h5>
+  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <h5>Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -31,7 +32,7 @@
     <th class="text-center">Due Date</th>
     
     </tr>
-   <c:forEach items="${issues}" var="issueList"> 
+   <c:forEach items="${history}" var="issueList"> 
     <c:forEach items="${issueList}" var="issueData"> 
                 <tr>
                     <td><c:out value="${issueData[0]}" /></td>

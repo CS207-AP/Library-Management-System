@@ -25,7 +25,15 @@ input[type="submit"]{
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><a class="btn btn-link" href="create_accounts.jsp" style="float: right;">Create Accounts</a></div>
+  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <div class="col-md-12"><a class="btn btn-link" href="create_account.jsp" style="float: right;">Create Account</a></div>
+  <%
+    if((double)request.getAttribute("fine")>0.0){
+%>
+ <h5 style="color:red"> <%=request.getAttribute("user")%> owes Rs. <%=request.getAttribute("fine") %> in fine.</h5>
+<%
+}
+%>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -49,11 +57,7 @@ input[type="submit"]{
                 </tr>
             </c:forEach> 
    
-    <tr>
-    <td><a href="#"></a></td>
-    <td><a href="#" class="btn btn-link">Edit</a></td>
-    <td>Delete</td>
-    </tr>
+    
     </tbody>
     </table>
     <div class="modal fade" id="editAccount" role="dialog">
@@ -81,7 +85,8 @@ input[type="submit"]{
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Member Type:</label>
-            <input type="text" class="form-control" id="member-type" value="">
+            <input type="radio" class="form-control" id="member-type" value="admin">Admin<br>
+            <input type="radio" class="form-control" id="member-type" value="member">Regular Member<br>
           </div>
           <input type="hidden" id="action" value="edit_user"/>
         </form>
