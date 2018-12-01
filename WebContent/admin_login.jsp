@@ -7,34 +7,64 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.nav-item{
+padding-bottom: 10px;
+}
+
+.btn-primary{
+width: 50%;
+font-size: 16px;
+transition-duration: 0.4s;}
+
+.btn-primary:hover{
+background-color: white;
+color: #3E76A7;}
+
+.logout-btn{
+padding-right:10px;
+}
+</style>
 </head>
 <body>
   <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="admin_login.jsp">
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
         <b> Library Management System</b>
       </a> </div>
   </nav>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right; color: white;" type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form>
+  </div>
   <div class="py-3">
     <div class="container">
       <div class="row">
-      <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+      
         <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center">
           <ul class="nav d-flex justify-content-center">
             <li class="nav-item"> <form action="ControllerServlet" method="post">
             							<input type="hidden" id="action" value="calling_browse_books"/>
-                                        <input type="submit" value="Browse Books"/> </form> </li> 
+                                        <input class="btn btn-primary" type="submit" value="Browse Books"/> </form> </li> 
             <li class="nav-item"> <form action="ControllerServlet" method="post">
             							<input type="hidden" id="action" value="calling_edit_books"/>
-                                        <input type="submit" value="Edit Books"/> </form> </li>
+                                        <input class="btn btn-primary" type="submit" value="Edit Books"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
             							<input type="hidden" id="action" value="calling_edit_accounts"/>
-                                        <input type="submit" value="Edit Account Details"/> </form> </li>
+                                        <input class="btn btn-primary" type="submit" value="Edit Account Details"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
             							<input type="hidden" id="action" value="calling_current_issues"/>
-                                        <input type="submit" value="View Current Issues"/> </form> </li>
+                                        <input class="btn btn-primary" type="submit" value="View Current Issues"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
             							<input type="hidden" id="action" value="calling_past_issues"/>
-                                        <input type="submit" value="View Past Issues"/> </form> </li>
+                                        <input class="btn btn-primary" type="submit" value="View Past Issues"/> </form> </li>
           </ul>
         </div>
       </div>

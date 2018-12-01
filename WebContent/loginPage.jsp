@@ -7,18 +7,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+.form-group-row{
+padding-left: 400px;
+padding-top: 20px;}
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.button{
+padding-top:20px;
+padding-left:680px;
+
+}
+}
+
+</style>
 </head>
 
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container-d-flex-justify-content-center"> <a style="color:white;" class="navbar-brand" href="loginPage.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
   <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
         <%
     if(request.getAttribute("loginResult") != null && request.getAttribute("loginResult") == "true"){
 %>
@@ -28,17 +50,18 @@
 %>
 
           <form id="login_form" class="" action="ControllerServlet" method="post">
-            <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">E-mail</label>
+            <div class="form-group-row"> <label for="inputmailh" class="col-2 col-form-label">E-mail</label>
               <div class="col-10">
                 <input form="login_form" type="email" class="form-control" id="login_email" placeholder="mail@example.com"> </div>
             </div>
-            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Password</label>
+            <div class="form-group-row"> <label for="inputpasswordh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="login_form" type="password" class="form-control" id="login_password" placeholder="Password"> </div>
+                <input form="login_form" type="password" class="form-control" id="login_password" placeholder="**********"> </div>
             </div>
             <input type="hidden" id="action" value="login"/>
            
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="button"><button type="submit" class="btn btn-primary">Submit</button>
+            </div>
             
           </form>
           </div>
