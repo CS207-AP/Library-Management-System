@@ -30,7 +30,7 @@ public class ControllerServlet extends HttpServlet {
 	DBConnector mydbConnect = new DBConnector();
 	Book book=new Book();
 	User u = new User();
-	final User currentuser=LoginServlet.login;
+	//final User currentuser=LoginServlet.login;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -192,7 +192,7 @@ public class ControllerServlet extends HttpServlet {
 		}
 		
 		else if(action.equalsIgnoreCase("edit_user")) {
-			User userToEdit = getUserDetails(request.getParameter("member-id"));
+			User userToEdit = mydbConnect.getUserDetails(Integer.parseInt(request.getParameter("member-id")));
 			String user_type=request.getParameter("member-type");
 			userToEdit.setType(user_type);
 			String Name=request.getParameter("member-name");
@@ -259,7 +259,7 @@ public class ControllerServlet extends HttpServlet {
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=db.getAllBooksCurrentlyIssued();
 			
-			List<Object[]> allObjects=db.browseBooks(user_id);
+			List<Object[]> allObjects=db.browseBooks(1);
 			List<Book> allBooks=new ArrayList<Book>();
 			
 			for(int i=0;i<allObjects.size();i++) {
@@ -357,7 +357,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
 		{
-			int userID=currentuser.getMemId();
+			int userID=u.getMemId();
 			String bookid="";
 			request.getAttribute(bookid);
 			int bookID=Integer.parseInt(bookid);
@@ -376,7 +376,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("Return"))
 		{
-			int userID=currentuser.getMemId();
+			int userID=u.getMemId();
 			
 			String bookid="";
 			request.getAttribute(bookid);
@@ -393,6 +393,10 @@ public class ControllerServlet extends HttpServlet {
 			}
 			
 			request.getRequestDispatcher("return-book.jsp").include(request, response); //to connect the next page,check name of jsp.
+		}
+		else if(action.equalsIgnoreCase("logout")) {
+			request.getSession().invalidate();
+			response.sendRedirect("loginPage.jsp");
 		}
 		
 		
