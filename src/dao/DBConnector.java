@@ -611,6 +611,44 @@ public class DBConnector {
 		
 	}
 	
+	public void addtoWaitlist(int bookid,int userid) {
+		
+		Connection conn; 
+		try {
+			conn = dbUtil.getConnection();
+				PreparedStatement ps;
+				ps = conn.prepareStatement("INSERT INTO waitlist SET user_id=?,book_is=?");
+				ps.setInt(1,userid);
+				ps.setInt(2,bookid);
+				ps.executeQuery();
+				conn.close();
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void removeFromWaitlist(int bookid,int userid) {
+		
+		Connection conn; 
+		try {
+			conn = dbUtil.getConnection();
+				PreparedStatement ps;
+				ps = conn.prepareStatement("DELETE FROM waitlist WHERE user_id=? AND book_is=?");
+				ps.setInt(1,userid);
+				ps.setInt(2,bookid);
+				ps.executeQuery();
+				conn.close();
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public boolean addBook(Book book)
 	{
 		Connection conn; int x=0;
@@ -642,34 +680,7 @@ public class DBConnector {
             return false;
 	}
 	
-	public boolean addUser(User user)
-	{
-		Connection conn; int x=0;
-		try {
-			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
-	        ps.setString(2, user.getType());
-	        ps.setString(3, user.getEmail());
-	        ps.setString(4, user.getName());
-	        ps.setString(5, user.getPassword());
-	       
-	        x = ps.executeUpdate();
-	        
-	        conn.close();
-	        
-	        
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.err.println("Got an exception in addmember in dbconnector");
-		}
-		if (x == 1) 
-            return true;
-         else 
-            return false;
-	}
-	
+		
 	public boolean editBook(Book book)
 	{
 		Connection conn;
@@ -773,6 +784,36 @@ public class DBConnector {
 		}
 		return fine;
 		
+	}
+
+
+
+	public boolean addUser(User user)
+	{
+		Connection conn; int x=0;
+		try {
+			conn = dbUtil.getConnection();
+			PreparedStatement ps;
+			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
+	        ps.setString(2, user.getType());
+	        ps.setString(3, user.getEmail());
+	        ps.setString(4, user.getName());
+	        ps.setString(5, user.getPassword());
+	       
+	        x = ps.executeUpdate();
+	        
+	        conn.close();
+	        
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.err.println("Got an exception in addmember in dbconnector");
+		}
+		if (x == 1) 
+	        return true;
+	     else 
+	        return false;
 	}
 	
 	
