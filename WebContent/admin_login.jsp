@@ -42,7 +42,7 @@ padding-right:10px;
         <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right; color: white;" type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
   <div class="py-3">
     <div class="container">

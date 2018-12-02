@@ -9,14 +9,32 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+
+
+
+</style>
+
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
-        <b>Library Management System</b>
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
+        <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  </div>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -25,8 +43,8 @@
     <tr>
  
   
-    <th class="col-md-10">Book Title</th>
-    <th class="col-md-5"></th>
+    <th class="col-md-7 text-center">Book Title</th>
+    <th class="col-md-2"></th>
     
     
     </tr>
@@ -34,7 +52,7 @@
                 <tr>
                     <td> <c:out value="${book.getTitle()}" /></td>
                     <td><form id="view-history" action="ControllerServlet" method="post">
-                    <input type="submit" value="View History"/>
+                    <input class="btn btn-primary" type="submit" value="View History"/>
                     <input type="hidden" id="booktitle" value="${book.getTitle()}"/>
                     <input type="hidden" id="bookid" value="${book.getid()}"/>
                     <input type="hidden" id="action" value="calling_individual_view_history"/>

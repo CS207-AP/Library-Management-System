@@ -9,25 +9,48 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.homepage{
+padding-left:10px;}
+.title{
+text-align: center;}
+
+</style>
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="member_login.jsp">
-        <b>Library Management System</b>
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
+        <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <div class="homepage"><a href="member_login.jsp" style="float: left;">Go To Homepage</a></div>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  </div>
+  <br>
+   <h5 class="title">Current Issues:</h5>
   <table class="table table-bordered table-striped table-hover">
+   
     <thead>
-    <h5>Current Issues:</h5>
+    
     </thead>
     <tbody>
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-2">Book ID</th>
+    <th class="col-md-2 text-center">Book ID</th>
    
-    <th class="col-md-5">Book Title</th>
+    <th class="col-md-5 text-center">Book Title</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
@@ -46,17 +69,18 @@
    
         </tbody>
     </table>
+     <h5 class="title">Past Issues:</h5>
     <table class="table table-bordered table-striped table-hover">
     <thead>
-    <h5>Past Issues:</h5>
+   
     </thead>
     <tbody>
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-2">Book ID</th>
+    <th class="col-md-2 text-center">Book ID</th>
     
-    <th class="col-md-5">Book Title</th>
+    <th class="col-md-5 text-center">Book Title</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
