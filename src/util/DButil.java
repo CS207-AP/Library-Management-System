@@ -19,10 +19,13 @@ public class DButil {
   public static Connection getConnection() throws SQLException {
         try {
             Class.forName(Driver);
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-            con.close();
-        }      
+            
+            
+
+        } catch (ClassNotFoundException e) {
+        	e.printStackTrace();
+        	con.close();
+        }    
         con = (Connection) DriverManager.getConnection(ConnectionString, user, pwd);
         return con;
     }

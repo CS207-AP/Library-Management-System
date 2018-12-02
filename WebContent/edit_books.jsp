@@ -23,6 +23,8 @@ padding-left:40px;
 .table-bordered{
 padding-left:10px;
 padding-right:10px;}
+.homepage{
+padding-left:10px;}
 </style>
 </head>
 <body >
@@ -71,34 +73,34 @@ padding-right:10px;}
          <form id="edit-book-form" action="ControllerServlet" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Book ID:</label>
-            <input type="text" class="form-control" id="id" value="" readonly>
+            <input type="text" class="form-control" name="id" value="" readonly>
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">ISBN:</label>
-            <input type="text" class="form-control" id="isbn" value="" readonly>
+            <input type="text" class="form-control" name="isbn" value="" readonly>
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" id="title" value="">
+            <input type="text" class="form-control" name="title" value="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Author:</label>
-            <input type="text" class="form-control" id="author" value="">
+            <input type="text" class="form-control" name="author" value="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Genre:</label>
-            <input type="text" class="form-control" id="genre" value="">
+            <input type="text" class="form-control" name="genre" value="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Publisher:</label>
-            <input type="text" class="form-control" id="publisher" value="">
+            <input type="text" class="form-control" name="publisher" value="">
           </div>
           
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Total Copies:</label>
-            <input type="number" class="form-control" id="copies" value="" min="1" max="25"/>
+            <input type="number" class="form-control" name="copies" value="" min="1" max="25"/>
           </div>
-          <input type="hidden" id="action" value="edit_book"/>
+          <input type="hidden" name="action" value="edit_book"/>
         </form>
         </div>
         <div class="modal-footer">
@@ -122,8 +124,8 @@ padding-right:10px;}
         </div>
         <div class="modal-footer">
           <form id="delete-book-form" action="ControllerServlet" method="post">
-          <input type="hidden" id="action" value="delete_book"/>
-          <input type="hidden" id="bookId" value=""/>
+          <input type="hidden" name="action" value="delete_book"/>
+          <input type="hidden" name="bookId" value=""/>
           <input type="submit" value="Yes"/>
           
           </form >
@@ -151,20 +153,20 @@ padding-right:10px;}
 	  
 	  var modal = $(this)
 	  modal.find('.modal-title').text('Edit Details for: ' + title)
-	  modal.find('input[id="id"]').val(bookId)
-	  modal.find('input[id="isbn"]').val(isbn)
-	  modal.find('input[id="title"]').val(title)
-	  modal.find('input[id="author"]').val(author)
-	  modal.find('input[id="genre"]').val(genre)
-	  modal.find('input[id="publisher"]').val(publisher)
-	  modal.find('input[id="copies"]').val(copies)
-	  modal.find('input[id="book-to-change"]').val(bookId)
+	  modal.find('input[name="id"]').val(bookId)
+	  modal.find('input[name="isbn"]').val(isbn)
+	  modal.find('input[name="title"]').val(title)
+	  modal.find('input[name="author"]').val(author)
+	  modal.find('input[name="genre"]').val(genre)
+	  modal.find('input[name="publisher"]').val(publisher)
+	  modal.find('input[name="copies"]').val(copies)
+	  modal.find('input[name="book-to-change"]').val(bookId)
 	  //modal.find('input[id="isbn"]').val(isbn)
-	  modal.find('input[id="change-title"]').val(title)
-	  modal.find('input[id="change-author"]').val(author)
-	  modal.find('input[id="change-genre"]').val(genre)
-	  modal.find('input[id="change-publisher"]').val(publisher)
-	  modal.find('input[id="change-copies"]').val(copies)
+	  modal.find('input[name="change-title"]').val(title)
+	  modal.find('input[name="change-author"]').val(author)
+	  modal.find('input[name="change-genre"]').val(genre)
+	  modal.find('input[name="change-publisher"]').val(publisher)
+	  modal.find('input[name="change-copies"]').val(copies)
 	})
 </script>
 <script>
@@ -177,7 +179,7 @@ padding-right:10px;}
 	  var modal = $(this)
 	  
 	  modal.find('.modal-body').text('Are you sure you want to delete '+title+'?')
-	  modal.find('input[id="bookId"]').val(bookId)
+	  modal.find('input[name="bookId"]').val(bookId)
 	  
 	  
 	})

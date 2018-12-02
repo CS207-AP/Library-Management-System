@@ -24,6 +24,8 @@ padding-left:40px;
 .table-bordered{
 padding-left:10px;
 padding-right:10px;}
+.homepage{
+padding-left:10px;}s
 </style>
 
 </head>
@@ -83,22 +85,22 @@ padding-right:10px;}
          <form id="edit-account-form" action="ControllerServlet" method="post">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Member ID:</label>
-            <input type="text" class="form-control" id="member-id" value="" readonly>
+            <input type="text" class="form-control" name="member-id" value="" readonly>
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="member-name" value="">
+            <input type="text" class="form-control" name="member-name" value="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Email ID:</label>
-            <input type="text" class="form-control" id="member-email" value="">
+            <input type="text" class="form-control" name="member-email" value="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Member Type:</label>
-            <input type="radio" class="form-control" id="member-type" value="admin">Admin<br>
-            <input type="radio" class="form-control" id="member-type" value="member">Regular Member<br>
+            <input type="radio" class="form-control" name="member-type" value="admin">Admin<br>
+            <input type="radio" class="form-control" name="member-type" value="member">Regular Member<br>
           </div>
-          <input type="hidden" id="action" value="edit_user"/>
+          <input type="hidden" name="action" value="edit_user"/>
         </form>
         </div>
         <div class="modal-footer">
@@ -122,8 +124,8 @@ padding-right:10px;}
         </div>
         <div class="modal-footer">
           <form id="delete-account-form" action="ControllerServlet" method="post">
-          <input type="hidden" id="action" value="delete_user"/>
-          <input type="hidden" id="memId" value=""/>
+          <input type="hidden" name="action" value="delete_user"/>
+          <input type="hidden" name="memId" value=""/>
           <input type="submit" value="Yes"/>
           
           </form >
@@ -147,14 +149,14 @@ padding-right:10px;}
 	  var type = button.data('mem-type')
 	  var modal = $(this)
 	  modal.find('.modal-title').text('Edit Details for: ' + name)
-	  modal.find('input[id="member-id"]').val(memId)
-	  modal.find('input[id="member-name"]').val(name)
-	  modal.find('input[id="member-email"]').val(email)
-	  modal.find('input[id="member-type"]').val(type)
-	  modal.find('input[id="account-to-change"]').val(memId)
-	  modal.find('input[id="change-name"]').val(name)
-	  modal.find('input[id="change-email"]').val(email)
-	  modal.find('input[id="change-type"]').val(type)
+	  modal.find('input[name="member-id"]').val(memId)
+	  modal.find('input[name="member-name"]').val(name)
+	  modal.find('input[name="member-email"]').val(email)
+	  modal.find('input[name="member-type"]').val(type)
+	  modal.find('input[name="account-to-change"]').val(memId)
+	  modal.find('input[name="change-name"]').val(name)
+	  modal.find('input[name="change-email"]').val(email)
+	  modal.find('input[name="change-type"]').val(type)
 	  
 	})
 </script>
@@ -167,7 +169,7 @@ padding-right:10px;}
 	  var modal = $(this)
 	  
 	  modal.find('.modal-body').text('Are you sure you want to delete member '+name+'?')
-	  modal.find('input[id="memId"]').val(memId)
+	  modal.find('input[name="memId"]').val(memId)
 	  
 	  
 	})

@@ -34,6 +34,8 @@ color: #3E76A7;}
 .logout-btn{
 padding-right:10px;
 }
+.homepage{
+padding-left:10px;}
 </style>
 </head>
 <body>
@@ -42,7 +44,7 @@ padding-right:10px;
         <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" name="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
     <br>
   <div class="py-3">
@@ -52,19 +54,19 @@ padding-right:10px;
         <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center">
           <ul class="nav d-flex justify-content-center">
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_browse_books"/>
+            							<input type="hidden" name="action" value="calling_browse_books"/>
                                         <input class="btn btn-primary" type="submit" value="Browse Books"/> </form> </li> 
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_edit_books"/>
+            							<input type="hidden" name="action" value="calling_edit_books"/>
                                         <input class="btn btn-primary" type="submit" value="Edit Books"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_edit_accounts"/>
+            							<input type="hidden" name="action" value="calling_edit_accounts"/>
                                         <input class="btn btn-primary" type="submit" value="Edit Account Details"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_current_issues"/>
+            							<input type="hidden" name="action" value="calling_current_issues"/>
                                         <input class="btn btn-primary" type="submit" value="View Current Issues"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_past_issues"/>
+            							<input type="hidden" name="action" value="calling_past_issues"/>
                                         <input class="btn btn-primary" type="submit" value="View Past Issues"/> </form> </li>
           </ul>
         </div>

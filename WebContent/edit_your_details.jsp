@@ -25,7 +25,8 @@ padding-left: 350px;}
 padding-top:230px;
 padding-left:780px;
 padding-bottom: 20px;}
-
+.homepage{
+padding-left:10px;}
 </style>
 
 </head>
@@ -57,7 +58,7 @@ padding-bottom: 20px;}
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="create_user" type="password" class="form-control" name="password" placeholder="***"> </div>
+                <input form="create_user" type="password" class="form-control" name="password" placeholder="********"> </div>
             </div>
             
             <input type="hidden" id="action" value="edit_your_details"/></form>

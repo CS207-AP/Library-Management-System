@@ -20,7 +20,8 @@ background-color: black;
 padding-top: 50px;
 padding-left:40px;
 }
-
+.homepage{
+padding-left:10px;}
 
 
 </style>

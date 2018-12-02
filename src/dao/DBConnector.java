@@ -29,25 +29,30 @@ public class DBConnector {
 		User user = new User();
 		try {
             Connection conn = dbUtil.getConnection();
-            String query = "SELECT user_id, user_type, user_email, user_name, user_password FROM users WHERE email = "+email+";";
+            String query = "SELECT user_id, user_type, user_email, user_name, user_password FROM users WHERE user_email=\'"+email+"\';";
             
             Statement st = conn.createStatement();
            
             ResultSet rs = st.executeQuery(query);
-            
+           
             
             while (rs.next()) {
             	String em = rs.getString("user_email");
             	String pw = rs.getString("user_password");
-            	
-                if (em.equals(email)&& pw.equals(password) ) {
+            	System.out.println(em);
+            	System.out.println(pw);
+            	System.out.println(email);
+            	System.out.println(password);
+                if (em.equals(email) && pw.equals(password) ) {
                 
                     user.setMemId(rs.getInt("user_id"));
+//                    System.out.println(user.getMemId());
                     user.setEmail(em);
+//                    System.out.println(user.getEmail());
                     user.setPassword(pw);
                     user.setType(rs.getString("user_type"));
                     user.setName(rs.getString("user_name"));
-                    
+                    break;
                 	}
                 }
             conn.close();
@@ -149,9 +154,9 @@ public class DBConnector {
 		    	Object [] book = new Object[5];
 		    	book[0]=bookSet.getString("book_id");
 		    	book[1]=bookSet.getString("user_id");
-		    	book[2]=bookSet.getString("book_name");
+		    	book[2]=bookSet.getString("book_title");
 		    	book[3]=bookSet.getDate("issue_date");
-		    	book[4]=bookSet.getDate("return_date");
+		    	book[4]=bookSet.getDate("due_date");
 		    	allBooks.add(book);
 
 		    }
@@ -207,16 +212,18 @@ public class DBConnector {
 	    User user= new User();
 		try {
 			conn = dbUtil.getConnection();
-			String query= "SELECT * FROM users WHERE user_id = "+user_id;
+			String query= "SELECT user_name, user_email, user_password, user_type FROM users WHERE user_id = "+user_id+";";
 			Statement st = conn.createStatement();
 		    ResultSet userSet = st.executeQuery(query);
-		    	
-		    user.setMemId(userSet.getInt("user_id"));
+		    
+		    while(userSet.next()) {
+		    user.setMemId(user_id);
 		   	user.setType(userSet.getString("user_type"));
 		   	user.setName(userSet.getString("user_name"));
 	    	user.setEmail(userSet.getString("user_email"));		    		 
-	    	user.setPassword(userSet.getString("user_password"));		    		 
-	    	conn.close();			
+	    	user.setPassword(userSet.getString("user_password"));	
+	    	}	    		 
+	    	conn.close();		
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -337,12 +344,12 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			
-			  String query = "SELECT * FROM books";		        
+			  String query = "SELECT * FROM books;";		        
 		      Statement st = conn.createStatement();	     	      
 		      ResultSet bookSet = st.executeQuery(query);		      
 		      
 		      while(bookSet.next()) {
-		    	  
+		    	 
 		    	  Book book = new Book();
 		    	  book.setTitle(bookSet.getString("book_title"));
 		    	  book.setAuthor(bookSet.getString("book_author"));
@@ -560,10 +567,11 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("DELETE from lms_db.member_list WHERE user_id = ?;");
+			ps = conn.prepareStatement("DELETE from users WHERE user_id = ?;");
 	        ps.setInt(1, user_id);
 	        x = ps.executeUpdate();
 	        ps = conn.prepareStatement("SELECT book_Id, mem_Id FROM currentlyIssued WHERE user_id = ?;");
+	        ps.setInt(1, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        //int bookId = rs.getInt(1);
 	        if(rs.next()) {
@@ -588,25 +596,34 @@ public class DBConnector {
 	}
 
 	public boolean editUserDetails(User user) {
-		
+		System.out.println("Inside edit_user in dbconn");
 		Connection conn; 
+		int x=0;
+		
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
-				ps = conn.prepareStatement("UPDATE users SET name=?,email=?,password=? WHERE user_id=?");
+				ps = conn.prepareStatement("UPDATE users SET user_name=?,user_email=?,user_password=? WHERE user_id=?;");
 				ps.setString(1,user.getName());
 				ps.setString(2,user.getEmail());
 				ps.setString(3,user.getPassword());
-				ps.setInt(4,user.getMemId());
-				ps.executeQuery();
+			    ps.setInt(4,user.getMemId());
+			    System.out.println("Mem id is "+user.getMemId());
+				x=ps.executeUpdate();
 				conn.close();
-				return true;
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Got an exception in editUserDetails in dbconnector");
+		}
+		
+		if(x==1) {
+			System.out.println("Edited successfully");
+			return true;
+		}else{
 			return false;
+		
 		}
 		
 	}
@@ -683,12 +700,14 @@ public class DBConnector {
 		
 	public boolean editBook(Book book)
 	{
+		System.out.println("inside edit_book in editbook");
 		Connection conn;
 		int x=0;
+		
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("UPDATE books SET ISBN=?, title=?, author=?, publisher=?, genre=?, quantity=?,available=? WHERE user_id=?;");
+			ps = conn.prepareStatement("UPDATE books SET book_ISBN=?, book_title=?, book_author=?, book_publisher=?, book_genre=?, book_quantity=?, book_available=? WHERE book_id=?;");
 	        ps.setString(1,book.getISBN() );
 	        ps.setString(2, book.getTitle());
 	        ps.setString(3, book.getAuthor());
@@ -696,6 +715,7 @@ public class DBConnector {
 	        ps.setString(5, book.getGenre());
 	        ps.setInt(6, book.getQuantity());
 	        ps.setInt(7, book.getAvailable());
+	        ps.setInt(8, book.getid());
 	        
 	        x = ps.executeUpdate();
 	        conn.close();
@@ -730,7 +750,7 @@ public class DBConnector {
 		    	  
 		    	 user.setEmail(userSet.getString("user_email")); 
 		    	 user.setMemId(userSet.getInt("user_id")); 
-		    	 user.setName(userSet.getString("user_email")); 
+		    	 user.setName(userSet.getString("user_name")); 
 		    	 user.setPassword(userSet.getString("user_password")); 
 		    	 
 		    	 users.add(user);

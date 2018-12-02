@@ -31,7 +31,8 @@ padding-left: 350px;}
 padding-top:450px;
 padding-left:775px;
 padding-bottom: 20px;}
-
+.homepage{
+padding-left:10px;}
 </style>
 </head>
 

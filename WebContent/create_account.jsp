@@ -30,6 +30,8 @@ padding-left: 350px;}
 .button{
 padding-top:380px;
 padding-left:780px;}
+.homepage{
+padding-left:10px;}
 </style>
 
 </head>

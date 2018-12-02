@@ -16,6 +16,8 @@ padding-left:40px;
 .table-bordered{
 padding-left:10px;
 padding-right:10px;}
+.homepage{
+padding-left:10px;}
 </style>
 <head>
   <meta charset="utf-8">

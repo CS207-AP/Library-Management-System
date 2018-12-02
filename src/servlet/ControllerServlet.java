@@ -55,13 +55,19 @@ public class ControllerServlet extends HttpServlet {
 		//doGet(request, response);
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
-		// form id="login_form", email id="login_email", password id="login_password"
-		String action = request.getParameter("action");
+		
+		String action = "";
+		action=request.getParameter("action");
+		
+		
 		if(action.equalsIgnoreCase("login"))
 		{
+			
 			 String email = request.getParameter("login_email"); 
+//			 System.out.println(email+"(in servlet)");
 		     String pass = request.getParameter("login_password");
 		     User obj = mydbConnect.checkCredentials(email, pass);
+		     //System.out.println(obj.getMemId());
 	        	if (obj==null)
 	        	{
 	           //out.println("Username or Password is incorrect");
@@ -71,9 +77,15 @@ public class ControllerServlet extends HttpServlet {
 	           }
 	        	else
 	        	{   u=obj;
+//	        	    System.out.println(obj.getMemId());
+//	        	    System.out.println(obj.getEmail());
+//	        	    System.out.println(obj.getPassword());
+	        	
 	        		String type=obj.getType();
+//	        		System.out.println(obj.getType());
 	        		request.setAttribute("memberid", obj.getMemId());
 	        		if(type.equalsIgnoreCase("admin"));
+	        		System.out.println("Entered");
 	        		RequestDispatcher rs = request.getRequestDispatcher("admin_login.jsp");
 	        		rs.forward(request, response);
 	        		rs = request.getRequestDispatcher("member_login.jsp");
@@ -163,6 +175,7 @@ public class ControllerServlet extends HttpServlet {
 			book.setid(book_ID);
 			String Title=request.getParameter("title");
 			book.setTitle(Title);
+			
 			String Author=request.getParameter("author");
 			book.setAuthor(Author);
 			String ISBN=request.getParameter("isbn");
@@ -179,33 +192,37 @@ public class ControllerServlet extends HttpServlet {
 			{
 				out.println("Edited Book Successfully");
 			}
-			request.getRequestDispatcher("edit_books.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 			
 		}
 		else if(action.equalsIgnoreCase("calling_edit_accounts")) {
-			
+			System.out.println("Inside edit_user in servlet");
 			List<User> memberlist= new ArrayList<User>();
 			memberlist=mydbConnect.getAllUsers();
 			request.setAttribute("users",memberlist);//set list as attribute
 			
-			request.getRequestDispatcher("edit_user.jsp").include(request, response);
+			request.getRequestDispatcher("edit_accounts.jsp").include(request, response);
 		}
 		
 		else if(action.equalsIgnoreCase("edit_user")) {
+			System.out.println("Entering edit_user in servlet");
 			User userToEdit = mydbConnect.getUserDetails(Integer.parseInt(request.getParameter("member-id")));
+			System.out.println("Old name: "+userToEdit.getName());
 			String user_type=request.getParameter("member-type");
 			userToEdit.setType(user_type);
 			String Name=request.getParameter("member-name");
 			userToEdit.setName(Name);
+			
 			String Email=request.getParameter("member-email");
 			userToEdit.setEmail(Email);
 		
 			boolean save=mydbConnect.editUserDetails(userToEdit);
+			System.out.println("New name: "+userToEdit.getName());
 			if(save==true)
 			{
 				out.println("Edited User details Successfully");
 			}
-			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
@@ -218,12 +235,14 @@ public class ControllerServlet extends HttpServlet {
 				out.println("BOOK DELETED SUCCESSFULLY!");
 			}
 			
-			request.getRequestDispatcher("edit_books.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
 			String userid =request.getParameter("memId");
 			int user_id=Integer.parseInt(userid);
+			System.out.println("MEM ID IN DELETE USER SERVLET: "+user_id);
+			
 			double fine=0.0;
 			fine=mydbConnect.deleteMember(user_id);
 			if (fine>0)

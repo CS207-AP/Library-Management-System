@@ -33,6 +33,8 @@ color: #3E76A7;}
 .logout-btn{
 padding-right:10px;
 }
+.homepage{
+padding-left:10px;}
 </style>
 
 </head>

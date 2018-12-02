@@ -49,16 +49,16 @@ padding-left:680px;
 }
 %>
 
-          <form id="login_form" class="" action="ControllerServlet" method="post">
+          <form id="login_form" class="" action="ControllerServlet?" method="post">
             <div class="form-group-row"> <label for="inputmailh" class="col-2 col-form-label">E-mail</label>
               <div class="col-10">
-                <input form="login_form" type="email" class="form-control" id="login_email" placeholder="mail@example.com"> </div>
+                <input form="login_form" type="email" class="form-control" name="login_email" placeholder="mail@example.com"> </div>
             </div>
             <div class="form-group-row"> <label for="inputpasswordh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="login_form" type="password" class="form-control" id="login_password" placeholder="**********"> </div>
+                <input form="login_form" type="password" class="form-control" name="login_password" placeholder="**********"> </div>
             </div>
-            <input type="hidden" id="action" value="login"/>
+            <input type="hidden" id="action" name="action" value="login"/>
            
             <div class="button"><button type="submit" class="btn btn-primary">Submit</button>
             </div>
