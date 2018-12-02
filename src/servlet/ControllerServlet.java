@@ -410,45 +410,31 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
 		}
-//		else if(action.equalsIgnoreCase("add_to_waitlist"))
-//		{
-//			int bookid = Integer.parseInt(request.getParameter("book-id"));
-//			int userid = u.getMemId();
-//			boolean waitlist=mydbConnect.addToWaitlist(userid,bookid);
-//			if(waitlist==true)
-//			{
-//				out.println("Book Issued Successfully");
-//			}
-//			else
-//			{
-//				out.println("Unable to waitlist the Book. Try again later!");
-//			}
-//			if(u.getType().equalsIgnoreCase("admin"))
-//			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
-//			else
-//				request.getRequestDispatcher("member_login.jsp").include(request, response);
-//			
-//			
-//		}
-//		else if(action.equalsIgnoreCase("remove_from_waitlist"))
-//		{
-//			int bookid = Integer.parseInt(request.getParameter("book-id"));
-//			int userid = u.getMemId();
-//			boolean waitlist=mydbConnect.removeFromWaitlist(userid,bookid);
-//			if(waitlist==true)
-//			{
-//				out.println("Book Issued Successfully");
-//			}
-//			else
-//			{
-//				out.println("Unable to remove from waitlist. Try again later!");
-//			}
-//			if(u.getType().equalsIgnoreCase("admin"))
-//			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
-//			else
-//				request.getRequestDispatcher("member_login.jsp").include(request, response);
-//			
-//		}
+		else if(action.equalsIgnoreCase("add_to_waitlist"))
+		{
+			int bookid = Integer.parseInt(request.getParameter("book-id"));
+			int userid = u.getMemId();
+			mydbConnect.addtoWaitlist(bookid,userid);
+			
+			if(u.getType().equalsIgnoreCase("admin"))
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			else
+				request.getRequestDispatcher("member_login.jsp").include(request, response);
+			
+			
+		}
+		else if(action.equalsIgnoreCase("remove_from_waitlist"))
+		{
+			int bookid = Integer.parseInt(request.getParameter("book-id"));
+			int userid = u.getMemId();
+			mydbConnect.removeFromWaitlist(bookid, userid);
+			
+			if(u.getType().equalsIgnoreCase("admin"))
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			else
+				request.getRequestDispatcher("member_login.jsp").include(request, response);
+			
+		}
 		
 	}
 		

@@ -617,10 +617,10 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
-				ps = conn.prepareStatement("INSERT INTO waitlist SET user_id=?,book_is=?");
+				ps = conn.prepareStatement("INSERT INTO waitlist SET user_id=?,book_id=?");
 				ps.setInt(1,userid);
 				ps.setInt(2,bookid);
-				ps.executeQuery();
+			    ps.executeQuery();
 				conn.close();
 	        
 		} catch (SQLException e) {
@@ -636,7 +636,7 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
-				ps = conn.prepareStatement("DELETE FROM waitlist WHERE user_id=? AND book_is=?");
+				ps = conn.prepareStatement("DELETE FROM waitlist WHERE user_id=? AND book_id=?");
 				ps.setInt(1,userid);
 				ps.setInt(2,bookid);
 				ps.executeQuery();

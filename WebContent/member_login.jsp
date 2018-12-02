@@ -44,6 +44,7 @@ padding-right:10px;
   </nav>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
+    <br>
   <div class="py-3">
     <div class="container">
       <div class="row">

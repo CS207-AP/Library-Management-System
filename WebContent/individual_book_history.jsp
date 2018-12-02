@@ -35,6 +35,7 @@ padding-left:40px;
   <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
+    <br>
   <h5>Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>

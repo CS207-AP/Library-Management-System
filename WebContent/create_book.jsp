@@ -41,9 +41,11 @@ padding-bottom: 20px;}
         <b>Library Management System</b>
       </a> </div>
   </nav>
+  
   <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
+    <br>
   <div class="py-5">
     <div class="container">
       <div class="row">
