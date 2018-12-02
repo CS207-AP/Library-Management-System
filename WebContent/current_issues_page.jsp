@@ -2,7 +2,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.table-bordered{
+padding-left:10px;
+padding-right:10px;}
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,12 +26,14 @@
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
+    <div class="container-d-flex-justify-content-center"> <a style="color:white;" class="navbar-brand" href="admin_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
-  
+  <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  </div>
+    <br>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -26,12 +42,12 @@
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-3">Book ID</th>
-    <th class="col-md-3">Member ID</th>
-    <th class="col-md-3">Book Title</th>
+    <th class="col-md-1 text-center">Book ID</th>
+    <th class="col-md-1 text-center">Member ID</th>
+    <th class="col-md-5 text-center">Book Title</th>
     <!-- Use text alignment like text-center or text-right -->
-    <th class="text-center">Issue Date</th>
-    <th class="text-center">Due Date</th>
+    <th class="col-md-2 text-center">Issue Date</th>
+    <th class="col-md-2 text-center">Due Date</th>
     </tr>
     <c:forEach items="${currentIssues}" var="books"> 
     <c:forEach items="${books}" var="book"> 

@@ -11,29 +11,39 @@
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
 <style>
-input[type="submit"]{
-    /* change these properties to whatever you want */
-    background-color: #555;
-    color: #fff;
-    border-radius: 10px;
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
 }
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.table-bordered{
+padding-left:10px;
+padding-right:10px;}
 </style>
+
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="admin_login.jsp">
+    <div class="container-d-flex-justify-content-center"> <a style="color:white;" class="navbar-brand" href="admin_login.jsp">
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
-  <div class="col-md-12"><a class="btn btn-link" href="create_account.jsp" style="float: right;">Create Account</a></div>
-  <%
+  <div class="col-md-12"><a class="btn btn-link" href="create_account.jsp" style="float: left;">Create Account</a></div>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  </div>
+    <br>
+  <%-- <%
     if((double)request.getAttribute("fine")>0.0){
 %>
  <h5 style="color:red"> <%=request.getAttribute("user")%> owes Rs. <%=request.getAttribute("fine") %> in fine.</h5>
 <%
 }
-%>
+%> --%>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -42,8 +52,8 @@ input[type="submit"]{
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-2">Member ID</th>
-    <th class="col-md-8">Member Name</th>
+    <th class="col-md-2 text-center">Member ID</th>
+    <th class="col-md-6 text-center">Member Name</th>
     <!-- Use text alignment like text-center or text-right -->
     <th class="text-center">Edit</th>
     <th class="text-center">Delete</th>

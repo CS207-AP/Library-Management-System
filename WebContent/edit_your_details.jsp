@@ -7,19 +7,43 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+
+.col-md-9{
+padding-left: 350px;}
+.button{
+padding-top:230px;
+padding-left:780px;
+padding-bottom: 20px;}
+
+</style>
+
 </head>
 
 <body >
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="member_login.jsp">
-        <b>Library Management System</b>
+ <nav class="navbar navbar-dark bg-dark">
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
+        <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><button class="btn btn-link" type="submit">Log Out</button></form></div>
+  <div class="homepage"><a href="member_login.jsp" style="float: left;">Go To Homepage</a></div>
+  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
+  </div>
+  <br>
   <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
         
           <form id="edit_details" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
@@ -36,11 +60,12 @@
                 <input form="create_user" type="password" class="form-control" name="password" placeholder="***"> </div>
             </div>
             
-            <input type="hidden" id="action" value="edit_your_details"/>
-            <button type="submit" class="btn btn-primary">Edit Details</button>
-            
-          </form>
+            <input type="hidden" id="action" value="edit_your_details"/></form>
           </div>
+          <div class="button"><button form="edit_details" type="submit" class="btn btn-primary">Edit Details</button></div>
+            
+            
+          
       </div>
     </div>
   </div>

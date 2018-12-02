@@ -358,7 +358,7 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		
-		else if(action.equalsIgnoreCase("Issue Book"))   //user Issue Books
+		else if(action.equalsIgnoreCase("borrowing_book"))   //user Issue Books
 		{
 			int userID=u.getMemId();
 			String bookid="";
@@ -377,7 +377,7 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("issue-books.jsp").include(request, response); //to connect the next page, check name of jsp.
 		}
 		
-		else if(action.equalsIgnoreCase("Return"))
+		else if(action.equalsIgnoreCase("returning_book"))
 		{
 			int userID=u.getMemId();
 			
@@ -401,7 +401,40 @@ public class ControllerServlet extends HttpServlet {
 			request.getSession().invalidate();
 			response.sendRedirect("loginPage.jsp");
 		}
-		
+		else if(action.equalsIgnoreCase("calling_browse_books"))
+		{
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			int user_id=u.getMemId();
+			objectlist=mydbConnect.browseBooks(user_id);
+            request.setAttribute("object_list",objectlist);//set list as attribute
+			request.getRequestDispatcher("browse_books.jsp").include(request, response);
+			
+		}
+		else if(action.equalsIgnoreCase("add_to_waitlist"))
+		{
+			int bookid = Integer.parseInt(request.getParameter("book-id"));
+			int userid = u.getMemId();
+			mydbConnect.addtoWaitlist(bookid,userid);
+			
+			if(u.getType().equalsIgnoreCase("admin"))
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			else
+				request.getRequestDispatcher("member_login.jsp").include(request, response);
+			
+			
+		}
+		else if(action.equalsIgnoreCase("remove_from_waitlist"))
+		{
+			int bookid = Integer.parseInt(request.getParameter("book-id"));
+			int userid = u.getMemId();
+			mydbConnect.removeFromWaitlist(bookid, userid);
+			
+			if(u.getType().equalsIgnoreCase("admin"))
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			else
+				request.getRequestDispatcher("member_login.jsp").include(request, response);
+			
+		}
 		
 	}
 		
