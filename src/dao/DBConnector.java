@@ -6,6 +6,8 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 import objects.User;
+
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -408,13 +410,14 @@ public class DBConnector {
 			String query="SELECT COUNT(user_id) FROM currentlyIssued";			
 			 Statement st = connection.createStatement();         
 	         ResultSet rs = st.executeQuery(query);
-	         int noOfBooks=rs.getInt(0);
+	         int noOfBooks=0;
+	         while(rs.next()) { noOfBooks=rs.getInt(1);}
 	         
 	         if(noOfBooks>=2) {
-	        	 System.out.println("Only two books bro");
+	        	 System.out.println("You cannot issue more than 2 books.");
 	         }
 	         
-			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
