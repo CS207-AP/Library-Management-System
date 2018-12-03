@@ -379,9 +379,8 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("borrowing_book"))   //user Issue Books
 		{
 			int userID=u.getMemId();
-			String bookid="";
-			request.getAttribute(bookid);
-			int bookID=Integer.parseInt(bookid);
+			
+			int bookID=Integer.parseInt(request.getParameter("book-id"));
 			
 			boolean issue=mydbConnect.borrowBook(userID,bookID);
 			if(issue==true)
