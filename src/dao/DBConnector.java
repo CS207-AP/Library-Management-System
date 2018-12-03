@@ -400,13 +400,19 @@ public class DBConnector {
 			ps.setInt(1, user_id);
 			ps.setInt(2, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
+	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?");
+	        ps.setInt(1, bookId);
+	        ResultSet rss= ps.executeQuery();
+	        rss.next();
+			
+	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id,book_title,issue_date, due_date) VALUES (?, ?,?,?, ?);");
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
-	        ps.setDate(3, java.sql.Date.valueOf(idate));
-	        ps.setDate(4, java.sql.Date.valueOf(ddate));
+	        ps.setString(3, rss.getString("book_title"));
+	        ps.setDate(4, java.sql.Date.valueOf(idate));
+	        ps.setDate(5, java.sql.Date.valueOf(ddate));
 	        
 	        i = ps.executeUpdate();
 	        
@@ -439,16 +445,26 @@ public class DBConnector {
 	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
-	        ps = connection.prepareStatement("SELECT issue_date,return_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
+	        ps = connection.prepareStatement("SELECT issue_date,due_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
+	        ps.setInt(1, user_id);
+	        ps.setInt(2, bookId);
+
 	        ResultSet rs= ps.executeQuery();
+	        rs.next();
+
 	        
+	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?;");
+	        ps.setInt(1, bookId);
+	        ResultSet rsp = ps.executeQuery();
+	        rsp.next();
+
 	        
-	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,book_name,issue_date,return_date) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE num = num + 1;");
+	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,book_title,issue_date,return_date) VALUES (?,?,?,?,?);");
 	        ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
-	        rs.next();
-	        ps.setDate(3, rs.getDate("issue_date"));
-	        ps.setDate(4, rs.getDate("due_date"));
+	        ps.setString(3,rsp.getString("book_title"));
+	        ps.setDate(4, rs.getDate("issue_date"));
+	        ps.setDate(5, rs.getDate("due_date"));
 	        ps.executeUpdate();
 	        
 	        connection.close();
@@ -764,13 +780,13 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT issue_date, due_date FROM issueHistory WHERE user_id =? AND bookId=?;");
+			ps = conn.prepareStatement("SELECT issue_date, return_date FROM issueHistory WHERE user_id =? AND book_id=?;");
 	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        ResultSet rs = ps.executeQuery();
 	        while(rs.next()) {
-	        	LocalDate idate = rs.getDate(3).toLocalDate();
-	        	LocalDate ddate = rs.getDate(4).toLocalDate();
+	        	LocalDate idate = rs.getDate(1).toLocalDate();
+	        	LocalDate ddate = rs.getDate(2).toLocalDate();
 	        	if(ddate.isAfter(idate)) {
 	        	Period period = Period.between(ddate, idate);
 	        	int daysElapsed = period.getDays();
@@ -779,7 +795,6 @@ public class DBConnector {
 	        	}
 	        }
 	       
-	        x = ps.executeUpdate();
 	        conn.close();
 	        
 	        
