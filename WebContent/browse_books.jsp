@@ -9,16 +9,49 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="theme.css" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">
+<style>
+.container-d-flex-justify-content-center{
+padding-bottom: 140px;
+padding-left: 475px;
+padding-top: 10px;
+background-color: black;
+}
+.navbar-brand{
+padding-top: 50px;
+padding-left:40px;
+}
+.search{
+display:inline-block;
+padding-left:20px;
+margin-left:10px;}
+.homepage{
+padding-left: 10px;}
+</style>
+
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container d-flex justify-content-center"> <a class="navbar-brand" href="#">
-        <b>Library Management System</b>
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
+        <b> Library Management System</b>
       </a> </div>
   </nav>
+  <div class="homepage"><a href="#" style="float: left;">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
-    <br>
+    <br/>
+     <br/>
+    <div class="search"><form action="ControllerServlet" method="post">
+    <input type="text" name="search_title" placeholder="Macbeth"/>
+    <input type="text" name="search_genre" placeholder="Thriller"/>
+    <input type="text" name="search_author" placeholder="Shakespeare"/>
+    <input type="text" name="search_publisher" placeholder="Penguin"/>
+    <input type="text" name="search_isbn" placeholder="978-3-16-148410-0"/>
+    <input type="hidden" name="action" value="search"/>
+    <input type="submit" class="btn btn-primary" value="Search"/>
+    </form>
+    </div>
+     <br/> 
+     <br/>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -27,12 +60,12 @@
     <tr>
  
     <!-- You can adjust the width of table columns as well -->
-    <th class="col-md-2">Title</th>
+    <th class="col-md-4">Title</th>
     <th class="col-md-2">Genre</th>
     <th class="col-md-2">Author</th>
     <th class="col-md-2">Publisher</th>
-    <th class="col-md-2"></th>
-    <th class="col-md-2"></th>
+    <th class="col-md-1"></th>
+    <th class="col-md-1"></th>
     
     
     </tr>

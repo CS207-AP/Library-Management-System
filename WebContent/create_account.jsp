@@ -32,6 +32,7 @@ padding-top:380px;
 padding-left:780px;}
 .homepage{
 padding-left:10px;}
+
 </style>
 
 </head>
@@ -45,7 +46,7 @@ padding-left:10px;}
   <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
-    <br>
+    <br/>
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -53,16 +54,16 @@ padding-left:10px;}
           <form id="create_user" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" name="name" placeholder="Aastha"> </div>
+                <input form="create_user" type="text" class="form-control" name="name" placeholder="Adam"> </div>
             </div>
-            <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Type</label>
-              <div class="col-10">
-                <input form="create_user" type="radio" class="form-control" name="type" value="member" checked="yes"><span>Regular Member</span>
-                <input form="create_user" type="radio" class="form-control" name="type" value="admin"><span>Admin</span></div>
+            <div class="form-group row"> <label for="type" class="col-2 col-form-label">Type</label>
+              <div class="col-10" style="white-space:nowrap;">
+               <input form="create_user" type="radio" class="form-control" id="type" name="type" value="member" checked="yes">
+                <input form="create_user" type="radio" class="form-control" name="type" value="admin"><br></div>
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" name="email" placeholder="aastha@gmail.com"> </div>
+                <input form="create_user" type="text" class="form-control" name="email" placeholder="mail@example.com"> </div>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">

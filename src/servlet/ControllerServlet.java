@@ -14,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.PrintWriter;
 import dao.DBConnector;
 import objects.Book;
@@ -70,19 +72,20 @@ public class ControllerServlet extends HttpServlet {
 		     //System.out.println(obj.getMemId());
 	        	if (obj.getMemId()==0)
 	        	{
-	           //out.println("Username or Password is incorrect");
-	           request.setAttribute("loginResult", true);
+	           out.println("Invalid Credentials");
+	           //request.setAttribute("loginResult", "Error");
 	           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); 
 	           rs.include(request, response);
 	           }
 	        	else
-	        	{   u=obj;
-	        	    System.out.println(obj.getMemId());
-	        	    System.out.println(obj.getEmail());
-	        	    System.out.println(obj.getPassword());
-	        	
+	        	{   
+	        		u=obj;
+//	        	    System.out.println(obj.getMemId());
+//	        	    System.out.println(obj.getEmail());
+//	        	    System.out.println(obj.getPassword());
+//	        	
 	        		String type=obj.getType();
-	        		System.out.println(obj.getType());
+//	        		System.out.println(obj.getType());
 	        		request.setAttribute("memberid", obj.getMemId());
 	        		RequestDispatcher rs;
 	        		if(type.equalsIgnoreCase("admin"))
@@ -110,7 +113,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean save=mydbConnect.addBook(book);
 			if(save==true)
 			{
-				out.println("Book Added Successfully");
+				out.println("Book added successfully.");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response);
 			}
@@ -130,14 +133,14 @@ public class ControllerServlet extends HttpServlet {
 			obj.setEmail(Email);
 			String Password=request.getParameter("password");
 			obj.setPassword(Password);
-			System.out.println("INSIDE CREATE_USER IN SERVLET" +obj.getEmail());
+			//System.out.println("INSIDE CREATE_USER IN SERVLET" +obj.getEmail());
 			
 			try {
 			boolean save;
 			save=mydbConnect.addUser(obj);
 			if(save==true)
 			{
-			out.println("Member added successfully");
+			out.println("Member added successfully.");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //form for member add.
 			}
@@ -183,7 +186,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean save=mydbConnect.editBook(book);
 			if(save==true)
 			{
-				out.println("Edited Book Successfully");
+				out.println("Edited book details successfully.");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 			
@@ -198,9 +201,9 @@ public class ControllerServlet extends HttpServlet {
 		}
 		
 		else if(action.equalsIgnoreCase("edit_user")) {
-			System.out.println("Entering edit_user in servlet");
+			
 			User userToEdit = mydbConnect.getUserDetails(Integer.parseInt(request.getParameter("member-id")));
-			System.out.println("Old name: "+userToEdit.getName());
+			
 			String user_type=request.getParameter("member-type");
 			userToEdit.setType(user_type);
 			String Name=request.getParameter("member-name");
@@ -210,10 +213,10 @@ public class ControllerServlet extends HttpServlet {
 			userToEdit.setEmail(Email);
 		
 			boolean save=mydbConnect.editUserDetails(userToEdit);
-			System.out.println("New name: "+userToEdit.getName());
+			
 			if(save==true)
 			{
-				out.println("Edited User details Successfully");
+				out.println("Edited iser details successfully.");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
@@ -225,7 +228,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean remove=mydbConnect.deleteBook(book_id);
 			if(remove==true)
 			{
-				out.println("BOOK DELETED SUCCESSFULLY!");
+				out.println("Book deleted successfully.");
 			}
 			
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
@@ -234,7 +237,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			String userid =request.getParameter("memId");
 			int user_id=Integer.parseInt(userid);
-			System.out.println("MEM ID IN DELETE USER SERVLET: "+user_id);
+//			System.out.println("MEM ID IN DELETE USER SERVLET: "+user_id);
 			
 			double fine=0.0;
 			fine=mydbConnect.deleteMember(user_id);
@@ -347,13 +350,13 @@ public class ControllerServlet extends HttpServlet {
 			u.setEmail(Email);
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
-			System.out.println("INSIDE EDIT_YOUR_DETAILS IN SERVLET" +u.getName());
-			System.out.println(u.getEmail());
-			System.out.println(u.getPassword());
+//			System.out.println("INSIDE EDIT_YOUR_DETAILS IN SERVLET" +u.getName());
+//			System.out.println(u.getEmail());
+//			System.out.println(u.getPassword());
 			boolean save=mydbConnect.editUserDetails(u);
 			if(save==true)
 			{
-				out.println("Edited User details Successfully");
+				out.println("Edited details successfully.");
 			}
 			request.getRequestDispatcher("member_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
@@ -383,11 +386,11 @@ public class ControllerServlet extends HttpServlet {
 			boolean issue=mydbConnect.borrowBook(userID,bookID);
 			if(issue==true)
 			{
-				out.println("Book Issued Successfully");
+				out.println("Book issued successfully.");
 			}
 			else
 			{
-				out.println("Unable to Issue the Book. Try again later!");
+				out.println("Unable to issue the book. Try again later!");
 			}
 			request.getRequestDispatcher("issue-books.jsp").include(request, response); //to connect the next page, check name of jsp.
 		}
@@ -407,14 +410,16 @@ public class ControllerServlet extends HttpServlet {
 			}
 			else
 			{
-				out.println("Returned Book Successfully!");
+				out.println("Returned book successfully.");
 			}
 			
 			request.getRequestDispatcher("return-book.jsp").include(request, response); //to connect the next page,check name of jsp.
 		}
 		else if(action.equalsIgnoreCase("logout")) {
-			request.getSession().invalidate();
-			response.sendRedirect("loginPage.jsp");
+			HttpSession session=request.getSession();  
+			session.invalidate();
+			out.close();
+			
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
 		{
@@ -448,6 +453,24 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
 			else
 				request.getRequestDispatcher("member_login.jsp").include(request, response);
+			
+		}
+		else if(action.equalsIgnoreCase("search")) {
+			String search_title=request.getParameter("search-title");
+			String search_genre=request.getParameter("search-genre");
+			String search_publisher=request.getParameter("search-publisher");
+			String search_author=request.getParameter("search-author");
+			String search_isbn=request.getParameter("search-isbn");
+			Book toSearch=new Book();
+			toSearch.setid(0);
+			toSearch.setAuthor(search_author);
+			toSearch.setAvailable(0);
+			toSearch.setGenre(search_genre);
+			toSearch.setISBN(search_isbn);
+			toSearch.setPublisher(search_publisher);
+			toSearch.setQuantity(0);
+			toSearch.setTitle(search_title);
+//			List <Book> object_list
 			
 		}
 		

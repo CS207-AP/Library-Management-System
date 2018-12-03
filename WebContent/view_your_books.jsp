@@ -37,7 +37,7 @@ text-align: center;}
   <div class="homepage"><a href="member_login.jsp" style="float: left;">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
-  <br>
+  <br/>
    <h5 class="title">Current Issues:</h5>
   <table class="table table-bordered table-striped table-hover">
    

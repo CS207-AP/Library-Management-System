@@ -25,6 +25,7 @@ padding-left:10px;
 padding-right:10px;}
 .homepage{
 padding-left:10px;}
+
 </style>
 </head>
 <body >
@@ -126,10 +127,10 @@ padding-left:10px;}
           <form id="delete-book-form" action="ControllerServlet" method="post">
           <input type="hidden" name="action" value="delete_book"/>
           <input type="hidden" name="bookId" value=""/>
-          <input type="submit" value="Yes"/>
+          <input class="btn btn-link" type="submit" value="Yes"/>
           
           </form >
-           <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+           <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
         </div>
       </div>
     </div>

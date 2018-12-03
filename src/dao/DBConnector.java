@@ -386,7 +386,7 @@ public class DBConnector {
 			
 			Book book = books.get(i);
 			
-			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && (Integer.parseInt(toSearch.getISBN())!=0))) {
+			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && toSearch.getISBN()!="")) {
 				
 				matchingBooks.add(book);
 			}
@@ -628,7 +628,7 @@ public class DBConnector {
 	}
 	
 	public void addtoWaitlist(int bookid,int userid) {
-		
+		int x;
 		Connection conn; 
 		try {
 			conn = dbUtil.getConnection();
