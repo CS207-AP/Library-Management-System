@@ -458,6 +458,7 @@ public class DBConnector {
 			e.printStackTrace();
 			System.err.println("Got an exception in returnbook in dbconnector");
 		}
+		
 		return calcFine(user_id, bookId);
 	}
 	
@@ -763,7 +764,7 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT issue_date, due_date FROM currentlyIssued WHERE user_id =? AND bookId=?;");
+			ps = conn.prepareStatement("SELECT issue_date, due_date FROM issueHistory WHERE user_id =? AND bookId=?;");
 	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        ResultSet rs = ps.executeQuery();
