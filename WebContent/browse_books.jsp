@@ -27,15 +27,31 @@ margin-left:10px;}
 .homepage{
 padding-left: 10px;}
 </style>
-
+<script>
+$(document).ready(function(){
+	var type=request.getAttribute("type");
+    if(type=="admin")
+    {	$("a").click(function(){
+        $("#header").attr("href", "admin_login.jsp");
+        $("#home").attr("href", "admin_login.jsp");
+    });}
+    else{
+    	$("a").click(function(){
+            $("#header").attr("href", "member_login.jsp");
+            $("#home").attr("href", "member_login.jsp");
+        });
+    	
+    }
+});
+</script>
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
+    <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="" id="header">
         <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="homepage"><a href="#" style="float: left;">Go To Homepage</a></div>
+  <div class="homepage"><a href="" style="float: left;" id="home">Go To Homepage</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
     <br/>
@@ -114,6 +130,26 @@ padding-left: 10px;}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script>
+
+  function headerClicked() {
+     var type=request.getAttribute("type");
+	 if (type=="admin")
+	 {
+		 window.location.href = "admin_login.jsp";
+	 }
+     else
+         window.location.href = "member_login.jsp";
+  }
+  function homeClicked() {
+	     var type=request.getAttribute("type");
+		 if (type=="admin")
+		 {
+			 window.location.href = "admin_login.jsp";
+		 }
+	     else
+	         window.location.href = "member_login.jsp";
+	  }
+
   </script>
 </body>
 

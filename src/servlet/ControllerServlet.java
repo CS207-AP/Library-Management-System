@@ -425,6 +425,7 @@ public class ControllerServlet extends HttpServlet {
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			int user_id=u.getMemId();
 			objectlist=mydbConnect.browseBooks(user_id);
+			request.setAttribute("type", u.getType());
             request.setAttribute("object_list",objectlist);//set list as attribute
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
