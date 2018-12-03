@@ -76,29 +76,29 @@ padding-left: 10px;}
                     <td><c:out value="${array[0].getGenre()}" /></td>
                     <td><c:out value="${array[0].getAuthor()}" /></td>
                     <td><c:out value="${array[0].getPublisher()}" /></td>
-                    <td><c:if test="${array[1][0]==true}">
+                    <td><c:if test="${array[1][1]==true}">
                          <form action="ControllerServlet" method="post">
-                         <input type="hidden" id="book-id" value="c:out value="${array[0].getid()}/>
-                         <input type="hidden" id="action" value="returning_book"/>
+                         <input type="hidden" name="book-id" value="<c:out value="${array[0].getid()}"/>"/>
+                         <input type="hidden" name="action" value="returning_book"/>
                          <input type="submit" class="btn btn-primary" value="Return Book"/>
                          </form></c:if>
-                         <c:if test="${array[1][1]==true}">
+                         <c:if test="${array[1][0]==true}">
                          <form action="ControllerServlet" method="post">
-                         <input type="hidden" id="book-id" value="c:out value="${array[0].getid()}/>
-                         <input type="hidden" id="action" value="borrowing_book"/>
+                         <input type="hidden" name="book-id" value="<c:out value="${array[0].getid()}"/>" />
+                         <input type="hidden" name="action" value="borrowing_book"/>
                          <input type="submit" class="btn btn-primary" value="Borrow Book"/>
                          </form></c:if>
                          <c:if test="${array[1][2]==true}">
                          <form action="ControllerServlet" method="post">
-                         <input type="hidden" id="book-id" value="c:out value="${array[0].getid()}/>
-                         <input type="hidden" id="action" value="add_to_waitlist"/>
+                         <input type="hidden" name="book-id" value="<c:out value="${array[0].getid()}"/>"/>
+                         <input type="hidden" name="action" value="add_to_waitlist"/>
                          <input type="submit" class="btn btn-primary" value="Waitlist"/>
                          </form></c:if></td>
                          <td>
                          <c:if test="${array[1][3]==true}">
                          <form action="ControllerServlet" method="post">
-                         <input type="hidden" id="book-id" value="c:out value="${array[0].getid()}/>
-                         <input type="hidden" id="action" value="remove_from_waitlist"/>
+                         <input type="hidden" name="book-id" value="<c:out value="${array[0].getid()}"/>"/>
+                         <input type="hidden" name="action" value="remove_from_waitlist"/>
                          <input type="submit" class="btn btn-link" value="Remove from Waitlist"/>
                          </form></c:if></td>
                 </tr>  

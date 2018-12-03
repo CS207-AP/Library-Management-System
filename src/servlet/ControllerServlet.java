@@ -397,11 +397,10 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("returning_book"))
 		{
+			System.out.println("Entered returning_book in servlet");
 			int userID=u.getMemId();
 			
-			String bookid="";
-			request.getAttribute(bookid);
-			int bookID=Integer.parseInt(bookid);
+			int bookID = Integer.parseInt(request.getParameter("book-id"));
 			
 			double fine=mydbConnect.returnBook(userID,bookID);
 			if(fine>0)
@@ -423,6 +422,7 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
 		{
+		
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			int user_id=u.getMemId();
 			objectlist=mydbConnect.browseBooks(user_id);

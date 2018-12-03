@@ -453,14 +453,14 @@ public class DBConnector {
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = connection.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND bookId=?;");
+	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        
-	        ps = connection.prepareStatement("INSERT INTO lms_db.past_issues (bookId, user_id, num) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
+	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
 	        ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        i = ps.executeUpdate();
@@ -481,7 +481,7 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT book_id, user_Id, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
+			ps = conn.prepareStatement("SELECT book_title, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
 	        ps.setInt(1, book_id);
 	        ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
@@ -509,13 +509,13 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT * FROM waitlist WHERE book_id = ?");
+			ps = conn.prepareStatement("SELECT user_id FROM waitlist WHERE book_id = ?;");
 	        ps.setInt(1, book_id);
-	        ps.setInt(2, user_id);
+	        //ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
 	        for(int i=0;rs.next();i++)
 	        {
-	        	if(rs.getString("user_id").equals(user_id)) return i;
+	        	if(rs.getInt("user_id")==user_id) return i;
 	        	
 	        }
 	        conn.close();
