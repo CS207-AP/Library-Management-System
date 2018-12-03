@@ -34,9 +34,8 @@ public class DBConnector {
             Statement st = conn.createStatement();
            
             ResultSet rs = st.executeQuery(query);
-           
-            
-            while (rs.next()) {
+            System.out.println(email);
+            while(rs.next()) {
             	String em = rs.getString("user_email");
             	String pw = rs.getString("user_password");
             	System.out.println(em);
@@ -52,9 +51,8 @@ public class DBConnector {
                     user.setPassword(pw);
                     user.setType(rs.getString("user_type"));
                     user.setName(rs.getString("user_name"));
-                    break;
-                	}
-                }
+                   
+                }}
             conn.close();
             
 	}catch (SQLException e) {
@@ -182,7 +180,7 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT FROM issueHistory WHERE book_id ="+book_id;			
+			String query = "SELECT FROM issueHistory WHERE book_id ="+book_id+";";			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
@@ -599,7 +597,7 @@ public class DBConnector {
 		System.out.println("Inside edit_user in dbconn");
 		Connection conn; 
 		int x=0;
-		
+		System.out.println(user.getEmail());
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
@@ -672,15 +670,15 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("INSERT into books (book_id, book_ISBN, book_title, book_author,book_publisher,book_genre,book_quantity,book_available) values (NULL, ?, ?, ?, ?, ?, ?, 0);");
+			ps = conn.prepareStatement("INSERT into books (book_ISBN, book_title, book_author,book_publisher,book_genre,book_quantity,book_available) values (?, ?, ?, ?, ?, ?, ?);");
 	        //generate an ID
-			ps.setString(2, book.getISBN());
-	        ps.setString(3, book.getTitle());
-	        ps.setString(4, book.getAuthor());
-	        ps.setString(5, book.getPublisher());
-	        ps.setString(6, book.getGenre());
-	        ps.setInt(7, book.getQuantity());
-	        ps.setInt(8, book.getAvailable());
+			ps.setString(1, book.getISBN());
+	        ps.setString(2, book.getTitle());
+	        ps.setString(3, book.getAuthor());
+	        ps.setString(4, book.getPublisher());
+	        ps.setString(5, book.getGenre());
+	        ps.setInt(6, book.getQuantity());
+	        ps.setInt(7, book.getAvailable());
 	        x = ps.executeUpdate();
 	        
 	        conn.close();
@@ -814,11 +812,11 @@ public class DBConnector {
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("INSERT into member_list (user_id, user_type, user_email, user_name, user_password) values (0, ?, ?, ?, ?);");
-	        ps.setString(2, user.getType());
-	        ps.setString(3, user.getEmail());
-	        ps.setString(4, user.getName());
-	        ps.setString(5, user.getPassword());
+			ps = conn.prepareStatement("INSERT into users (user_type, user_email, user_name, user_password) values  (?, ?, ?, ?);");
+	        ps.setString(1, user.getType());
+	        ps.setString(2, user.getEmail());
+	        ps.setString(3, user.getName());
+	        ps.setString(4, user.getPassword());
 	       
 	        x = ps.executeUpdate();
 	        

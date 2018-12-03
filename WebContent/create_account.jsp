@@ -53,23 +53,23 @@ padding-left:10px;}
           <form id="create_user" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="name" placeholder="Aastha"> </div>
+                <input form="create_user" type="text" class="form-control" name="name" placeholder="Aastha"> </div>
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Type</label>
               <div class="col-10">
-                <input form="create_user" type="radio" class="form-control" name="type" id="type" value="member" checked="yes"><span>Regular Member</span>
-                <input form="create_user" type="radio" class="form-control" name="type" id="type" value="admin"><span>Admin</span></div>
+                <input form="create_user" type="radio" class="form-control" name="type" value="member" checked="yes"><span>Regular Member</span>
+                <input form="create_user" type="radio" class="form-control" name="type" value="admin"><span>Admin</span></div>
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" id="email" placeholder="aastha@gmail.com"> </div>
+                <input form="create_user" type="text" class="form-control" name="email" placeholder="aastha@gmail.com"> </div>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="create_user" type="password" class="form-control" id="password" placeholder="*********"> </div>
+                <input form="create_user" type="password" class="form-control" name="password" placeholder="*********"> </div>
             </div>
             
-            <input type="hidden" id="action" value="create_user"/>  </form> </div>
+            <input type="hidden" name="action" value="create_user"/>  </form> </div>
             <div class="button"><button form="create_user" type="submit" class="btn btn-primary">Create User</button>
             </div>
           

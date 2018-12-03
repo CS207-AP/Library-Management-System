@@ -68,7 +68,7 @@ public class ControllerServlet extends HttpServlet {
 		     String pass = request.getParameter("login_password");
 		     User obj = mydbConnect.checkCredentials(email, pass);
 		     //System.out.println(obj.getMemId());
-	        	if (obj==null)
+	        	if (obj.getMemId()==0)
 	        	{
 	           //out.println("Username or Password is incorrect");
 	           request.setAttribute("loginResult", true);
@@ -77,50 +77,42 @@ public class ControllerServlet extends HttpServlet {
 	           }
 	        	else
 	        	{   u=obj;
-//	        	    System.out.println(obj.getMemId());
-//	        	    System.out.println(obj.getEmail());
-//	        	    System.out.println(obj.getPassword());
+	        	    System.out.println(obj.getMemId());
+	        	    System.out.println(obj.getEmail());
+	        	    System.out.println(obj.getPassword());
 	        	
 	        		String type=obj.getType();
-//	        		System.out.println(obj.getType());
+	        		System.out.println(obj.getType());
 	        		request.setAttribute("memberid", obj.getMemId());
-	        		if(type.equalsIgnoreCase("admin"));
-	        		System.out.println("Entered");
-	        		RequestDispatcher rs = request.getRequestDispatcher("admin_login.jsp");
-	        		rs.forward(request, response);
+	        		RequestDispatcher rs;
+	        		if(type.equalsIgnoreCase("admin"))
+	        		{
+	        		rs = request.getRequestDispatcher("admin_login.jsp");
+	        		}else {
 	        		rs = request.getRequestDispatcher("member_login.jsp");
+	        		}
 	        		rs.forward(request, response);
+
 	        	}
 		}
 		else if(action.equalsIgnoreCase("create_book"))
 		{
 			book.setTitle(request.getParameter("title"));
-			String author=request.getParameter("author");
-			book.setAuthor("author");
-			String publisher = request.getParameter("publisher");
-			book.setPublisher("publisher");
-			String genre=request.getParameter("genre");
-			book.setGenre("author");
-			String ISBN=request.getParameter("ISBN");
-			book.setISBN("ISBN");
-			String sbookID=request.getParameter("sbookID");
-			int bookID=Integer.parseInt(sbookID);
-			book.setid(bookID);
-			String squantity=request.getParameter("quantity");
-			int quantity=Integer.parseInt(squantity);
+			book.setAuthor(request.getParameter("author"));
+			book.setPublisher(request.getParameter("publisher"));
+			book.setGenre(request.getParameter("genre"));
+			book.setISBN(request.getParameter("isbn"));
+			int quantity=Integer.parseInt(request.getParameter("number_of_copies"));
 			book.setQuantity(quantity);
-			String savailable=request.getParameter("savailable");
-			int available=Integer.parseInt(savailable);
-			book.setAvailable(available);
-			
-			
+			book.setAvailable(quantity);
+			System.out.println("INSIDE CREATE_BOOK OF SERVLET: "+book.getTitle());
 			try {
 			boolean save=mydbConnect.addBook(book);
 			if(save==true)
 			{
 				out.println("Book Added Successfully");
 			}
-			request.getRequestDispatcher("Add Book WebPage").include(request, response);
+			request.getRequestDispatcher("admin_login.jsp").include(request, response);
 			}
 			catch (Exception ex) {
 			Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,14 +122,15 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("create_user"))
 		{
 			User obj = new User();
-			String user_type=request.getParameter("User Type");
+			String user_type=request.getParameter("type");
 			obj.setType(user_type);
-			String Name=request.getParameter("Name");
+			String Name=request.getParameter("name");
 			obj.setName(Name);
-			String Email=request.getParameter("Email");
+			String Email=request.getParameter("email");
 			obj.setEmail(Email);
-			String Password=request.getParameter("Password");
+			String Password=request.getParameter("password");
 			obj.setPassword(Password);
+			System.out.println("INSIDE CREATE_USER IN SERVLET" +obj.getEmail());
 			
 			try {
 			boolean save;
@@ -146,7 +139,7 @@ public class ControllerServlet extends HttpServlet {
 			{
 			out.println("Member added successfully");
 			}
-			request.getRequestDispatcher("add member html page").include(request, response); //form for member add.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //form for member add.
 			}
 			catch (Exception ex) {
 				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,6 +263,7 @@ public class ControllerServlet extends HttpServlet {
 //				getIssues.add((Book)array[0]);
 //			}
 			request.setAttribute("currentIssues",objectlist);//set list as attribute
+			request.setAttribute("book", new Object[5]);
 			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
 			
 		}
@@ -353,7 +347,9 @@ public class ControllerServlet extends HttpServlet {
 			u.setEmail(Email);
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
-			
+			System.out.println("INSIDE EDIT_YOUR_DETAILS IN SERVLET" +u.getName());
+			System.out.println(u.getEmail());
+			System.out.println(u.getPassword());
 			boolean save=mydbConnect.editUserDetails(u);
 			if(save==true)
 			{

@@ -54,10 +54,10 @@ padding-left:10px;}
                 <tr>
                     <td> <c:out value="${book.getTitle()}" /></td>
                     <td><form id="view-history" action="ControllerServlet" method="post">
-                    <input class="btn btn-primary" type="submit" value="View History"/>
-                    <input type="hidden" id="booktitle" value="${book.getTitle()}"/>
-                    <input type="hidden" id="bookid" value="${book.getid()}"/>
-                    <input type="hidden" id="action" value="calling_individual_view_history"/>
+                    <input class="btn btn-link" type="submit" value="View History"/>
+                    <input type="hidden" name="booktitle" value="${book.getTitle()}"/>
+                    <input type="hidden" name="bookid" value="${book.getid()}"/>
+                    <input type="hidden" name="action" value="calling_individual_view_history"/>
                     
                     </form>
                     </td>

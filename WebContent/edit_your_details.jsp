@@ -49,19 +49,21 @@ padding-left:10px;}
           <form id="edit_details" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" name="name" value=<%=request.getAttribute("name")%>> </div>
+                <input form="edit_details" type="text" class="form-control" name="name" value=<%=request.getAttribute("name")%>> </div>
+                <%-- <input type="hidden" name="name" value=<%=request.getAttribute("name")%>/> --%>
             </div>
             
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="create_user" type="text" class="form-control" name="email" value=<%=request.getAttribute("email")%>"> </div>
+                <input form="edit_details" type="text" class="form-control" name="email" value=<%=request.getAttribute("email")%>> </div>
+                 <%-- <input type="hidden" name="name" value=<%=request.getAttribute("email")%>/> --%>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>
               <div class="col-10">
-                <input form="create_user" type="password" class="form-control" name="password" placeholder="********"> </div>
+                <input form="edit_details" type="password" class="form-control" name="new_password" placeholder="********" required> </div>
             </div>
             
-            <input type="hidden" id="action" value="edit_your_details"/></form>
+            <input type="hidden" name="action" value="edit_your_details"/></form>
           </div>
           <div class="button"><button form="edit_details" type="submit" class="btn btn-primary">Edit Details</button></div>
             
@@ -75,7 +77,17 @@ padding-left:10px;}
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!-- <script>
+$('#new_name').change(function(){
+	  var user_input = $('#new_name').val(); 
+	  $('#name').val(user_input);        
+	});
+$('#new_email').change(function(){
+	  var user_input = $('#new_email').val(); 
+	  $('#email').val(user_input);        
+	});
 
+</script> -->
 </body>
 
 </html>

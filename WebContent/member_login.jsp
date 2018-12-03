@@ -53,13 +53,13 @@ padding-left:10px;}
       <div class="col-md-12 text-center d-md-flex justify-content-between align-items-center">
           <ul class="nav d-flex justify-content-center">
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_browse_books"/>
+            							<input type="hidden" name="action" value="calling_browse_books"/>
                                         <input class="btn btn-primary" type="submit" value="Browse Books"/> </form></li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_view_your_books"/>
+            							<input type="hidden" name="action" value="calling_view_your_books"/>
                                         <input class="btn btn-primary" type="submit" value="View Your Books"/> </form> </li>
             <li class="nav-item"> <form action="ControllerServlet" method="post">
-            							<input type="hidden" id="action" value="calling_edit_your_details"/>
+            							<input type="hidden" name="action" value="calling_edit_your_details"/>
                                         <input class="btn btn-primary" type="submit" value="Edit Your Details"/> </form></li>
             </ul>
         </div>
