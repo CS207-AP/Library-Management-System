@@ -52,16 +52,14 @@ padding-left:10px;}
     <th class="col-md-2 text-center">Due Date</th>
     </tr>
     <c:forEach items="${currentIssues}" var="book"> 
-    <c:forEach items="${book}" var="bookDetails"> 
                
                 <tr>
-                    <td><c:out value="${detail}" /></td>
-                    <td><c:out value="" /></td>
-                    <td><c:out value="" /></td>
-                    <td class="idate"><c:out value="" /></td>
-                    <td class="ddate"><c:out value="" /></td>
+                    <td><c:out value="${book[0]}" /></td>
+                    <td><c:out value="${book[1]}" /></td>
+                    <td><c:out value="${book[2]}" /></td>
+                    <td class="idate"><c:out value="${book[3]}" /></td>
+                    <td class="ddate"><c:out value="${book[4]}" /></td>
                 </tr>  
-            </c:forEach>
            </c:forEach>
       
     

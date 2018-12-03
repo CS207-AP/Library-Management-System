@@ -180,16 +180,17 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT FROM issueHistory WHERE book_id ="+book_id+";";			
+			String query = "SELECT user_id,book_title,issue_date,return_date FROM issueHistory WHERE book_id ="+book_id+";";			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
 		    while(userSet.next()) {
 		    	
-		    	Object [] issueData = new Object[3];
-		    	issueData[0]=userSet.getString("user_id");
-		    	issueData[1]=userSet.getDate("issue_date");
-		    	issueData[2]=userSet.getDate("return_date");
+		    	Object [] issueData = new Object[4];
+		    	issueData[0]=userSet.getInt("user_id");
+		    	issueData[1]=userSet.getString("book_title");
+		    	issueData[2]=userSet.getDate("issue_date");
+		    	issueData[3]=userSet.getDate("return_date");
 		    	issues.add(issueData);
 		    	
 
