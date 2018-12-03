@@ -372,30 +372,6 @@ public class DBConnector {
 		return combinedList;
 	
 	}
-		
-		
-	
-	
-	List<Book> searchBook(Book toSearch){
-		
-		List<Book> books = getAllBooks();;
-		List<Book> matchingBooks= new ArrayList<Book>();
-		int size = books.size();
-		
-		for (int i=0;i<size;i++) {
-			
-			Book book = books.get(i);
-			
-			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && toSearch.getISBN()!="")) {
-				
-				matchingBooks.add(book);
-			}
-		}
-		
-		return matchingBooks;
-	}
-	  
-	
 	
 	public boolean borrowBook(int user_id, int bookId)
 	{
@@ -449,21 +425,28 @@ public class DBConnector {
 	public double returnBook(int user_id, int bookId) 
 	{
 		Connection connection;
-		int i = 0;
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
+			
+			
 	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
+	        ps = connection.prepareStatement("SELECT issue_date,return_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
+	        ResultSet rs= ps.executeQuery();
 	        
-	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
+	        
+	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,book_name,issue_date,return_date) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE num = num + 1;");
 	        ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
-	        i = ps.executeUpdate();
+	        rs.next();
+	        ps.setDate(3, rs.getDate("issue_date"));
+	        ps.setDate(4, rs.getDate("due_date"));
+	        ps.executeUpdate();
 	        
 	        connection.close();
 		
@@ -835,6 +818,75 @@ public class DBConnector {
 	        return false;
 	}
 	
+	public List<Object[]> searchBooks(Book searchBook,int user_id) {
+		
+		Connection conn;
+		List<Object[]> combinedList= new ArrayList<Object[]>();
+		try {
+			conn = dbUtil.getConnection();
+			
+			PreparedStatement ps;
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id=? OR book_title=? OR book_author=? OR book_ISBN=? OR book_publisher=?");		        
+			  ps.setInt(1, searchBook.getid());
+			  ps.setString(2, searchBook.getAuthor());
+			  ps.setString(3, searchBook.getISBN());
+			  ps.setString(4, searchBook.getPublisher());
+		      ResultSet bookSet = ps.executeQuery();
+		      
+		      while(bookSet.next()) {
+		    	  
+		    	  Object[] array= new Object[2];
+		    	  boolean[] buttons= new boolean[4];
+		    	  
+		    	  Book book = new Book();
+		    	  book.setTitle(bookSet.getString("book_title"));
+		    	  book.setAuthor(bookSet.getString("book_author"));
+		    	  book.setAvailable(bookSet.getInt("book_available"));
+		    	  book.setQuantity(bookSet.getInt("book_quantity"));
+		    	  book.setGenre(bookSet.getString("book_genre"));
+		    	  book.setid(bookSet.getInt("book_id"));
+		    	  book.setISBN(bookSet.getString("book_ISBN"));
+		    	  book.setPublisher(bookSet.getString("book_publisher"));
+		    	  
+		    	  if(hasIssuedThisBook(book.getid(),user_id)==true) {
+		    		  
+		    		  buttons[1]=true;// set return button to true
+		    	  }else {
+		    		  if(book.getAvailable()>0) {
+		    			  
+		    			  buttons[0]=true;// set borrow button to true
+		    		  }
+		    		  
+		    		  if(book.getAvailable()==0 && posInWaitlist(book.getid(),user_id)==-1) {
+		    			  
+		    			  buttons[2]=true;//set add to WL true
+		    		  }
+		    		  
+		    		  if(posInWaitlist(book.getid(),user_id)!=-1) {
+		    			  
+		    			  buttons[3]=true;// set rem from WL to true
+		    		  }
+		    	  }
+		    	  
+		    	  array[0]=book;
+		    	  array[1]=buttons;
+		    	  combinedList.add(array);
+		    	  
+		      }
+		      
+		      conn.close();
+		      
+		   	      
+		      
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Error while getting books");
+			e.printStackTrace();
+		}
+		
+		return combinedList;
+		
+	}
 	
 
 }
