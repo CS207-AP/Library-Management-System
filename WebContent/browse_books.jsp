@@ -49,11 +49,11 @@ padding-left: 10px;}
     <br/>
      <br/>
     <div class="search"><form action="ControllerServlet" method="post">
-    <input type="text" name="search_title" placeholder="Macbeth"/>
-    <input type="text" name="search_genre" placeholder="Thriller"/>
-    <input type="text" name="search_author" placeholder="Shakespeare"/>
-    <input type="text" name="search_publisher" placeholder="Penguin"/>
-    <input type="text" name="search_isbn" placeholder="978-3-16-148410-0"/>
+    <input type="text" name="search_title" placeholder="Macbeth" value=""/>
+    <input type="text" name="search_genre" placeholder="Thriller" value=""/>
+    <input type="text" name="search_author" placeholder="Shakespeare" value=""/>
+    <input type="text" name="search_publisher" placeholder="Penguin" value=""/>
+    <input type="text" name="search_isbn" placeholder="978-3-16-148410-0" value=""/>
     <input type="hidden" name="action" value="search"/>
     <input type="submit" class="btn btn-primary" value="Search"/>
     </form>

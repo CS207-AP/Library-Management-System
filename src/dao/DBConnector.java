@@ -710,8 +710,9 @@ public class DBConnector {
  * @param bookid
  * @param userid
  */
-	public void addtoWaitlist(int bookid,int userid) {
+	public boolean addtoWaitlist(int bookid,int userid) {
 		Connection conn; 
+		int x=0;
 		try {
 			
 			conn = dbUtil.getConnection();
@@ -719,35 +720,41 @@ public class DBConnector {
 				ps = conn.prepareStatement("INSERT INTO waitlist SET user_id=?,book_id=?");
 				ps.setInt(1,userid);
 				ps.setInt(2,bookid);
-			    ps.executeQuery();
+			    x= ps.executeUpdate();
 				conn.close();
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+	    if(x==1)
+	    	return true;
+	    else return false;
 	}
 /**
  * 	Removes a user from a wait-list
  * @param bookid The bookid's wait-list from which to remove the user from
  * @param userid The user to remove from the given bookid's wait-list
  */
-	public void removeFromWaitlist(int bookid,int userid) {
+	public boolean removeFromWaitlist(int bookid,int userid) {
 		
 		Connection conn; 
-		
+		int x=0;
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
 				ps = conn.prepareStatement("DELETE FROM waitlist WHERE user_id=? AND book_id=?");
 				ps.setInt(1,userid);
 				ps.setInt(2,bookid);
-				ps.executeQuery();
+				x= ps.executeUpdate();
 				conn.close();
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		if(x==1)
+			return true;
+		else return false;
 	}
 	
 /**
@@ -932,16 +939,18 @@ public class DBConnector {
 		
 		Connection conn;
 		List<Object[]> combinedList= new ArrayList<Object[]>();
-		
+		System.out.println("Reached searchBooks in dbconn");
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
 			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id=? OR book_title=? OR book_author=? OR book_ISBN=? OR book_publisher=?");		        
 			  ps.setInt(1, searchBook.getid());
-			  ps.setString(2, searchBook.getAuthor());
-			  ps.setString(3, searchBook.getISBN());
-			  ps.setString(4, searchBook.getPublisher());
+			  ps.setString(2, searchBook.getTitle());
+			  System.out.println(searchBook.getTitle());
+			  ps.setString(3, searchBook.getAuthor());
+			  ps.setString(4, searchBook.getISBN());
+			  ps.setString(5, searchBook.getPublisher());
 		      ResultSet bookSet = ps.executeQuery();
 		      
 		      while(bookSet.next()) {

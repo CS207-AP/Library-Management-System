@@ -82,7 +82,7 @@ padding-left:10px;}
     </div>
     </c:if>
     <c:if test="${not empty borrowFail}">
-    <div class="alert alert-success" style="color:red;">
+    <div class="alert alert-error" style="color:red;">
     <strong>Oops!</strong> Book could not be issued.
     </div>
     </c:if>
@@ -92,8 +92,28 @@ padding-left:10px;}
     </div>
     </c:if>
     <c:if test="${not empty fine}">
-    <div class="alert alert-success" style="color:red;">
-    <strong>Error!</strong> You must pay a fine of Rs. ${fine}.
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> You must pay a fine of Rs. ${fine}.
+    </div>
+    </c:if>
+    <c:if test="${not empty waitlistFailure}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> Could not add to waitlist.
+    </div>
+    </c:if>
+    <c:if test="${not empty waitlistSuccess}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> You have been added to the waitlist.
+    </div>
+    </c:if>
+    <c:if test="${not empty remWaitlistS}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> You have removed yourself from the waitlist.
+    </div>
+    </c:if>
+    <c:if test="${not empty remWaitlistF}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> You could not remove yourself from the waitlist.
     </div>
     </c:if>
   <div class="py-3">

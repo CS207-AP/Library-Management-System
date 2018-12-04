@@ -495,8 +495,15 @@ public class ControllerServlet extends HttpServlet {
 		{
 			int bookid = Integer.parseInt(request.getParameter("book-id"));
 			int userid = u.getMemId();
-			mydbConnect.addtoWaitlist(bookid,userid);
-			
+			boolean x = mydbConnect.addtoWaitlist(bookid,userid);
+			if(x)
+			{
+				request.setAttribute("waitlistSuccess", "yes");
+			}
+			else
+			{
+				request.setAttribute("waitlistFailure", "yes");
+			}
 			if(u.getType().equalsIgnoreCase("admin"))
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
 			else
@@ -508,8 +515,12 @@ public class ControllerServlet extends HttpServlet {
 		{
 			int bookid = Integer.parseInt(request.getParameter("book-id"));
 			int userid = u.getMemId();
-			mydbConnect.removeFromWaitlist(bookid, userid);
-			
+			boolean x = mydbConnect.removeFromWaitlist(bookid, userid);
+			if(x) {
+				request.setAttribute("remWaitlistS", "yes");
+			}
+			else
+				request.setAttribute("remWaitlistF", "yes");
 			if(u.getType().equalsIgnoreCase("admin"))
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
 			else
@@ -517,12 +528,14 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		else if(action.equalsIgnoreCase("search")) {
-			String search_title=request.getParameter("search-title");
-			String search_genre=request.getParameter("search-genre");
-			String search_publisher=request.getParameter("search-publisher");
-			String search_author=request.getParameter("search-author");
-			String search_isbn=request.getParameter("search-isbn");
+			//System.out.println("Reached search in servlet");
+			String search_title=request.getParameter("search_title");
+			String search_genre=request.getParameter("search_genre");
+			String search_publisher=request.getParameter("search_publisher");
+			String search_author=request.getParameter("search_author");
+			String search_isbn=request.getParameter("search_isbn");
 			Book toSearch=new Book();
+			System.out.println(search_title);
 			toSearch.setid(0);
 			toSearch.setAuthor(search_author);
 			toSearch.setAvailable(0);
