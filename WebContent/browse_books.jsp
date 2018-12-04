@@ -27,23 +27,7 @@ margin-left:10px;}
 .homepage{
 padding-left: 10px;}
 </style>
-<script>
-$(document).ready(function(){
-	var type=request.getAttribute("type");
-    if(type=="admin")
-    {	$("a").click(function(){
-        $("#header").attr("href", "admin_login.jsp");
-        $("#home").attr("href", "admin_login.jsp");
-    });}
-    else{
-    	$("a").click(function(){
-            $("#header").attr("href", "member_login.jsp");
-            $("#home").attr("href", "member_login.jsp");
-        });
-    	
-    }
-});
-</script>
+
 </head>
 <body >
 <nav class="navbar navbar-dark bg-dark">

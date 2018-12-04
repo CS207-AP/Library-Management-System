@@ -49,6 +49,7 @@ padding-left:10px;}
   </nav>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" name="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
+  
     <br/>
     <c:if test="${not empty deleteBook}">
     <div class="alert alert-success" style="color:green;">

@@ -44,7 +44,7 @@ padding-left:10px;}
   <h5 class="title">Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
-    
+   
     </thead>
     <tbody>
     <tr>

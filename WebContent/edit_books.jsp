@@ -41,6 +41,7 @@ padding-left:10px;}
   <td width="50%"><div class="col-md-12"><a class="btn btn-link" href="create_book.jsp">Order Books</a></div></td>
   <td width="20%"><div class="logout-btn"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form></div></td>
   </tr></tbody></table>
+  
   <br/>
   <table class="table table-bordered table-striped table-hover">
     <thead>
