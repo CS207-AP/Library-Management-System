@@ -9,8 +9,11 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.FilterChain;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +87,18 @@ public class ControllerServlet extends HttpServlet {
 	 * @param fine Contains the fine a user is supposed to pay while returning the book.
 	 * @return returns a <code>User</code> object with its appropriate details of the user.
 	 */
+
+
+    	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+            HttpServletResponse response = (HttpServletResponse) res;
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0); // Proxies.
+
+            chain.doFilter(req, res);
+        }
+       
+   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
@@ -448,6 +463,8 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("logout")) {
 			HttpSession session=request.getSession();  
 			session.invalidate();
+			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
+            rd.forward(request, response);
 			out.close();
 			
 		}
