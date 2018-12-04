@@ -36,7 +36,6 @@ public class ControllerServlet extends HttpServlet {
 	DBConnector mydbConnect = new DBConnector();
 	Book book=new Book();
 	User u = new User();
-	//final User currentuser=LoginServlet.login;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -69,7 +68,7 @@ public class ControllerServlet extends HttpServlet {
 	
 	/**
 	 * This method has all the functions of the Servlet. It checks if the action is: login,logout,issue book,return book, edit user,
-	 * edit book, delete user, delete book, create user, add book, add on Waitlist, remove from Waitlist, browse books,
+	 * edit book, delete user, delete book, create user, add book, add on Waitlist, remove from Waitlist, browse books, search book,
 	 * individual book history and view your current and past books.
 	 * 
 	 * 
@@ -112,10 +111,8 @@ public class ControllerServlet extends HttpServlet {
 		{
 			
 			 String email = request.getParameter("login_email"); 
-//			 System.out.println(email+"(in servlet)");
 		     String pass = request.getParameter("login_password");
 		     User obj = mydbConnect.checkCredentials(email, pass);
-		     //System.out.println(obj.getMemId());
 	        	if (obj.getMemId()==0)
 	        	{
 	           out.println("Invalid Credentials");
@@ -126,12 +123,7 @@ public class ControllerServlet extends HttpServlet {
 	        	else
 	        	{   
 	        		u=obj;
-//	        	    System.out.println(obj.getMemId());
-//	        	    System.out.println(obj.getEmail());
-//	        	    System.out.println(obj.getPassword());
-//	        	
 	        		String type=obj.getType();
-//	        		System.out.println(obj.getType());
 	        		request.setAttribute("memberid", obj.getMemId());
 	        		RequestDispatcher rs;
 	        		if(type.equalsIgnoreCase("admin"))
@@ -179,7 +171,6 @@ public class ControllerServlet extends HttpServlet {
 			obj.setEmail(Email);
 			String Password=request.getParameter("password");
 			obj.setPassword(Password);
-			//System.out.println("INSIDE CREATE_USER IN SERVLET" +obj.getEmail());
 			
 			try {
 			boolean save;
@@ -197,15 +188,8 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_edit_books")) {
 			
-//			List<Object[]> objectlist = new ArrayList<Object[]>();
-//			int user_id=u.getMemId();
-//			objectlist=mydbConnect.browseBooks(user_id+"");
 			List<Book> booklist = new ArrayList<Book>();
 			booklist = mydbConnect.getAllBooks();
-//			for(int i=0;i<objectlist.size();i++) {		
-//				Object []array=objectlist.get(i);
-//				booklist.add((Book)array[0]);
-//			}
 			request.setAttribute("book_list",booklist);//set list as attribute
 			
 			request.getRequestDispatcher("edit_books.jsp").include(request, response);
@@ -283,7 +267,6 @@ public class ControllerServlet extends HttpServlet {
 			
 			String userid =request.getParameter("memId");
 			int user_id=Integer.parseInt(userid);
-//			System.out.println("MEM ID IN DELETE USER SERVLET: "+user_id);
 			
 			boolean deleted;
 			deleted=mydbConnect.deleteMember(user_id);
@@ -296,7 +279,6 @@ public class ControllerServlet extends HttpServlet {
 				out.println("Removed User from Database.");
 			}
 			request.setAttribute("user", user_id);
-			// request.setAttribute("fine", fine);
 			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 
 			
@@ -305,12 +287,6 @@ public class ControllerServlet extends HttpServlet {
 			
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=mydbConnect.getAllBooksCurrentlyIssued();
-//			List<Book> getIssues = new ArrayList<Book>();
-//			
-//			for(int i=0;i<objectlist.size();i++) {		
-//				Object []array=objectlist.get(i);
-//				getIssues.add((Book)array[0]);
-//			}
 			request.setAttribute("currentIssues",objectlist);//set list as attribute
 			request.setAttribute("book", new Object[5]);
 			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
@@ -318,22 +294,8 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("calling_past_issues")) {
 			
-//			List<Object[]> objectlist = new ArrayList<Object[]>();
-//			objectlist=mydbConnect.getAllBooksCurrentlyIssued();
-//			
-//			List<Object[]> allObjects=mydbConnect.browseBooks(1);
 			List<Book> allBooks=new ArrayList<Book>();
 			allBooks = mydbConnect.getAllBooks();
-//			
-//			for(int i=0;i<allObjects.size();i++) {
-//				
-//				Object [] object=allObjects.get(i);
-//				Book book = new Book();
-//				
-//				book=(Book)object[0];
-//				allBooks.add(book);
-//			}
-			
 			
 			request.setAttribute("books",allBooks);//set list as attribute
 			request.getRequestDispatcher("view_history.jsp").include(request, response);
@@ -347,13 +309,6 @@ public class ControllerServlet extends HttpServlet {
 			String title = request.getParameter("booktitle");
 			List<Object[]> issues = new ArrayList<Object[]>();
 			issues=mydbConnect.getBookIssueHistory(bookID);
-//			List<Book> getHistorey = new ArrayList<Book>();
-//			
-//			for(int i=0;i<objectlist.size();i++) {		
-//				Object []array=objectlist.get(i);
-//				getHistory.add((Book)array[0]);
-//			}
-			//request.setAttribute("bookd", bookid);
 			request.setAttribute("booktitle", title);
 			request.setAttribute("history",issues);//set list as attribute
 			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
@@ -365,22 +320,9 @@ public class ControllerServlet extends HttpServlet {
 			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=mydbConnect.getUserCurrentIssue(memberID);
-//			List<Book> getCIssues = new ArrayList<Book>();
-//			
-//			for(int i=0;i<objectlist.size();i++) {		
-//				Object []array=objectlist.get(i);
-//				getCIssues.add((Book)array[0]);
-//			}
-			
 			request.setAttribute("current_issues",objectlist);//set list as attribute
 			List<Object[]> objectlist1 = new ArrayList<Object[]>();
 			objectlist1=mydbConnect.getUserIssueHistory(memberID);
-//			List<Book> getPIssues = new ArrayList<Book>();
-//			
-//			for(int i=0;i<objectlist1.size();i++) {		
-//				Object []array=objectlist1.get(i);
-//				getPIssues.add((Book)array[0]);
-//			}
 			request.setAttribute("past_issues",objectlist1);//set list as attribute
 			request.getRequestDispatcher("view_your_books.jsp").include(request, response);
 			
@@ -388,17 +330,13 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("edit_your_details")) { //if user wants to change something
 			
-//			int memID=Integer.parseInt(request.getParameter("Member ID"));
-//			u.setMemId(memID);
+
 			String Name=request.getParameter("name");
 			u.setName(Name);
 			String Email=request.getParameter("email");
 			u.setEmail(Email);
 			String Password=request.getParameter("password");
 			u.setPassword(Password);
-//			System.out.println("INSIDE EDIT_YOUR_DETAILS IN SERVLET" +u.getName());
-//			System.out.println(u.getEmail());
-//			System.out.println(u.getPassword());
 			boolean save=mydbConnect.editUserDetails(u);
 			if(save==true)
 			{
@@ -409,16 +347,10 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_edit_your_details"))
 		{
-			//int user_id=currentuser.getMemId();
-			//request.setAttribute("userid", user_id);
 			String name=u.getName();
 			request.setAttribute("name", name);
 			String email=u.getEmail();
 			request.setAttribute("email", email);
-			//String password=currentuser.getPassword();
-			//request.setAttribute("password", password);
-			//String type=currentuser.getType();
-			//request.setAttribute("type",type);
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		
@@ -469,6 +401,7 @@ public class ControllerServlet extends HttpServlet {
 			rs.include(request, response);
 		}
 		else if(action.equalsIgnoreCase("logout")) {
+			
 			HttpSession session=request.getSession();  
 			session.invalidate();
 			request.setAttribute("loginResult", null);
