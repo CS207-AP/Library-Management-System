@@ -445,7 +445,7 @@ public class DBConnector {
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
 	        ps.setString(3, rss.getString("book_title"));
-	        ps.setString(4,username.getString(0));
+	        ps.setString(4,username.getString(1));
 	        ps.setDate(5, java.sql.Date.valueOf(idate));
 	        ps.setDate(6, java.sql.Date.valueOf(ddate));
 	        
@@ -475,11 +475,12 @@ public class DBConnector {
 	public double returnBook(int user_id, int bookId) 
 	{
 		Connection connection;
+		double fine=0;
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			ps = connection.prepareStatement("SELECT book_id,user_id,book_title,user_name,issue_date,return_date FROM currentIssue WHERE user_id=? AND book_id=?;");
+			ps = connection.prepareStatement("SELECT book_id,user_id,book_title,user_name,issue_date,due_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
 	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 			ResultSet fullSet=ps.executeQuery();
@@ -495,24 +496,28 @@ public class DBConnector {
 			ps.executeUpdate();
 			
 	        
-	        ps = connection.prepareStatement("INSERT INTO issueHistory ?,?,?,?,?,?;");
+	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id,user_id,book_title,user_name,issue_date,return_date) VALUES (?,?,?,?,?,?);");
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        ps.setString(3, fullSet.getString("book_title"));
 	        ps.setString(4, fullSet.getString("user_name"));
 	        ps.setDate(5,fullSet.getDate("issue_date"));
+	       // System.out.println(fullSet.getDate("issue_date"));
 	        ps.setDate(6,fullSet.getDate("due_date"));
+	       // System.out.println(fullSet.getDate("due_date"));
+
 	        
 	        ps.executeUpdate();
 	        connection.close();
 	        
-	        //double fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
+	        fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
+
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return calcFine(user_id, bookId);
+		return fine;
+
 	}
 	
 /**
@@ -601,7 +606,7 @@ public class DBConnector {
 			ResultSet rs2=ps.executeQuery();
 			rs2.next();
 			
-			if(rs1.getInt(0)>0|| rs2.getInt(0)>0) {
+			if(rs1.getInt(1)>0|| rs2.getInt(1)>0) {
 				
 				conn.close(); 
 				return false;
@@ -642,7 +647,7 @@ public class DBConnector {
 			ResultSet rs2=ps.executeQuery();
 			rs2.next();
 			
-			if(rs1.getInt(0)>0|| rs2.getInt(0)>0) {
+			if(rs1.getInt(1)>0|| rs2.getInt(1)>0) {
 				
 				conn.close(); 
 				return false;

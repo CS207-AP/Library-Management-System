@@ -285,18 +285,18 @@ public class ControllerServlet extends HttpServlet {
 			int user_id=Integer.parseInt(userid);
 //			System.out.println("MEM ID IN DELETE USER SERVLET: "+user_id);
 			
-			double fine=0.0;
-			fine=mydbConnect.deleteMember(user_id);
-			if (fine>0)
+			boolean deleted;
+			deleted=mydbConnect.deleteMember(user_id);
+			if (!deleted)
 			{
-				out.println("Fine Due is :"+ fine);
+				out.println("User is has borrowed a book or is in a waitlist, cannot delete");
 			}
 			else
 			{
 				out.println("Removed User from Database.");
 			}
 			request.setAttribute("user", user_id);
-			request.setAttribute("fine", fine);
+			//request.setAttribute("fine", fine);
 			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 
 			

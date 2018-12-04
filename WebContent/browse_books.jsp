@@ -40,6 +40,7 @@ padding-left: 10px;}
     <a class="navbar-brand" style="color:white;" href="member_login.jsp" id="header">
         <b> Library Management System</b>
       </a> </c:if>
+      
       </div>
   </nav>
   <div class="homepage"><c:if test="${not empty adminBrowsing}"><a href="admin_login.jsp" style="float: left;" id="home">Go To Homepage</a></c:if><c:if test="${not empty memberBrowsing}"><a href="member_login.jsp" style="float: left;" id="home">Go To Homepage</a></c:if></div>
