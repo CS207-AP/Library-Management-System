@@ -296,7 +296,7 @@ public class ControllerServlet extends HttpServlet {
 				out.println("Removed User from Database.");
 			}
 			request.setAttribute("user", user_id);
-			//request.setAttribute("fine", fine);
+			// request.setAttribute("fine", fine);
 			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
 
 			
