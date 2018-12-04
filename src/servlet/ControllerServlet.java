@@ -530,7 +530,7 @@ public class ControllerServlet extends HttpServlet {
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			int user_id=u.getMemId();
 			objectlist=mydbConnect.searchBooks(toSearch,user_id);
-		    request.setAttribute("object_list",objectlist);//set list as attribute
+		    request.setAttribute("object_list",objectlist);
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
 		}
