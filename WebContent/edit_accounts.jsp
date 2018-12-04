@@ -25,7 +25,7 @@ padding-left:40px;
 padding-left:10px;
 padding-right:10px;}
 .homepage{
-padding-left:10px;}s
+padding-left:10px;}
 </style>
 
 </head>
@@ -38,7 +38,7 @@ padding-left:10px;}s
   <div class="col-md-12"><a class="btn btn-link" href="create_account.jsp" style="float: left;">Create Account</a></div>
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
-    <br>
+    <br/>
   <%-- <%
     if((double)request.getAttribute("fine")>0.0){
 %>
@@ -126,10 +126,10 @@ padding-left:10px;}s
           <form id="delete-account-form" action="ControllerServlet" method="post">
           <input type="hidden" name="action" value="delete_user"/>
           <input type="hidden" name="memId" value=""/>
-          <input type="submit" value="Yes"/>
+          <input class="btn btn-link" type="submit" value="Yes"/>
           
           </form >
-           <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+           <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
         </div>
       </div>
     </div>

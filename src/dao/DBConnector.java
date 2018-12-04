@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 public class DBConnector {
 	
 	DButil dbUtil = new DButil();
@@ -36,23 +35,24 @@ public class DBConnector {
             ResultSet rs = st.executeQuery(query);
             System.out.println(email);
             while(rs.next()) {
+            	
             	String em = rs.getString("user_email");
             	String pw = rs.getString("user_password");
             	System.out.println(em);
             	System.out.println(pw);
             	System.out.println(email);
             	System.out.println(password);
+            	
                 if (em.equals(email) && pw.equals(password) ) {
                 
                     user.setMemId(rs.getInt("user_id"));
-//                    System.out.println(user.getMemId());
                     user.setEmail(em);
-//                    System.out.println(user.getEmail());
                     user.setPassword(pw);
                     user.setType(rs.getString("user_type"));
                     user.setName(rs.getString("user_name"));
                    
-                }}
+                	}
+                }
             conn.close();
             
 	}catch (SQLException e) {
@@ -99,7 +99,9 @@ public class DBConnector {
 		    	  if(hasIssuedThisBook(book.getid(),user_id)==true) {
 		    		  
 		    		  buttons[1]=true;// set return button to true
+		    		  
 		    	  }else {
+		    		  
 		    		  if(book.getAvailable()>0) {
 		    			  
 		    			  buttons[0]=true;// set borrow button to true
@@ -124,11 +126,7 @@ public class DBConnector {
 		      
 		      conn.close();
 		      
-		   	      
-		      
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.err.println("Error while getting books");
 			e.printStackTrace();
 		}
 		
@@ -136,6 +134,10 @@ public class DBConnector {
 		
 	}
 	
+/**
+ * This function returns all the books currently issued from the database with the book details,user id	
+ * @return All the necessary details of the user,book and dates
+ */
 	 public List<Object[]> getAllBooksCurrentlyIssued(){
 		
 		List <Object[]> allBooks = new ArrayList<Object[]>();
@@ -161,16 +163,18 @@ public class DBConnector {
 		    
 			conn.close();			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return allBooks;
 		
-		
 	}
 	
-	
+/**
+ * 	Gets the issue history of the book with the book_id
+ * @param book_id The bookid corresponds to the book of which to get the history of
+ * @return The user-id, book-title and both issue and return dates
+ */
 	public List<Object[]> getBookIssueHistory(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -192,19 +196,23 @@ public class DBConnector {
 		    	issueData[2]=userSet.getDate("issue_date");
 		    	issueData[3]=userSet.getDate("return_date");
 		    	issues.add(issueData);
-		    	
 
 		    }
+		    
 			conn.close();			
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return issues;
-		
 	}
 	
+	/**
+	 *  Gets the user details of the given User
+	 * @param user_id The for which we want the user's details of
+	 * @return a User object with all relevant detials. Returns null if a the user doesn't exist
+	 */
 	public User getUserDetails(int user_id) {
 		
 		Connection conn;
@@ -216,24 +224,29 @@ public class DBConnector {
 		    ResultSet userSet = st.executeQuery(query);
 		    
 		    while(userSet.next()) {
-		    user.setMemId(user_id);
-		   	user.setType(userSet.getString("user_type"));
-		   	user.setName(userSet.getString("user_name"));
-	    	user.setEmail(userSet.getString("user_email"));		    		 
-	    	user.setPassword(userSet.getString("user_password"));	
+		    	
+		    	user.setMemId(user_id);
+		    	user.setType(userSet.getString("user_type"));
+		    	user.setName(userSet.getString("user_name"));
+		    	user.setEmail(userSet.getString("user_email"));		    		 
+		    	user.setPassword(userSet.getString("user_password"));	
+		    	
 	    	}	    		 
+		    
 	    	conn.close();		
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return user;
-		
 	}
 	
-	
+/**
+ * 	Gets the history of the books issued by the user
+ * @param user_id The id of the user to get his/her book history from
+ * @return Details of the books the user has issued along with their respective issue and due dates
+ */
 	public List<Object[]> getUserIssueHistory(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -259,16 +272,17 @@ public class DBConnector {
 		    }
 		    conn.close();
 			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return issues;
-		
 	}
-	
+/**
+ * 	Gets the users who have borrowed the book with the given book id
+ * @param book_id The book_id of the book to check which User has borrowed
+ * @return The user(s) who have borrowed the book
+ */
 	public List<Object[]> getBookCurrentIssue(int book_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -290,19 +304,20 @@ public class DBConnector {
 		    	issueData[2]=userSet.getDate("due_date");
 		    	issues.add(issueData);
 		    	
-
 		    }
 			conn.close();			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return issues;
-		
 	}
 	
-	
+/**
+ * 	Gets the currently issued book(s) that the User with user_id has issued
+ * @param user_id
+ * @return
+ */
 	public List<Object[]> getUserCurrentIssue(int user_id){
 		
 		List<Object[]> issues = new ArrayList<Object[]>();
@@ -328,14 +343,16 @@ public class DBConnector {
 		    }
 			conn.close();			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return issues;
-		
 	}
 	
+/**
+ * Gets a master list of all the Books in the catalogue
+ * @return A List of all Books
+ */
 	public List<Book> getAllBooks(){
 		
 		Connection conn;
@@ -372,31 +389,12 @@ public class DBConnector {
 		return combinedList;
 	
 	}
-		
-		
-	
-	
-	List<Book> searchBook(Book toSearch){
-		
-		List<Book> books = getAllBooks();;
-		List<Book> matchingBooks= new ArrayList<Book>();
-		int size = books.size();
-		
-		for (int i=0;i<size;i++) {
-			
-			Book book = books.get(i);
-			
-			if((book.getTitle().contains(toSearch.getTitle()) && (!toSearch.getTitle().equals(""))) && (book.getAuthor().contains(toSearch.getTitle()) && (!toSearch.getAuthor().equals("")))&& (book.getGenre().contains(toSearch.getGenre()) && (!toSearch.getGenre().equals(""))) && (book.getPublisher().contains(toSearch.getPublisher()) && (!toSearch.getPublisher().equals(""))) && (book.getISBN().contains(toSearch.getISBN()) && (Integer.parseInt(toSearch.getISBN())!=0))) {
-				
-				matchingBooks.add(book);
-			}
-		}
-		
-		return matchingBooks;
-	}
-	  
-	
-	
+/**
+ * Borrows the book (given it matches given constraints) on behalf of the user
+ * @param user_id The user_id of the person borrowing the book
+ * @param bookId The id of the book the User wants to borrow
+ * @return a boolean value to indicate whether the book has been successfully issued or not
+ */
 	public boolean borrowBook(int user_id, int bookId)
 	{
 		
@@ -408,135 +406,173 @@ public class DBConnector {
 			String query="SELECT COUNT(user_id) FROM currentlyIssued";			
 			 Statement st = connection.createStatement();         
 	         ResultSet rs = st.executeQuery(query);
-	         int noOfBooks=rs.getInt(0);
+	         int noOfBooks=0;
+	         while(rs.next()) { noOfBooks=rs.getInt(1);}
 	         
 	         if(noOfBooks>=2) {
-	        	 System.out.println("Only two books bro");
+	        	 System.out.println("You cannot issue more than 2 books.");
 	         }
 	         
-			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
 			ps.setInt(1, user_id);
 			ps.setInt(2, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id, issue_date, due_date) VALUES (?, ?, ?, ?);");
+	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?");
+	        ps.setInt(1, bookId);
+	        ResultSet rss= ps.executeQuery();
+	        rss.next();
+			
+	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id,book_title,issue_date, due_date) VALUES (?, ?,?,?, ?);");
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
-	        ps.setDate(3, java.sql.Date.valueOf(idate));
-	        ps.setDate(4, java.sql.Date.valueOf(ddate));
+	        ps.setString(3, rss.getString("book_title"));
+	        ps.setDate(4, java.sql.Date.valueOf(idate));
+	        ps.setDate(5, java.sql.Date.valueOf(ddate));
 	        
 	        i = ps.executeUpdate();
 	        
 	        connection.close();
 	        
-	        
-		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-			System.err.println("Got an exception in borrowbook in dbconnector");
 		}
-		if (i == 1) 
+		
+		if (i == 1) {
             return true;
-         else 
+            
+		}else {
             return false;
+		}
+		
 	}
-	
+/**
+ * 	Returns the book with the given user-id and book id
+ * @param user_id The id of the user returning the book
+ * @param bookId The id of the book to be returned
+ * @return the fine if a book is returned more than 20 days late. It's 0 if it's returned before time.
+ */
 	public double returnBook(int user_id, int bookId) 
 	{
 		Connection connection;
-		int i = 0;
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = connection.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?");
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND bookId=?;");
+			
+			
+	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
+	        ps = connection.prepareStatement("SELECT issue_date,due_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
+	        ps.setInt(1, user_id);
+	        ps.setInt(2, bookId);
+
+	        ResultSet rs= ps.executeQuery();
+	        rs.next();
+
 	        
-	        ps = connection.prepareStatement("INSERT INTO lms_db.past_issues (bookId, user_id, num) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE num = num + 1;");
+	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?;");
+	        ps.setInt(1, bookId);
+	        ResultSet rsp = ps.executeQuery();
+	        rsp.next();
+
+	        
+	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,book_title,issue_date,return_date) VALUES (?,?,?,?,?);");
 	        ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
-	        i = ps.executeUpdate();
+	        ps.setString(3,rsp.getString("book_title"));
+	        ps.setDate(4, rs.getDate("issue_date"));
+	        ps.setDate(5, rs.getDate("due_date"));
+	        ps.executeUpdate();
 	        
 	        connection.close();
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Got an exception in returnbook in dbconnector");
 		}
+		
 		return calcFine(user_id, bookId);
 	}
 	
+/**
+ *Checks if the user currently has possession of the book
+ * @param book_id The id of the book
+ * @param user_id The id of the user
+ * @return
+ */
 	boolean hasIssuedThisBook(int book_id, int user_id)
 	{
 		Connection conn;
+		
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT book_id, user_Id, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
+			ps = conn.prepareStatement("SELECT book_title, issue_date, due_date FROM currentlyIssued WHERE book_id = ? AND user_id = ?;");
 	        ps.setInt(1, book_id);
 	        ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
-	        while(rs.next())
-	        {
+	        
+	        while(rs.next()) {
+	        	
 	        	return true;
 	        }
 	        
 	        conn.close();
 	        
-	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-			System.err.println("Got an exception in currentlyissued in dbconnector");
+			
 		}
+		
 		return false;
-        
 	}
 	
-	
+	/**
+	 * Returns the position the user(user_id) is in for the book(book_id). -1 if he/she's not in the wait-list
+	 * @param book_id The id of the book
+	 * @param user_id The id of the user
+	 * @return The position the user is in the wait-list for the book
+	 */
 	int posInWaitlist(int book_id,int user_id) {
 		
 		Connection conn;
 		try {
+			
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT * FROM waitlist WHERE book_id = ?");
+			ps = conn.prepareStatement("SELECT user_id FROM waitlist WHERE book_id = ?;");
 	        ps.setInt(1, book_id);
-	        ps.setInt(2, user_id);
 	        ResultSet rs = ps.executeQuery();
-	        for(int i=0;rs.next();i++)
-	        {
-	        	if(rs.getString("user_id").equals(user_id)) return i;
+	        
+	        for(int i=0;rs.next();i++) {
+	        
+	        	if(rs.getInt("user_id")==user_id) return i;
 	        	
 	        }
 	        conn.close();
 	        
-	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in currentlyissued in dbconnector");
 		}
-		return -1;
 		
+		return -1;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+/**
+ * 	
+ * @param bookId The id of the book to delete
+ * @return boolean value representing whether the book was deleted or not
+ */
   public boolean deleteBook(int bookId)
 	{
 		Connection conn; int x=0;
@@ -549,16 +585,18 @@ public class DBConnector {
 	        conn.close(); 
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in deletebook in dbconnector");
 		}
 		if (x == 1) 
             return true;
          else 
             return false;
 	}
-	
+/**
+ * Deletes a member given the user_id 
+ * @param user_id The id of the member to delete
+ * @return Any outstanding fine the member has
+ */
 	public double deleteMember(int user_id)
 	{
 		Connection conn; int x=0;
@@ -572,7 +610,6 @@ public class DBConnector {
 	        ps = conn.prepareStatement("SELECT book_Id, mem_Id FROM currentlyIssued WHERE user_id = ?;");
 	        ps.setInt(1, user_id);
 	        ResultSet rs = ps.executeQuery();
-	        //int bookId = rs.getInt(1);
 	        if(rs.next()) {
 	        	PreparedStatement ps2 = conn.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?;");
 	        	int id = rs.getInt(1);
@@ -584,16 +621,18 @@ public class DBConnector {
 	        ps.setInt(1, user_id);
 	        x = ps.executeUpdate();
 	        conn.close();
-	       
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in deletemember in dbconnector");
 		}
 		 return fine;
 	}
 
+/**
+ * Edits a user's details	
+ * @param user The user who's details to update
+ * @return a boolean representing whether the User's details has been updated
+ */
 	public boolean editUserDetails(User user) {
 		System.out.println("Inside edit_user in dbconn");
 		Connection conn; 
@@ -627,10 +666,15 @@ public class DBConnector {
 		
 	}
 	
+/**
+ * 	Adds a user(user_id) to the wait-list of the book (bbok_id)
+ * @param bookid
+ * @param userid
+ */
 	public void addtoWaitlist(int bookid,int userid) {
-		
 		Connection conn; 
 		try {
+			
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
 				ps = conn.prepareStatement("INSERT INTO waitlist SET user_id=?,book_id=?");
@@ -640,15 +684,19 @@ public class DBConnector {
 				conn.close();
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-	
+/**
+ * 	Removes a user from a wait-list
+ * @param bookid The bookid's wait-list from which to remove the user from
+ * @param userid The user to remove from the given bookid's wait-list
+ */
 	public void removeFromWaitlist(int bookid,int userid) {
 		
 		Connection conn; 
+		
 		try {
 			conn = dbUtil.getConnection();
 				PreparedStatement ps;
@@ -659,20 +707,23 @@ public class DBConnector {
 				conn.close();
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public boolean addBook(Book book)
-	{
+/**
+ * Adds a book to catalogue
+ * @param book The book object which contains the details of the book to add
+ * @return A boolean value representing whether the book was successfully added or no
+ */
+	public boolean addBook(Book book) {
+		
 		Connection conn; int x=0;
 		try {
+			
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("INSERT into books (book_ISBN, book_title, book_author,book_publisher,book_genre,book_quantity,book_available) values (?, ?, ?, ?, ?, ?, ?);");
-	        //generate an ID
 			ps.setString(1, book.getISBN());
 	        ps.setString(2, book.getTitle());
 	        ps.setString(3, book.getAuthor());
@@ -684,19 +735,22 @@ public class DBConnector {
 	        
 	        conn.close();
 	        
-	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in addbook in dbconnector");
 		}
-		if (x == 1) 
+		
+		if (x == 1) {
             return true;
-         else 
+		}else {
             return false;
+		}
 	}
 	
-		
+/**
+ * Edits a book details in the catalogue	
+ * @param book The book object contains the details of the book to edit
+ * @return A boolean value representing whether the book was edited or not
+ */
 	public boolean editBook(Book book)
 	{
 		System.out.println("inside edit_book in editbook");
@@ -704,6 +758,7 @@ public class DBConnector {
 		int x=0;
 		
 		try {
+			
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("UPDATE books SET book_ISBN=?, book_title=?, book_author=?, book_publisher=?, book_genre=?, book_quantity=?, book_available=? WHERE book_id=?;");
@@ -721,7 +776,6 @@ public class DBConnector {
 	        
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.err.println("Got an exception in editbook in dbconnector");
 		}
@@ -732,21 +786,25 @@ public class DBConnector {
             return false;
 	}
 	
-	
+/**
+ * Gets the master list of all the users
+ * @return the master list of all the users
+ */
 	public List<User> getAllUsers(){
 		
 		List<User> users= new ArrayList<User>();
 		Connection conn;
+		
 			try {
-				conn = dbUtil.getConnection();
 				
+			  conn = dbUtil.getConnection();
 			  String query = "SELECT * FROM users";		        
 		      Statement st = conn.createStatement();	     	      
 		      ResultSet userSet = st.executeQuery(query);		      
 		      
 		      while(userSet.next()) {
-		    	  User user = new User();
 		    	  
+		    	 User user = new User();
 		    	 user.setEmail(userSet.getString("user_email")); 
 		    	 user.setMemId(userSet.getInt("user_id")); 
 		    	 user.setName(userSet.getString("user_name")); 
@@ -758,59 +816,72 @@ public class DBConnector {
 		      
 		      conn.close();
 		      
-		      
-		      
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 			return users;
-			
-		
-		
 	}
 	
+/**
+ *  Calculates the fine for a given bookid and user	
+ * @param user_id The user who has to pay the fine
+ * @param bookId The book which the user borrowed
+ * @return The fine  which is calculated as noOfDaysExceeded * 20
+ */
 	double calcFine(int user_id, int bookId) {
 		Connection conn; int x=0;
 		double fine=0;
+		
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT issue_date, due_date FROM currentlyIssued WHERE user_id =? AND bookId=?;");
+			ps = conn.prepareStatement("SELECT issue_date, return_date FROM issueHistory WHERE user_id =? AND book_id=?;");
 	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        ResultSet rs = ps.executeQuery();
+	        
 	        while(rs.next()) {
-	        	LocalDate idate = rs.getDate(3).toLocalDate();
-	        	LocalDate ddate = rs.getDate(4).toLocalDate();
+	        	
+	        	LocalDate idate = rs.getDate(1).toLocalDate();
+	        	LocalDate ddate = rs.getDate(2).toLocalDate();
+	        	
 	        	if(ddate.isAfter(idate)) {
+	        		
 	        	Period period = Period.between(ddate, idate);
 	        	int daysElapsed = period.getDays();
-	        	if(Math.abs(daysElapsed)>0)
-	        	   fine = daysElapsed*20;
+	        	
+	        		if(Math.abs(daysElapsed)>0) {
+	        			
+	        			fine = daysElapsed*20;
+	        			
+	        		}
+	        		
 	        	}
+	        	
 	        }
 	       
-	        x = ps.executeUpdate();
 	        conn.close();
 	        
-	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in calcfine in dbconnector");
 		}
+		
 		return fine;
 		
 	}
 
 
-
+/**
+ * Adds a user to the master list
+ * @param user The user object to add with the details of the new User
+ * @return a boolean value representing whether the user was added successfully 
+ */
 	public boolean addUser(User user)
 	{
 		Connection conn; int x=0;
 		try {
+			
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			ps = conn.prepareStatement("INSERT into users (user_type, user_email, user_name, user_password) values  (?, ?, ?, ?);");
@@ -822,21 +893,91 @@ public class DBConnector {
 	        x = ps.executeUpdate();
 	        
 	        conn.close();
-	        
-	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println("Got an exception in addmember in dbconnector");
 		}
-		if (x == 1) 
+		
+		if (x == 1) {
 	        return true;
-	     else 
+	        
+		}else {
 	        return false;
+		}
+		
 	}
-	
-	
 
+/**
+ * 	Returns all books that match at least one search parameter in the searchBook object
+ * @param searchBook A book object with all the fields to search for
+ * @param user_id The user who has searched for the books
+ * @return A list of all the books that match the search terms and their respective buttons
+ */
+	public List<Object[]> searchBooks(Book searchBook,int user_id) {
+		
+		Connection conn;
+		List<Object[]> combinedList= new ArrayList<Object[]>();
+		
+		try {
+			conn = dbUtil.getConnection();
+			PreparedStatement ps;
+			
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id=? OR book_title=? OR book_author=? OR book_ISBN=? OR book_publisher=?");		        
+			  ps.setInt(1, searchBook.getid());
+			  ps.setString(2, searchBook.getAuthor());
+			  ps.setString(3, searchBook.getISBN());
+			  ps.setString(4, searchBook.getPublisher());
+		      ResultSet bookSet = ps.executeQuery();
+		      
+		      while(bookSet.next()) {
+		    	  
+		    	  Object[] array= new Object[2];
+		    	  boolean[] buttons= new boolean[4];
+		    	  
+		    	  Book book = new Book();
+		    	  book.setTitle(bookSet.getString("book_title"));
+		    	  book.setAuthor(bookSet.getString("book_author"));
+		    	  book.setAvailable(bookSet.getInt("book_available"));
+		    	  book.setQuantity(bookSet.getInt("book_quantity"));
+		    	  book.setGenre(bookSet.getString("book_genre"));
+		    	  book.setid(bookSet.getInt("book_id"));
+		    	  book.setISBN(bookSet.getString("book_ISBN"));
+		    	  book.setPublisher(bookSet.getString("book_publisher"));
+		    	  
+		    	  if(hasIssuedThisBook(book.getid(),user_id)==true) {
+		    		  
+		    		  buttons[1]=true;// set return button to true
+		    		  
+		    	  }else {
+		    		  
+		    		  if(book.getAvailable()>0) {
+		    			  
+		    			  buttons[0]=true;// set borrow button to true
+		    			  
+		    		  }
+		    		  
+		    		  if(book.getAvailable()==0 && posInWaitlist(book.getid(),user_id)==-1) {
+		    			  
+		    			  buttons[2]=true;//set add to WL true
+		    		  }
+		    		  
+		    		  if(posInWaitlist(book.getid(),user_id)!=-1) {
+		    			  
+		    			  buttons[3]=true;// set rem from WL to true
+		    		  }
+		    	  }
+		    	  
+		    	  array[0]=book;
+		    	  array[1]=buttons;
+		    	  combinedList.add(array);
+		      }
+		      
+		      conn.close();
+		      
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return combinedList;
+	}
 }
         
 	
