@@ -437,7 +437,12 @@ public class ControllerServlet extends HttpServlet {
 			{
 				out.println("Unable to issue the book. Try again later!");
 			}
-			request.getRequestDispatcher("issue-books.jsp").include(request, response); //to connect the next page, check name of jsp.
+			RequestDispatcher rs;
+			if(u.getType().equalsIgnoreCase("admin"))
+			 rs=request.getRequestDispatcher("admin_login.jsp");
+			else
+				rs=request.getRequestDispatcher("member_login.jsp");
+			rs.include(request, response);
 		}
 		
 		else if(action.equalsIgnoreCase("returning_book"))
@@ -456,8 +461,12 @@ public class ControllerServlet extends HttpServlet {
 			{
 				out.println("Returned book successfully.");
 			}
-			
-			request.getRequestDispatcher("return-book.jsp").include(request, response); //to connect the next page,check name of jsp.
+			RequestDispatcher rs;
+			if(u.getType().equalsIgnoreCase("admin"))
+			 rs=request.getRequestDispatcher("admin_login.jsp");
+			else
+				rs=request.getRequestDispatcher("member_login.jsp");
+			rs.include(request, response);
 		}
 		else if(action.equalsIgnoreCase("logout")) {
 			HttpSession session=request.getSession();  

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+>>>>>>> branch 'master' of https://github.com/CS207-AP/Library-Management-system.git
 
 <!DOCTYPE html>
 <html lang="en">
