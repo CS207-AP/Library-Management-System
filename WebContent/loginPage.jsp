@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,8 +45,11 @@ padding-left:680px;
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-<%--       <% if(request.getAttribute("loginResult").equals("Error")){ %>
-      <h5 style="color:red;">Error</h5><%} %> --%>
+    <c:if test="${not empty loginResult}">
+    <div class="alert alert-error">
+    <strong>Error!</strong> Invalid Credentials.
+    </div>
+    </c:if>
       
       
           <form id="login_form" class="" action="ControllerServlet?" method="post">
