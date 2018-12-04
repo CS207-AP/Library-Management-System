@@ -431,12 +431,12 @@ public class ControllerServlet extends HttpServlet {
 			boolean issue=mydbConnect.borrowBook(userID,bookID);
 			if(issue==true)
 			{
-				out.println("Book issued successfully.");
+				request.setAttribute("borrowSuccess", "yes");
 			}
-			else
-			{
-				out.println("Unable to issue the book. Try again later!");
+			else {
+				request.setAttribute("borrowFail", "yes");
 			}
+			
 			RequestDispatcher rs;
 			if(u.getType().equalsIgnoreCase("admin"))
 			 rs=request.getRequestDispatcher("admin_login.jsp");
@@ -455,11 +455,11 @@ public class ControllerServlet extends HttpServlet {
 			double fine=mydbConnect.returnBook(userID,bookID);
 			if(fine>0)
 			{
-				out.println("You have to pay a fine of Rs. :" + fine);
+				request.setAttribute("fine", (double)fine);
 			}
 			else
 			{
-				out.println("Returned book successfully.");
+				request.setAttribute("returnBook", "success");
 			}
 			RequestDispatcher rs;
 			if(u.getType().equalsIgnoreCase("admin"))
