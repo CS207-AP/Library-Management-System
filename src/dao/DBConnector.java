@@ -4,9 +4,12 @@ import util.DButil;
 import objects.Book;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import objects.User;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -262,11 +265,13 @@ public class DBConnector {
 		    
 		    while(userSet.next()) {
 		    	
-		    	Object [] issueData = new Object[3];
+		    	Object [] issueData = new Object[6];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getString("book_name");
-		    	issueData[2]=userSet.getDate("issue_date");
-		    	issueData[3]=userSet.getDate("return_date");
+		    	issueData[1]=userSet.getString("user_id");
+		    	issueData[2]=userSet.getString("book_title");
+		    	issueData[3]=userSet.getString("user_name");
+		    	issueData[4]=userSet.getDate("issue_date");
+		    	issueData[5]=userSet.getDate("return_date");
 		    	issues.add(issueData);
 
 		    }
@@ -327,17 +332,19 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT FROM currentlyIssued WHERE user_id ="+user_id;			
+			String query = "SELECT * FROM currentlyIssued WHERE user_id ="+user_id;			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
 		    while(userSet.next()) {
 		    	
-		    	Object [] issueData = new Object[3];
+		    	Object [] issueData = new Object[6];
 		    	issueData[0]=userSet.getString("book_id");
-		    	issueData[1]=userSet.getString("book_name");
-		    	issueData[2]=userSet.getDate("issue_date");
-		    	issueData[3]=userSet.getDate("due_date");
+		    	issueData[1]=userSet.getString("user_id");
+		    	issueData[2]=userSet.getString("book_title");
+		    	issueData[3]=userSet.getString("user_name");
+		    	issueData[4]=userSet.getDate("issue_date");
+		    	issueData[5]=userSet.getDate("due_date");
 		    	issues.add(issueData);
 
 		    }
@@ -416,23 +423,31 @@ public class DBConnector {
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
+			
 			ps = connection.prepareStatement("DELETE from waitlist WHERE user_id=? AND book_id=?;");
 			ps.setInt(1, user_id);
 			ps.setInt(2, bookId);
 			ps.executeUpdate();
+			
 	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?");
 	        ps.setInt(1, bookId);
 	        ResultSet rss= ps.executeQuery();
 	        rss.next();
+	        
+	        ps = connection.prepareStatement("SELECT user_name FROM users WHERE user_id=?");
+	        ps.setInt(1, user_id);
+	        ResultSet username= ps.executeQuery();
+	        username.next();
 			
-	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id,book_title,issue_date, due_date) VALUES (?, ?,?,?, ?);");
+	        ps = connection.prepareStatement("INSERT INTO currentlyIssued (book_id, user_id,book_title,user_name,issue_date, due_date) VALUES (?,?,?,?,?,?);");
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
 	        LocalDate ddate = idate.plusDays(14);
 	        ps.setString(3, rss.getString("book_title"));
-	        ps.setDate(4, java.sql.Date.valueOf(idate));
-	        ps.setDate(5, java.sql.Date.valueOf(ddate));
+	        ps.setString(4,username.getString(0));
+	        ps.setDate(5, java.sql.Date.valueOf(idate));
+	        ps.setDate(6, java.sql.Date.valueOf(ddate));
 	        
 	        i = ps.executeUpdate();
 	        
@@ -464,52 +479,37 @@ public class DBConnector {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			ps = connection.prepareStatement("SELECT book_id,user_idissue_date,return_date FROM currentIssue WHERE user_id=? AND book_id=?;");
+			ps = connection.prepareStatement("SELECT book_id,user_id,book_title,user_name,issue_date,return_date FROM currentIssue WHERE user_id=? AND book_id=?;");
 	        ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
-			ResultSet dateSet=ps.executeQuery();
-			
-			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
-			ps.setInt(1, bookId);
-			ps.executeUpdate();
-			System.out.println("Updated books number");
+			ResultSet fullSet=ps.executeQuery();
+	        fullSet.next();
 			
 	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
 	        ps.executeUpdate();
+			
+			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
+			ps.setInt(1, bookId);
+			ps.executeUpdate();
+			
 	        
-	        ps = connection.prepareStatement("INSERT INTO issueHistory ?,?,?,?,?;");
-            ps.setInt(1, user_id);
-	        ps.setInt(2, bookId);
-	        ps.executeUpdate();
-
-	        
-
-
-	        ResultSet rs= ps.executeQuery();
-	        rs.next();
-
-	        
-	        ps = connection.prepareStatement("SELECT book_title FROM books WHERE book_id=?;");
-	        ps.setInt(1, bookId);
-	        ResultSet rsp = ps.executeQuery();
-	        rsp.next();
-
-	        
-	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id, user_id,book_title,issue_date,return_date) VALUES (?,?,?,?,?);");
-	        ps.setInt(1, bookId);
+	        ps = connection.prepareStatement("INSERT INTO issueHistory ?,?,?,?,?,?;");
+            ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
-	        ps.setString(3,rsp.getString("book_title"));
-	        ps.setDate(4, rs.getDate("issue_date"));
-	        ps.setDate(5, rs.getDate("due_date"));
-	        ps.executeUpdate();
+	        ps.setString(3, fullSet.getString("book_title"));
+	        ps.setString(4, fullSet.getString("user_name"));
+	        ps.setDate(5,fullSet.getDate("issue_date"));
+	        ps.setDate(6,fullSet.getDate("due_date"));
 	        
+	        ps.executeUpdate();
 	        connection.close();
+	        
+	        //double fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Got an exception in returnbook in dbconnector");
 		}
 		
 		return calcFine(user_id, bookId);
@@ -587,57 +587,79 @@ public class DBConnector {
  */
   public boolean deleteBook(int bookId)
 	{
-		Connection conn; int x=0;
+		Connection conn; 
+		int x=0;
 		try {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
+			
+			ps = conn.prepareStatement("SELECT COUNT FROM currentlyIssued WHERE book_id = ?;");
+			ResultSet rs1=ps.executeQuery();
+			rs1.next();
+			
+			ps = conn.prepareStatement("SELECT COUNT FROM issueHistory WHERE book_id = ?;");
+			ResultSet rs2=ps.executeQuery();
+			rs2.next();
+			
+			if(rs1.getInt(0)>0|| rs2.getInt(0)>0) {
+				
+				conn.close(); 
+				return false;
+				
+			}
+			
 			ps = conn.prepareStatement("DELETE from books WHERE book_id = ?;");
 	        ps.setInt(1, bookId);
 	        x = ps.executeUpdate();
 	        conn.close(); 
 	        
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (x == 1) 
-            return true;
-         else 
-            return false;
-	}
-/**
- * Deletes a member given the user_id 
- * @param user_id The id of the member to delete
- * @return Any outstanding fine the member has
- */
-	public double deleteMember(int user_id)
-	{
-		Connection conn; int x=0;
-		double fine=0;
-		try {
-			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("DELETE from users WHERE user_id = ?;");
-	        ps.setInt(1, user_id);
-	        x = ps.executeUpdate();
-	        ps = conn.prepareStatement("SELECT book_Id, mem_Id FROM currentlyIssued WHERE user_id = ?;");
-	        ps.setInt(1, user_id);
-	        ResultSet rs = ps.executeQuery();
-	        if(rs.next()) {
-	        	PreparedStatement ps2 = conn.prepareStatement("UPDATE books SET available_copies = (available_copies + 1) WHERE bookId = ?;");
-	        	int id = rs.getInt(1);
-	        	ps2.setInt(1, id);
-	        	ps2.executeUpdate();
-	            fine = calcFine(user_id, id);
-	        }
-	        ps = conn.prepareStatement("DELETE from currentlyIssued WHERE user_id = ?;");
-	        ps.setInt(1, user_id);
-	        x = ps.executeUpdate();
-	        conn.close();
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		 return fine;
+		
+	        return true;
+		
+	}
+/**
+ * Deletes a member given the user_id 
+ * @param user_id The id of the member to delete
+ * @return Whether you can delete the member or not
+ */
+	public boolean deleteMember(int user_id)
+	{
+		Connection conn; int x=0;
+		
+		try {
+			conn = dbUtil.getConnection();
+			PreparedStatement ps;
+			
+			ps = conn.prepareStatement("SELECT COUNT FROM currentlyIssued WHERE user_id = ?;");
+			ResultSet rs1=ps.executeQuery();
+			rs1.next();
+			
+			ps = conn.prepareStatement("SELECT COUNT FROM issueHistory WHERE user_id = ?;");
+			ResultSet rs2=ps.executeQuery();
+			rs2.next();
+			
+			if(rs1.getInt(0)>0|| rs2.getInt(0)>0) {
+				
+				conn.close(); 
+				return false;
+				
+			}
+			
+			ps = conn.prepareStatement("DELETE from users WHERE user_id = ?;");
+	        ps.setInt(1, user_id);
+	        x = ps.executeUpdate();
+	        conn.close(); 
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	        return true;
 	}
 
 /**
@@ -841,46 +863,23 @@ public class DBConnector {
  * @param bookId The book which the user borrowed
  * @return The fine  which is calculated as noOfDaysExceeded * 20
  */
-	double calcFine(int user_id, int bookId) {
-		Connection conn; int x=0;
-		double fine=0;
+	double calcFine(Date dueDate, Date returnDate) {
 		
-		try {
-			conn = dbUtil.getConnection();
-			PreparedStatement ps;
-			ps = conn.prepareStatement("SELECT issue_date, return_date FROM issueHistory WHERE user_id =? AND book_id=?;");
-	        ps.setInt(1, user_id);
-	        ps.setInt(2, bookId);
-	        ResultSet rs = ps.executeQuery();
-	        
-	        while(rs.next()) {
-	        	
-	        	LocalDate idate = rs.getDate(1).toLocalDate();
-	        	LocalDate ddate = rs.getDate(2).toLocalDate();
-	        	
-	        	if(ddate.isAfter(idate)) {
-	        		
-	        	Period period = Period.between(ddate, idate);
-	        	int daysElapsed = period.getDays();
-	        	
-	        		if(Math.abs(daysElapsed)>0) {
-	        			
-	        			fine = daysElapsed*20;
-	        			
-	        		}
-	        		
-	        	}
-	        	
-	        }
-	       
-	        conn.close();
-	        
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(returnDate.after(dueDate)) {
+			int days= daysBetween(dueDate,returnDate);
+			return days*20.0;
+			
+		}else {
+			
+			return 0.0;
 		}
 		
-		return fine;
+	}
+	
+	public int daysBetween(Date d1, Date d2){
 		
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+        
 	}
 
 
