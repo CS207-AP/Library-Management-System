@@ -76,6 +76,26 @@ padding-left:10px;}
     <strong>Success!</strong> Member added successfully.
     </div>
     </c:if>
+    <c:if test="${not empty borrowSuccess}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book issued successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty borrowFail}">
+    <div class="alert alert-success" style="color:red;">
+    <strong>Oops!</strong> Book could not be issued.
+    </div>
+    </c:if>
+    <c:if test="${not empty returnBook}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book returned successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty fine}">
+    <div class="alert alert-success" style="color:red;">
+    <strong>Error!</strong> You must pay a fine of Rs. ${fine}.
+    </div>
+    </c:if>
   <div class="py-3">
     <div class="container">
       <div class="row">
