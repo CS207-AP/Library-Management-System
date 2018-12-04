@@ -52,6 +52,16 @@ public class ControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
+	
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
+	{
+        HttpServletResponse response = (HttpServletResponse) res;
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setDateHeader("Expires", 0); // Proxies.
+
+        chain.doFilter(req, res);
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -86,19 +96,7 @@ public class ControllerServlet extends HttpServlet {
 	 * @param objectlist1 Contains the list of objects of books.
 	 * @param fine Contains the fine a user is supposed to pay while returning the book.
 	 * @return returns a <code>User</code> object with its appropriate details of the user.
-	 */
-
-
-    	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
-    	{
-            HttpServletResponse response = (HttpServletResponse) res;
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-            response.setDateHeader("Expires", 0); // Proxies.
-
-            chain.doFilter(req, res);
-        }
-       
+	 */       
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -520,7 +518,11 @@ public class ControllerServlet extends HttpServlet {
 			toSearch.setPublisher(search_publisher);
 			toSearch.setQuantity(0);
 			toSearch.setTitle(search_title);
-//			List <Book> object_list
+			List<Object[]> objectlist = new ArrayList<Object[]>();
+			int user_id=u.getMemId();
+			objectlist=mydbConnect.searchBooks(toSearch,user_id);
+		    request.setAttribute("object_list",objectlist);//set list as attribute
+			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
 		}
 		
