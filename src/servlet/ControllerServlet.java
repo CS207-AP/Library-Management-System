@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 
 
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -49,6 +50,37 @@ public class ControllerServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	
+	/**
+	 * This method has all the functions of the Servlet. It checks if the action is: login,logout,issue book,return book, edit user,
+	 * edit book, delete user, delete book, create user, add book, add on Waitlist, remove from Waitlist, browse books,
+	 * individual book history and view your current and past books.
+	 * 
+	 * 
+	 * @param email Contains the email address entered by the user
+	 * @param pass Contains the password entered by the user
+	 * @param action Contains the action passed by the jsp pages to the Servlet.
+	 * @param obj is an object of class User
+	 * @param u is an object of class User
+	 * @param user_ToEdit is an object of class User
+	 * @param book is an object of class Book
+	 * @param Title Contains the title of the Book.
+	 * @param Author Contains the author of the Book.
+	 * @param book_id Contains the id of the Book.
+	 * @param ISBN Contains the ISBN of the Book.
+	 * @param Publisher Contains the Publisher of the Book.
+	 * @param Quantity Contains the quantity of the Book available.
+	 * @param Genre Contains the genre of the Book.
+	 * @param memberlist Contains the list of members.
+	 * @param booklist Contains the list of books.
+	 * @param Name Contains the name of a user.
+	 * @param user_id Contains the id of a user.
+	 * @param issues Contains the list of objects of books.
+	 * @param objectlist Contains the list of objects of books.
+	 * @param objectlist1 Contains the list of objects of books.
+	 * @param fine Contains the fine a user is supposed to pay while returning the book.
+	 * @return returns a <code>User</code> object with its appropriate details of the user.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
