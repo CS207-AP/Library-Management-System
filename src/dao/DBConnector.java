@@ -463,17 +463,29 @@ public class DBConnector {
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
+			
+			ps = connection.prepareStatement("SELECT book_id,user_idissue_date,return_date FROM currentIssue WHERE user_id=? AND book_id=?;");
+	        ps.setInt(1, user_id);
+	        ps.setInt(2, bookId);
+			ResultSet dateSet=ps.executeQuery();
+			
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-			
+			System.out.println("Updated books number");
 			
 	        ps = connection.prepareStatement("DELETE FROM currentlyIssued WHERE user_id=? AND book_id=?;");
             ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
-	        ps = connection.prepareStatement("SELECT issue_date,due_date FROM currentlyIssued WHERE user_id=? AND book_id=?;");
-	        ps.setInt(1, user_id);
+	        ps.executeUpdate();
+	        
+	        ps = connection.prepareStatement("INSERT INTO issueHistory ?,?,?,?,?;");
+            ps.setInt(1, user_id);
 	        ps.setInt(2, bookId);
+	        ps.executeUpdate();
+
+	        
+
 
 	        ResultSet rs= ps.executeQuery();
 	        rs.next();
