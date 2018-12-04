@@ -34,9 +34,14 @@ padding-left:10px;}
         <b>Library Management System</b>
       </a> </div>
   </nav>
-  <div class="col-md-12"><a class="btn btn-link" href="create_book.jsp" style="float: left;">Order Books</a></div>
-  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
-  </div>
+  <table style="width:100%">
+  <tbody>
+  <tr>
+  <td width="45%"><div><a class="btn btn-link" href="admin_login.jsp">Go To Homepage</a></div></td>
+  <td width="50%"><div class="col-md-12"><a class="btn btn-link" href="create_book.jsp">Order Books</a></div></td>
+  <td width="20%"><div class="logout-btn"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form></div></td>
+  </tr></tbody></table>
+  <br/>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     
@@ -106,7 +111,7 @@ padding-left:10px;}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-           <input type="submit" form="edit-book-form" value="Save Changes"/>
+           <input type="submit" form="edit-book-form" class="btn btn-primary" value="Save Changes"/>
         </div>
       </div>
     </div>

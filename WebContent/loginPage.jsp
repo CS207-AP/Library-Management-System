@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-=======
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
->>>>>>> branch 'master' of https://github.com/CS207-AP/Library-Management-system.git
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +47,7 @@ padding-left:680px;
       <div class="row">
         <div class="col-md-8">
     <c:if test="${not empty loginResult}">
-    <div class="alert alert-error">
+    <div class="alert alert-error" style="color:red;">
     <strong>Error!</strong> Invalid Credentials.
     </div>
     </c:if>

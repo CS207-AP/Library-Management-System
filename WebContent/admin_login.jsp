@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,6 +50,31 @@ padding-left:10px;}
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" name="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
     <br/>
+    <c:if test="${not empty deleteBook}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book deleted successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty addBook}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book added successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty editUser}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Edited user details successfully.
+    </div>
+    </c:if>
+     <c:if test="${not empty editBook}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Edited book details successfully.
+    </div>
+    </c:if>
+     <c:if test="${not empty addUser}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Member added successfully.
+    </div>
+    </c:if>
   <div class="py-3">
     <div class="container">
       <div class="row">

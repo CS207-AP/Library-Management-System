@@ -33,11 +33,15 @@ padding-left:10px;}
         <b> Library Management System</b>
       </a> </div>
   </nav>
-  <div class="homepage"><a href="admin_login.jsp" style="float: left;">Go To Homepage</a></div>
-  <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
-  </div>
+  <table style="width:100%">
+  <tbody>
+  <tr>
+  <td width="45%"><div><a class="btn btn-link" href="admin_login.jsp">Go To Homepage</a></div></td>
+  <td width="50%"><div><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="calling_past_issues"/><input class="btn btn-link" type="submit" value="View Book List"/></form></div></td>
+  <td width="20%"><div class="logout-btn"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form></div></td>
+  </tr></tbody></table>
     <br/>
-  <h5>Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
+  <h5 class="title">Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
     

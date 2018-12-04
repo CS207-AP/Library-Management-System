@@ -119,7 +119,7 @@ public class ControllerServlet extends HttpServlet {
 	        	if (obj.getMemId()==0)
 	        	{
 	           out.println("Invalid Credentials");
-	           //request.setAttribute("loginResult", "Error");
+	           request.setAttribute("loginResult", "Error");
 	           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); 
 	           rs.include(request, response);
 	           }
@@ -159,7 +159,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean save=mydbConnect.addBook(book);
 			if(save==true)
 			{
-				out.println("Book added successfully.");
+				request.setAttribute("addBook", "success");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response);
 			}
@@ -186,7 +186,7 @@ public class ControllerServlet extends HttpServlet {
 			save=mydbConnect.addUser(obj);
 			if(save==true)
 			{
-			out.println("Member added successfully.");
+			request.setAttribute("addUser", "success");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //form for member add.
 			}
@@ -232,7 +232,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean save=mydbConnect.editBook(book);
 			if(save==true)
 			{
-				out.println("Edited book details successfully.");
+				request.setAttribute("editBook", "success");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 			
@@ -262,7 +262,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			if(save==true)
 			{
-				out.println("Edited iser details successfully.");
+				request.setAttribute("editUser", "success");
 			}
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 		}
@@ -274,7 +274,7 @@ public class ControllerServlet extends HttpServlet {
 			boolean remove=mydbConnect.deleteBook(book_id);
 			if(remove==true)
 			{
-				out.println("Book deleted successfully.");
+				request.setAttribute("deleteBook", "success");
 			}
 			
 			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
@@ -471,6 +471,7 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("logout")) {
 			HttpSession session=request.getSession();  
 			session.invalidate();
+			request.setAttribute("loginResult", null);
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
 			out.close();
@@ -482,7 +483,10 @@ public class ControllerServlet extends HttpServlet {
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			int user_id=u.getMemId();
 			objectlist=mydbConnect.browseBooks(user_id);
-			request.setAttribute("type", u.getType());
+			if(u.getType().equalsIgnoreCase("admin"))
+				request.setAttribute("adminBrowsing", "yes");
+			else
+				request.setAttribute("memberBrowsing", "yes");
             request.setAttribute("object_list",objectlist);//set list as attribute
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
