@@ -100,7 +100,7 @@ padding-left:10px;}
     <div class="alert alert-error" style="color:red;">
     <strong>Oops!</strong> Could not add to waitlist.
     </div>
-    </c:if>
+    </c:if> 
     <c:if test="${not empty waitlistSuccess}">
     <div class="alert alert-success" style="color:green;">
     <strong>Success!</strong> You have been added to the waitlist.
