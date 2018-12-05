@@ -167,7 +167,7 @@ public class ControllerServlet extends HttpServlet {
 		     User obj = mydbConnect.checkCredentials(email, pass);
 	        	if (obj.getMemId()==0)
 	        	{
-	          // out.println("Invalid Credentials");
+	         
 	           request.setAttribute("loginResult", "Error");
 	           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); 
 	           rs.include(request, response);
@@ -231,7 +231,7 @@ public class ControllerServlet extends HttpServlet {
 			{
 			request.setAttribute("addUser", "success");
 			}
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //form for member add.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 			}
 			catch (Exception ex) {
 				Logger.getLogger(ControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,7 +242,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			List<Book> booklist = new ArrayList<Book>();
 			booklist = mydbConnect.getAllBooks();
-			request.setAttribute("book_list",booklist);//set list as attribute
+			request.setAttribute("book_list",booklist);
 			
 			request.getRequestDispatcher("edit_books.jsp").include(request, response);
 			
@@ -270,14 +270,14 @@ public class ControllerServlet extends HttpServlet {
 			{
 				request.setAttribute("editBook", "success");
 			}
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 			
 		}
 		else if(action.equalsIgnoreCase("calling_edit_accounts")) {
 			System.out.println("Inside edit_user in servlet");
 			List<User> memberlist= new ArrayList<User>();
 			memberlist=mydbConnect.getAllUsers();
-			request.setAttribute("users",memberlist);//set list as attribute
+			request.setAttribute("users",memberlist);
 			
 			request.getRequestDispatcher("edit_accounts.jsp").include(request, response);
 		}
@@ -300,7 +300,7 @@ public class ControllerServlet extends HttpServlet {
 			{
 				request.setAttribute("editUser", "success");
 			}
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 		}
 		else if(action.equalsIgnoreCase("delete_book")) {
 			
@@ -313,7 +313,7 @@ public class ControllerServlet extends HttpServlet {
 				request.setAttribute("deleteBook", "success");
 			}
 			
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 		}
 		else if(action.equalsIgnoreCase("delete_user")) {
 			
@@ -339,7 +339,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=mydbConnect.getAllBooksCurrentlyIssued();
-			request.setAttribute("currentIssues",objectlist);//set list as attribute
+			request.setAttribute("currentIssues",objectlist);
 			request.setAttribute("book", new Object[5]);
 			request.getRequestDispatcher("current_issues_page.jsp").include(request, response);
 			
@@ -349,7 +349,7 @@ public class ControllerServlet extends HttpServlet {
 			List<Book> allBooks=new ArrayList<Book>();
 			allBooks = mydbConnect.getAllBooks();
 			
-			request.setAttribute("books",allBooks);//set list as attribute
+			request.setAttribute("books",allBooks);
 			request.getRequestDispatcher("view_history.jsp").include(request, response);
 			
 		}
@@ -406,7 +406,7 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		  
-		else if(action.equalsIgnoreCase("borrowing_book"))   //user Issue Books
+		else if(action.equalsIgnoreCase("borrowing_book"))   
 		{
 			int user_id=u.getMemId();
 			
