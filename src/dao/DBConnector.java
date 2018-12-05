@@ -513,8 +513,7 @@ public class DBConnector {
 	        
 	        //fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
 	        LocalDate rdate = LocalDate.now();
-	        Instant instant = Instant.from(rdate.atStartOfDay(ZoneId.of("GMT")));
-	        Date date = (Date) Date.from(instant);
+	        Date date = Date.valueOf(rdate);
 	        fine = calcFine(date,fullSet.getDate("due_date"));
 	        connection.close();
 		
