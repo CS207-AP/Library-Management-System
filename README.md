@@ -2,15 +2,15 @@
 
 ## Table of Contents
 
-* [Project Aim](#introduction)
-* [Solution Approach](#getting-started)
-* [Challenges](#dependencies)
-* [Project Flow](#building-from-source)
-* [Documentation](#configuration)
-* [Built With](#running)
-* [Authors](#contributors)
+* [Project Aim](#project-aim)
+* [Solution Approach](#solution-approach)
+* [Challenges](#challenges)
+* [Project Flow](#project-flow)
+* [Documentation](#documentation)
+* [Built With](#built-with)
+* [Authors](#authors)
 * [License](#license)
-* [Acknowledgments](#Acknowledgments)
+* [Acknowledgments](#acknowledgments)
 
 ## Project Aim 
 The project's aim was to be able to adopt a fully functioning independent software to manage a library and automate whatever process wherever possible.
