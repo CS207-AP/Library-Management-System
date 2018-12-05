@@ -402,7 +402,7 @@ public class DBConnector {
  * @param bookId The id of the book the User wants to borrow
  * @return a boolean value to indicate whether the book has been successfully issued or not
  */
-	public int borrowBook(int user_id, int bookId)
+	public boolean borrowBook(int user_id, int bookId)
 	{
 		int noOfBooks=0;
 		Connection connection;
@@ -410,12 +410,18 @@ public class DBConnector {
 		try {
 			connection = dbUtil.getConnection();
 			PreparedStatement ps;
-			String query="SELECT COUNT(user_id) FROM currentlyIssued";			
+			 String query="SELECT COUNT(user_id) FROM currentlyIssued";			
 			 Statement st = connection.createStatement();         
 	         ResultSet rs = st.executeQuery(query);
+	         rs.next(); 
+	         noOfBooks=rs.getInt(1);
 	         
-	         while(rs.next()) { noOfBooks=rs.getInt(1);}
-	         
+	         if(noOfBooks==2) {
+	        	 
+	        	 connection.close();
+	        	 return false;
+	        	 
+	         }
 	         
 	         
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE book_id = ?");
@@ -455,15 +461,10 @@ public class DBConnector {
 			
 			e.printStackTrace();
 		}
+		return true;
 		
-		if (i == 1 && noOfBooks>=2) 
-            return 2;
-		else if(i==1)
-			return 1;
-		else return 0;
-            
 		
-		}
+	}
 		
 	
 /**
@@ -944,7 +945,7 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id =? OR LOCATE(?,book_title)>0  OR book_author=? OR book_ISBN = ? OR book_publisher = ?");		        
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE LOCATE(?,book_id)>0 OR LOCATE(?,book_title)>0 OR LOCATE(?,book_author)>0 OR LOCATE(?,book_ISBN)>0 OR LOCATE(?,book_publisher)>0");		        
 			  ps.setInt(1, searchBook.getid());
 			  ps.setString(2, searchBook.getTitle());
 			  System.out.println(searchBook.getTitle());
