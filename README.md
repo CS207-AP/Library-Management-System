@@ -1,6 +1,16 @@
 # Library Management System
 
-One Paragraph of project description goes here
+## Table of Contents
+
+* [Project Aim](#project-aim)
+* [Solution Approach](#solution-approach)
+* [Challenges](#challenges)
+* [Project Flow](#project-flow)
+* [Documentation](#documentation)
+* [Built With](#built-with)
+* [Authors](#authors)
+* [License](#license)
+* [Acknowledgments](#acknowledgments)
 
 ## Project Aim 
 The project's aim was to be able to adopt a fully functioning independent software to manage a library and automate whatever process wherever possible.
@@ -17,11 +27,11 @@ After a lot of back and forth, from trying swing to JavaFx we finally settled on
 * It looks much more prettier unlike swing which makes you feel like you're using Windows98
 * Finally, we decided on using Apapche Tomcat v9.0 as the servlet container for the GUI as it was the most easy-to-configure container which worked well out of the box.
 
-For more information about the build tools refer to the Built With section.
+For more information about the build tools refer to the [Built With](#built-with) section.
 
 * We split the work in such a way that we worked on our own part independent of the other. This helped because each person would be well versed in a certian part of the project and hence solve the problem of accountability.It also reduced the amount of merge conflicts we had to deal with.
 
-For more information refer to the Authors section.
+For more information refer to the [Authors](#authors) section.
 
 ## Challenges
 
@@ -29,7 +39,7 @@ For more information refer to the Authors section.
 * Deciding on which table needed what fields in the database as per our requirements which kept changing as we progressed with the project.
 * Due to the way we split the work, when the time came for our code to work in tandem debugging was a PAIN and required all three of us to be present at the same place to identify *where* the bug was and squash it accordingly.
 
-## Project flow
+## Project Flow
 
 ![flow](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/flow.png)
 
@@ -48,9 +58,21 @@ For more information refer to the Authors section.
 
 ## Authors
 
-* **Aastha Amul Shah** - *JSP pages* - [Aastha Shah](https://github.com/aastha-shah)
-* **Nandini Agrawal** - *Servlets* - [Nandini Agrawal](https://github.com/Nandini18)
-* **Reuel John** - *Database Management* - [Reuel John](https://github.com/mojoman11)
+### Aastha Amul Shah 
+* Web Content and GUI design
+* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
+* [github](https://github.com/aastha-shah)
+
+### Nandini Agrawal
+* Servlet and Objects
+* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet)
+* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
+* [github](https://github.com/Nandini18)
+
+### Reuel John 
+* Database Management and Query handling
+* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao)
+* [github](https://github.com/mojoman11)
 
 See also the list of [contributors](https://github.com/CS207-AP/Library-Management-system/graphs/contributors) who participated in this project.
 
