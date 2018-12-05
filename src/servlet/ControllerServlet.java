@@ -52,7 +52,7 @@ public class ControllerServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
+/*	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException
 	{
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -60,7 +60,7 @@ public class ControllerServlet extends HttpServlet {
         response.setDateHeader("Expires", 0); // Proxies.
 
         chain.doFilter(req, res);
-    }
+    }*/
 
 	/**
 	 * 
@@ -457,9 +457,12 @@ public class ControllerServlet extends HttpServlet {
 			HttpSession session=request.getSession();  
 			session.invalidate();
 			request.setAttribute("loginResult", null);
+			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+	        response.setHeader("Pragma", "no-cache"); 
+	        response.setDateHeader("Expires", 0);
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
-			out.close();
+            out.close();
 			
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
