@@ -74,58 +74,79 @@ public class ControllerServlet extends HttpServlet {
 	 *	<p>
 	 *  4.Create User: Accepts user details from the JSP page and stores those details in the User object obj. It then calls method add User in DBConnector, which adds the user in the database. If the add is a success, we set attribute <code>success</code> to <code>addBook</code> and redirect to the admin_login page (only admin can add users to the library).
 	 *	<p>
-	 *	5.Issue Book: 
+	 *	5.Borrowing_ Book: Obtains the user id of the currently logged in user and accepts the book id of the book that needs to be issued from the JSP page. It then calls the method borrowBook in the DBConnector. If the issue book is a success, we set attribute <code>yes</code> to <code>borrowSuccess</code> , else we set attribute <code>yes</code> to <code>borrowFail</code>  and redirect to the admin_login page or member_login page whoever is logged in and is borrowing the book.
 	 *	<p>
-	 *	6.Return Book	
-	 *	<p>
+	 *	6.Returning_Book: Obtains the user id of the currently logged in user and accepts the book id of the book that needs to be returned from the JSP page. It then calls the method returnBook in the DBConnector. If there is a delay in returning the book(past the due date), we set attribute fine (variable containing the fine)  to <code>fine</code> .Else if the return book is a success, we set attribute <code>yes</code> to <code>returnBook</code> and redirect to the admin_login page or member_login page whoever is logged in and is borrowing the book.
+     *	<p>
 	 *	7.Edit Book: Accepts the book details of the book that needs to be edited, from the JSP page and stores it in Book object book. It then calls method editBook in DBConnector, which edits that particular book in the database. If the edit is a success, we set attribute <code>success</code> to <code>editBook</code> and redirect to the admin_login page (only admin can edit book details).
 	 *  <p>
 	 *  8.Delete Book: Accepts the book id of the book that needs to be deleted,from the JSP page. It then calls method deleteBook in DBConnector, which deletes that particular book in the database. If the delete is a success, we set attribute <code>success</code> to <code>deleteBook</code> and redirect to the admin_login page (only admin can delete a book).
 	 *	<p>
 	 *	9.Delete user:  Accepts the user id of the user that needs to be deleted, from the JSP page. It then calls method deleteMember in DBConnector, which deletes that particular member in the database only if the member has no book issued currently or is not on waitlist for any particular book. If the delete is a success, the message <code>Removed User from Database</code> is printed and is redirected to edit_accounts.jsp (only admin can delete a user).
 	 *	<p>
-	 *	10.Edit User/Admin Details by Admin : Accepts the user details of the user that needs to be edited, from the JSP page and stores it in User object userToEdit. It then calls method editUserDetails in DBConnector, which edits that particular user details in the database. If the edit is a success, we set attribute <code>success</code> to <code>editUser</code> and redirect to the admin_login page (only admin can edit user details).
+	 *	10.Edit_user by Admin : Accepts the user details of the user that needs to be edited, from the JSP page and stores it in User object userToEdit. It then calls method editUserDetails in DBConnector, which edits that particular user details in the database. If the edit is a success, we set attribute <code>success</code> to <code>editUser</code> and redirect to the admin_login page (only admin can edit user details).
 	 *	<p>
-	 *	11.Edit Details by Member: Accepts the three parameters from the JSP page that the member can edit for himself i.e. name,email and password and stores it in User object u. It then calls method editUserDetails in DBConnector, which edits that particular members details in the database. If the edit is a success, the message <code>Edited Details Successfully</code> is printed and the page is redirected to member_login.
+	 *	11.Edit_details by Member: Accepts the three parameters from the JSP page that the member can edit for himself i.e. name,email and password and stores it in User object u. It then calls method editUserDetails in DBConnector, which edits that particular members details in the database. If the edit is a success, the message <code>Edited Details Successfully</code> is printed and the page is redirected to member_login.
 	 *	<p>
-	 *	12.Browse Books:
+	 *	12.Calling_browse_books: Obtains the user id and the user type of the currently logged in user and a list of objects from the method browseBooks in the DBConnector and stores it in a list called objectlist. If the user type is admin, it sets attribute <code>yes</code> to <code>adminBrowsing</code>, else if the user type is member, it sets attribute <code>yes</code> to <code>memberBrowsing</code>. Then it sets attribute objectlist to <code>object_list</code> and the page is redirected to browse_books.jsp 
 	 *	<p>
-	 *	13.Add to Waitlist:
+	 *	13.Add_to_Waitlist: Obtains the user id of the currently logged in user and accepts the book id of the book that he needs to issue but is not available in the library, from the JSP page. It then calls method addtoWaitlist which adds the user to the waitlist. If adding to waitlist is a success, it sets attribute <code>yes</code> to <code>waitlistSuccess</code>, else it sets attribute <code>yes</code> to <code>waitlistFailure</code> and the page is redirected to admin_login.jsp or member_login.jsp depending on who is currently logged in and wants to borrow this particular book.
 	 *	<p>
-	 *	14.Remove from Waitlist:
+	 *	14.Remove_from_Waitlist: Obtains the user id of the currently logged in member and accepts the book id of the book that he doesn't want to issue anymore (and is on the waitlist for this book), from the JSP page. It then calls method removeFromWaitlist which removes the users from the waitlist. If removing to waitlist is a success, it sets attribute <code>yes</code> to <code>remWaitlistS</code>, else it sets attribute <code>yes</code> to <code>remWaitlistF</code> and the page is redirected to admin_login.jsp or member_login.jsp depending on who is currently logged in and wants to remove himself from the waitlist for that book.
 	 * <p>
-	 *	15. View your Books:
+	 *	15.Calling_view_your_books: It obtains the user id of the currently logged in member, an object list from the method getUserCurrentIssue and stores it a list called objectlist, and an object list from the method getUserIssueHistory and stores it in a list called objectlist1. It then sets attribute objectlist to <code>current_issues</code> and objectlist1 to <code>past_issues</code>. Then the page is redirected to view_your_books.jsp
 	 *	<p>
-	 *	16.Individual History of the Book:
+	 *	16.Calling_individual_view_history:Accepts the book id and the title of the book from the JSP page.It then obtains a list of objects from the method getBooksIssueHistory in the DBConnector and stores it in a list called issues.Then it sets attribute issues to <code>history</code> and title to <code>booktitle</code> (for the particular book we obtained from the JSP page) and the page is redirected to individual_book_history.jsp 
 	 *	<p>
-	 *	17.View All Current Issues:
+	 *	17.Calling_current_issues: Obtains a list of objects from the method getAllBooksCurrentlyIssued in the DBConnector and stores it in a list called objectlist. Then it sets attribute objectlist to <code>currentIssues</code> and object[5] to <code>book</code> (for a particular book) and the page is redirected to current_issues_page.jsp. 
 	 * <p>
-     *  18.Calling_edit_books:Obtains a list of Books from getAllBooks method in the DBConnector and stores it in booklist. Then it sets attribute booklist to "book_list" and the page is redirected to edit_books.jsp
-	 *  19.Calling_edit_accounts: Obtains a list of users from getAllUsers method in the DBConnector and stores it in memberlist.Then it sets attribute memberlist to "users" and the page is redirected to edit_accounts.jsp
-	 * 
+     *  18.Calling_edit_books:Obtains a list of Books from getAllBooks method in the DBConnector and stores it in booklist. Then it sets attribute booklist to <code>book_list</code> and the page is redirected to edit_books.jsp
+	 *  <p>
+	 *  19.Calling_edit_accounts: Obtains a list of users from getAllUsers method in the DBConnector and stores it in memberlist.Then it sets attribute memberlist to <code>users</code> and the page is redirected to edit_accounts.jsp
+	 *  <p>
+	 *  20.Calling_past_issues: Obtains a list of books from the method getAllBooks in the DBConnector and stores it in allBooks. Then it sets attribute allBooks to <code>books</code> and the page is redirected to view_history.jsp.
+	 *  <p>	
+	 *  21.Calling edit_your_details: Obtains the name and email of the user from the JSP page and set attributes name to <code>name</code> and email to <code>email</code>. Then the page is redirected to edit_your_details.jsp
+	 *  <p>
+	 *  22.Search:It accepts the title, genre, publisher, author, ISBN of the book the user is searching for and stores it in a Book object toSearch. It then obtains a list of objects from the method searchBooks in the DBConnector and stores it in a list called objectlist. It also obtains the user id of the logged in member. Then it sets attribute objectlist to <code>object_list</code> and the page is redirected to browse_books.jsp
+	 *  <p>
 	 * @param email Contains the email address entered by the user
-	 * @param pass Contains the password entered by the user
+	 * @param pass Contains the password entered by the user.
+	 * @param password Contains the password entered by the user.
 	 * @param action Contains the action passed by the jsp pages to the Servlet.
 	 * @param obj is an object of class User
-	 * @param u is an object of class User
+	 * @param userToEdit is an object of class User
+	 * @param u is an object of class User for currently logged in user.
 	 * @param user_ToEdit is an object of class User
 	 * @param book is an object of class Book
+	 * @param toSearch is an object of class Book
 	 * @param Title Contains the title of the Book.
+	 * @param title Contains the title of the Book.
 	 * @param Author Contains the author of the Book.
+	 * @param author Contains the author of the Book.
 	 * @param book_id Contains the id of the Book.
+	 * @param bookid Contains the id of the Book.
 	 * @param ISBN Contains the ISBN of the Book.
 	 * @param Publisher Contains the Publisher of the Book.
 	 * @param Quantity Contains the quantity of the Book available.
 	 * @param Genre Contains the genre of the Book.
+	 * @param quantity Contains the quantity of the Book available.
+	 * @param genre Contains the genre of the Book.
 	 * @param memberlist Contains the list of members.
 	 * @param booklist Contains the list of books.
+	 * @param allBooks Contains the list of books.
 	 * @param Name Contains the name of a user.
+	 * @param name Contains the name of a user.
 	 * @param user_id Contains the id of a user.
+	 * @param userid Contains the id of a user.
 	 * @param issues Contains the list of objects of books.
 	 * @param objectlist Contains the list of objects of books.
 	 * @param objectlist1 Contains the list of objects of books.
 	 * @param fine Contains the fine a user is supposed to pay while returning the book.
-	 * @return returns a <code>User</code> object with its appropriate details of the user.
+	 * @param out is an object of class PrintWriter
+	 * @param rs is an object of class Request Dispatcher.
+	 * @param save is a boolean variable which checks if the action is performed successully or not.
+	 * @param delete is a boolean variable which checks if the action is performed successully or not.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */       
    
@@ -336,12 +357,12 @@ public class ControllerServlet extends HttpServlet {
 		else if(action.equalsIgnoreCase("calling_individual_view_history")) {
 			
 			String bookid=request.getParameter("bookid");
-			int bookID=Integer.parseInt(bookid);
+			int book_id=Integer.parseInt(bookid);
 			String title = request.getParameter("booktitle");
 			List<Object[]> issues = new ArrayList<Object[]>();
-			issues=mydbConnect.getBookIssueHistory(bookID);
+			issues=mydbConnect.getBookIssueHistory(book_id);
 			request.setAttribute("booktitle", title);
-			request.setAttribute("history",issues);//set list as attribute
+			request.setAttribute("history",issues);
 			request.getRequestDispatcher("individual_book_history.jsp").include(request, response);
 			
 		}
@@ -351,10 +372,10 @@ public class ControllerServlet extends HttpServlet {
 			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=mydbConnect.getUserCurrentIssue(memberID);
-			request.setAttribute("current_issues",objectlist);//set list as attribute
+			request.setAttribute("current_issues",objectlist);
 			List<Object[]> objectlist1 = new ArrayList<Object[]>();
 			objectlist1=mydbConnect.getUserIssueHistory(memberID);
-			request.setAttribute("past_issues",objectlist1);//set list as attribute
+			request.setAttribute("past_issues",objectlist1);
 			request.getRequestDispatcher("view_your_books.jsp").include(request, response);
 			
 		}
@@ -387,11 +408,11 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("borrowing_book"))   //user Issue Books
 		{
-			int userID=u.getMemId();
+			int user_id=u.getMemId();
 			
-			int bookID=Integer.parseInt(request.getParameter("book-id"));
+			int book_id=Integer.parseInt(request.getParameter("book-id"));
 			
-			boolean issue=mydbConnect.borrowBook(userID,bookID);
+			boolean issue=mydbConnect.borrowBook(user_id,book_id);
 			if(issue==true)
 			{
 				request.setAttribute("borrowSuccess", "yes");
@@ -451,7 +472,7 @@ public class ControllerServlet extends HttpServlet {
 				request.setAttribute("adminBrowsing", "yes");
 			else
 				request.setAttribute("memberBrowsing", "yes");
-            request.setAttribute("object_list",objectlist);//set list as attribute
+            request.setAttribute("object_list",objectlist);
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			
 		}
@@ -469,7 +490,7 @@ public class ControllerServlet extends HttpServlet {
 				request.setAttribute("waitlistFailure", "yes");
 			}
 			if(u.getType().equalsIgnoreCase("admin"))
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 			else
 				request.getRequestDispatcher("member_login.jsp").include(request, response);
 			
@@ -486,7 +507,7 @@ public class ControllerServlet extends HttpServlet {
 			else
 				request.setAttribute("remWaitlistF", "yes");
 			if(u.getType().equalsIgnoreCase("admin"))
-			request.getRequestDispatcher("admin_login.jsp").include(request, response); //to connect the next page, check name of jsp.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); 
 			else
 				request.getRequestDispatcher("member_login.jsp").include(request, response);
 			
