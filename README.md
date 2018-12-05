@@ -27,11 +27,11 @@ After a lot of back and forth, from trying swing to JavaFx we finally settled on
 * It looks much more prettier unlike swing which makes you feel like you're using Windows98
 * Finally, we decided on using Apapche Tomcat v9.0 as the servlet container for the GUI as it was the most easy-to-configure container which worked well out of the box.
 
-For more information about the build tools refer to the Built With section.
+For more information about the build tools refer to the [Built With](#built-with) section.
 
 * We split the work in such a way that we worked on our own part independent of the other. This helped because each person would be well versed in a certian part of the project and hence solve the problem of accountability.It also reduced the amount of merge conflicts we had to deal with.
 
-For more information refer to the Authors section.
+For more information refer to the [Authors](#authors) section.
 
 ## Challenges
 
