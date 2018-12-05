@@ -447,7 +447,8 @@ public class DBConnector {
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
-	        LocalDate ddate = idate.minusDays(2);
+	        idate = idate.minusDays(1);
+	        LocalDate ddate = idate.minusDays(3);
 	        ps.setString(3, rss.getString("book_title"));
 	        ps.setString(4,username.getString(1));
 	        ps.setDate(5, java.sql.Date.valueOf(idate));
@@ -511,7 +512,10 @@ public class DBConnector {
 	        ps.executeUpdate();
 	        
 	        
-	        fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
+	        //fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
+	        LocalDate rdate = LocalDate.now();
+	        Date date = Date.valueOf(rdate);
+	        fine = calcFine(date,fullSet.getDate("due_date"));
 	        connection.close();
 		
 		} catch (SQLException e) {
@@ -876,10 +880,10 @@ public class DBConnector {
  * @param bookId The book which the user borrowed
  * @return The fine which is calculated as noOfDaysExceeded * 20
  */
-	double calcFine(Date dueDate, Date returnDate) {
+	double calcFine(Date returnDate, Date dueDate) {
 		
-		if(dueDate.after(returnDate)) {
-			int days= daysBetween(dueDate,returnDate);
+		if(returnDate.after(dueDate)) {
+			int days= daysBetween(returnDate,dueDate);
 			return days*20.0;
 			
 		}else {
@@ -891,7 +895,7 @@ public class DBConnector {
 	
 	public int daysBetween(Date d1, Date d2){
 		
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+        return (int)( (d1.getTime() - d2.getTime()) / (1000 * 60 * 60 * 24));
         
 	}
 

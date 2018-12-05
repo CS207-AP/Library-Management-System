@@ -412,13 +412,12 @@ public class ControllerServlet extends HttpServlet {
 			
 			int book_id=Integer.parseInt(request.getParameter("book-id"));
 			
-			int issue=mydbConnect.borrowBook(user_id,book_id);
-			if(issue==2)
-			   request.setAttribute("excess", "yes");
-			else if(issue==1)
+			boolean issue=mydbConnect.borrowBook(user_id,book_id);
+			if(issue)
 				request.setAttribute("borrowSuccess", "yes");
-			else if(issue==0)
-				request.setAttribute("borrowFail", "yes");
+			else 
+				request.setAttribute("excess", "yes");
+			 
 			
 			
 			RequestDispatcher rs;
@@ -460,14 +459,10 @@ public class ControllerServlet extends HttpServlet {
 			HttpSession session=request.getSession(false);  
 			session.invalidate();
 			
-			request.setAttribute("loginResult", null);
-			String username=(String) session.getAttribute("user");
-			if(username==null)
-			{
+			
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
-			}
-           // out.close();
+			
 			
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
