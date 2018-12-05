@@ -60,18 +60,17 @@ For more information refer to the [Authors](#authors) section.
 
 ### Aastha Amul Shah 
 * Web Content and GUI design
-* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
+* View Contributions [here](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
 * [github](https://github.com/aastha-shah)
 
 ### Nandini Agrawal
 * Servlet and Objects
-* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet)
-* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
+* View Contributions [here](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet) and [here](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
 * [github](https://github.com/Nandini18)
 
 ### Reuel John 
 * Database Management and Query handling
-* [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao)
+* View Contributions [here](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao) and [here](https://github.com/CS207-AP/Library-Management-system/tree/master/src/util)
 * [github](https://github.com/mojoman11)
 
 See also the list of [contributors](https://github.com/CS207-AP/Library-Management-system/graphs/contributors) who participated in this project.
