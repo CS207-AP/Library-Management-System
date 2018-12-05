@@ -708,8 +708,8 @@ public class DBConnector {
 	
 /**
  * 	Adds a user(user_id) to the wait-list of the book (bbok_id)
- * @param bookid
- * @param userid
+ * @param bookid The id of the book whose wait-list to be put in
+ * @param userid The id of the user to be put in the wait-list
  */
 	public boolean addtoWaitlist(int bookid,int userid) {
 		Connection conn; 
@@ -871,10 +871,10 @@ public class DBConnector {
 	}
 	
 /**
- *  Calculates the fine for a given bookid and user	
+ * Calculates the fine for a given bookid and user	
  * @param user_id The user who has to pay the fine
  * @param bookId The book which the user borrowed
- * @return The fine  which is calculated as noOfDaysExceeded * 20
+ * @return The fine which is calculated as noOfDaysExceeded * 20
  */
 	double calcFine(Date dueDate, Date returnDate) {
 		
