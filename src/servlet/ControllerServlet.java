@@ -462,6 +462,7 @@ public class ControllerServlet extends HttpServlet {
 	        response.setDateHeader("Expires", 0);
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
+            
             out.close();
 			
 		}
