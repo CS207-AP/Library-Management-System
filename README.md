@@ -29,11 +29,11 @@ For more information refer to the Authors section.
 * Deciding on which table needed what fields in the database as per our requirements which kept changing as we progressed with the project.
 * Due to the way we split the work, when the time came for our code to work in tandem debugging was a PAIN and required all three of us to be present at the same place to identify *where* the bug was and squash it accordingly.
 
-##Project flow
+## Project flow
 
-image
+![flow](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/flow.png)
 
-##Documentation
+## Documentation
 
 * Java docs
 * JSP docs
