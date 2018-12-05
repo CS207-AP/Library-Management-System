@@ -537,10 +537,11 @@ public class ControllerServlet extends HttpServlet {
 			if(u.getType().equalsIgnoreCase("admin"))
 			 request.setAttribute("adminBrowsing", "yes");
 			else
+			{
 				request.setAttribute("memberBrowsing", "yes");
 		    request.setAttribute("object_list",objectlist);
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
-			
+			}
 		}
 		
 	}
