@@ -944,7 +944,7 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id REGEXP ? OR book_title REGEXP ? OR book_author REGEXP ? OR book_ISBN REGEXP ? OR book_publisher REGEXP ?");		        
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id =? OR LOCATE(?,book_title)>0  OR book_author=? OR book_ISBN = ? OR book_publisher = ?");		        
 			  ps.setInt(1, searchBook.getid());
 			  ps.setString(2, searchBook.getTitle());
 			  System.out.println(searchBook.getTitle());
