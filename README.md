@@ -2,35 +2,41 @@
 
 One Paragraph of project description goes here
 
-## Getting Started
+## Project Aim 
+The project's aim was to be able to adopt a fully functioning independent software to manage a library and automate whatever process wherever possible.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## Solution Approach
+Once getting the project aim into place we went about listing the various components of the project.In short it had to compromise mainly of three things, a flexible way tomanage the GUI, a query oriented language for a database and a primary language that would handle the backend. This primary language had to manage the backend by communicating between the GUI and the database.
 
-### Prerequisites
+Java was chosen as the primary language as all 3 contributors were well versed with it and it's vast array of libraries suited our need perfectly.
+Mysql was chosen as the database management system as it provided a simple syntax along with the contributors having prior knowledge of the language.
+After a lot of back and forth, from trying swing to JavaFx we finally settled on using a web based interface for the following reasons
 
-What things you need to install the software and how to install them
+* Bootstrap (a web UI framework) along with Pingendo (a bootstrap based gui builder) made designing the front-end easier
+* Cross platform uniformity (Windows,OSX and Linux\_64)
+* It looks much more prettier unlike swing which makes you feel like you're using Windows98
+* Finally, we decided on using Apapche Tomcat v9.0 as the servlet container for the GUI as it was the most easy-to-configure container which worked well out of the box.
 
-```
-Give examples
-```
+For more information about the build tools refer to the Built With section.
 
-### Installing
+* We split the work in such a way that we worked on our own part independent of the other. This helped because each person would be well versed in a certian part of the project and hence solve the problem of accountability.It also reduced the amount of merge conflicts we had to deal with.
 
-A step by step series of examples that tell you how to get a development env running
+For more information refer to the Authors section.
 
-Say what the step will be
+## Challenges
 
-```
-Give the example
-```
+* Web design was something none of us had experience in, therefore designing the GUI required a lot of attention.
+* Deciding on which table needed what fields in the database as per our requirements which kept changing as we progressed with the project.
+* Due to the way we split the work, when the time came for our code to work in tandem debugging was a PAIN and required all three of us to be present at the same place to identify *where* the bug was and squash it accordingly.
 
-And repeat
+##Project flow
 
-```
-until finished
-```
+image
 
-End with an example of getting some data out of the system or using it for a little demo
+##Documentation
+
+* Java docs
+* JSP docs
 
 ## Built With
 
