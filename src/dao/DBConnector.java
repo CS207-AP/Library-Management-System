@@ -441,7 +441,7 @@ public class DBConnector {
             ps.setInt(1, bookId);
 	        ps.setInt(2, user_id);
 	        LocalDate idate = LocalDate.now();
-	        LocalDate ddate = idate.plusDays(14);
+	        LocalDate ddate = idate.minusDays(2);
 	        ps.setString(3, rss.getString("book_title"));
 	        ps.setString(4,username.getString(1));
 	        ps.setDate(5, java.sql.Date.valueOf(idate));
@@ -508,10 +508,10 @@ public class DBConnector {
 
 	        
 	        ps.executeUpdate();
-	        connection.close();
+	        
 	        
 	        fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
-
+	        connection.close();
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -877,7 +877,7 @@ public class DBConnector {
  */
 	double calcFine(Date dueDate, Date returnDate) {
 		
-		if(returnDate.after(dueDate)) {
+		if(dueDate.after(returnDate)) {
 			int days= daysBetween(dueDate,returnDate);
 			return days*20.0;
 			
@@ -944,7 +944,7 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id=? OR book_title=? OR book_author=? OR book_ISBN=? OR book_publisher=?");		        
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE book_id LIKE %?% OR LIKE book_title=%?% OR book_author=? OR book_ISBN=? OR book_publisher=?");		        
 			  ps.setInt(1, searchBook.getid());
 			  ps.setString(2, searchBook.getTitle());
 			  System.out.println(searchBook.getTitle());
