@@ -508,10 +508,10 @@ public class DBConnector {
 
 	        
 	        ps.executeUpdate();
-	        connection.close();
+	        
 	        
 	        fine = calcFine(fullSet.getDate("issue_date"),fullSet.getDate("due_date"));
-
+	        connection.close();
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
