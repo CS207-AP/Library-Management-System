@@ -45,8 +45,7 @@ For more information refer to the [Authors](#authors) section.
 ![flow](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/flow.png)
 
 ## Documentation
-
-* [Java docs](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/overview-summary.html)
+* <a href="https://github.com/CS207-AP/Library-Management-system/blob/master/docs/overview-summary.html">JAVA docs</a>
 * JSP docs
 
 ## Built With
