@@ -456,8 +456,8 @@ public class ControllerServlet extends HttpServlet {
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 	        response.setHeader("Pragma", "no-cache"); 
 	        response.setDateHeader("Expires", 0);
-			HttpSession session=request.getSession();  
-			//session.invalidate();
+			HttpSession session=request.getSession(false);  
+			session.invalidate();
 			
 			request.setAttribute("loginResult", null);
 			String username=(String) session.getAttribute("user");
