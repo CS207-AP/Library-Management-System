@@ -1,6 +1,16 @@
 # Library Management System
 
-One Paragraph of project description goes here
+## Table of Contents
+
+* [Project Aim](#introduction)
+* [Solution Approach](#getting-started)
+* [Challenges](#dependencies)
+* [Project Flow](#building-from-source)
+* [Documentation](#configuration)
+* [Built With](#running)
+* [Authors](#contributors)
+* [License](#license)
+* [Acknowledgments](#Acknowledgments)
 
 ## Project Aim 
 The project's aim was to be able to adopt a fully functioning independent software to manage a library and automate whatever process wherever possible.
@@ -29,7 +39,7 @@ For more information refer to the Authors section.
 * Deciding on which table needed what fields in the database as per our requirements which kept changing as we progressed with the project.
 * Due to the way we split the work, when the time came for our code to work in tandem debugging was a PAIN and required all three of us to be present at the same place to identify *where* the bug was and squash it accordingly.
 
-## Project flow
+## Project Flow
 
 ![flow](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/flow.png)
 
