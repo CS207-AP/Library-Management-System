@@ -100,6 +100,8 @@ public class ControllerServlet extends HttpServlet {
 	 *	<p>
 	 *	17.View All Current Issues:
 	 * <p>
+     *  18.Calling_edit_books:Obtains a list of Books from getAllBooks method in the DBConnector and stores it in booklist. Then it sets attribute booklist to "book_list" and the page is redirected to edit_books.jsp
+	 *  19.Calling_edit_accounts: Obtains a list of users from getAllUsers method in the DBConnector and stores it in memberlist.Then it sets attribute memberlist to "users" and the page is redirected to edit_accounts.jsp
 	 * 
 	 * @param email Contains the email address entered by the user
 	 * @param pass Contains the password entered by the user
