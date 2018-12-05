@@ -494,7 +494,7 @@ public class DBConnector {
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available + 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
 			ps.executeUpdate();
-			
+			 
 	        
 	        ps = connection.prepareStatement("INSERT INTO issueHistory (book_id,user_id,book_title,user_name,issue_date,return_date) VALUES (?,?,?,?,?,?);");
             ps.setInt(1, bookId);

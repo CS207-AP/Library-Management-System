@@ -80,7 +80,7 @@ padding-left:10px;}
     <div class="alert alert-success" style="color:green;">
     <strong>Success!</strong> You have been added to the waitlist.
     </div>
-    </c:if>
+    </c:if> 
     <c:if test="${not empty remWaitlistS}">
     <div class="alert alert-success" style="color:green;">
     <strong>Success!</strong> You have removed yourself from the waitlist.
