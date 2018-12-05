@@ -41,7 +41,8 @@ For more information refer to the Authors section.
 ## Built With
 
 * [Java](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) - Primary Language
-* [Pingendo](https://pingendo.com/) - Web Content 
+* [Bootstrap](http://getbootstrap.com/) - Web Content 
+* [Pingendo](https://pingendo.com/) - Bootstrap Builder 
 * [Mysql](https://www.mysql.com/) - Database Management System
 * [Apache Tomcat](https://tomcat.apache.org/download-90.cgi) - Java Servlet Container
 
@@ -60,5 +61,5 @@ This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](LICE
 ## Acknowledgments
 
 * Professor Goutam Paul
-* Barun Parruck
-* Sanchit Bansal
+* Barun Parruck (TA)
+* Sanchit Bansal (TA)
