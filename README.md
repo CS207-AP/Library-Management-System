@@ -46,7 +46,7 @@ For more information refer to the [Authors](#authors) section.
 
 ## Documentation
 
-* Java docs
+* [Java docs](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/overview-summary.html)
 * JSP docs
 
 ## Built With
