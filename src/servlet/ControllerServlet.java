@@ -63,30 +63,43 @@ public class ControllerServlet extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	
-	/**
-	 * The dopost method of the controller servlet in this project is an HTTP servlet which handles request from the jsp pages and provides response to it. The requests that the controller servlet accepts is:
-	 *	1.Login: Accepts user details from the JSP page and calls method check Credentials in DBConnector.If the input is valid, then the user gets redirected to the admin_login or member_login page depending on the user type.
-	 *	2.Logout: Terminates the current session.
-	 *	3.Create Book: Accepts book details from the JSP page and stores those details in the Book object book. It then calls method addBook in DBConnector, which adds the book in the database. If the add is a success, we set attribute “success” to “addBook” and redirect to the admin_login page (only admin can add books to the library).
-	 *	4.Create User: Accepts user details from the JSP page and stores those details in the User object obj. It then calls method add User in DBConnector, which adds the user in the database. If the add is a success, we set attribute “success” to “addBook” and redirect to the admin_login page (only admin can add users to the library).
-	 *	5.Issue Book: 
-	 *	6.Return Book	
-	 *	7.Edit Book: Accepts the book details of the book that needs to be edited, from the JSP page and stores it in Book object book. It then calls method editBook in DBConnector, which edits that particular book in the database. If the edit is a success, we set attribute “success” to “editBook” and redirect to the admin_login page (only admin can edit book details).
-	 *  8.Delete Book: Accepts the book id of the book that needs to be deleted,from the JSP page. It then calls method deleteBook in DBConnector, which deletes that particular book in the database. If the delete is a success, we set attribute “success” to “deleteBook” and redirect to the admin_login page (only admin can delete a book).
-	 *	9.Delete user:  Accepts the user id of the user that needs to be deleted, from the JSP page. It then calls method deleteMember in DBConnector, which deletes that particular member in the database only if the member has no book issued currently or is not on waitlist for any particular book. If the delete is a success, the message “Removed User from Database” is printed and is redirected to edit_accounts.jsp (only admin can delete a user).
-	 *	10.Edit User/Admin Details by Admin : Accepts the user details of the user that needs to be edited, from the JSP page and stores it in User object userToEdit. It then calls method editUserDetails in DBConnector, which edits that particular user details in the database. If the edit is a success, we set attribute “success” to “editUser” and redirect to the admin_login page (only admin can edit user details).
-	 *	11.Edit Details by Member: Accepts the three parameters from the JSP page that the member can edit for himself i.e. name,email and password and stores it in User object u. It then calls method editUserDetails in DBConnector, which edits that particular member’s details in the database. If the edit is a success, the message “Edited Details Successfully” is printed and the page is redirected to member_login.
-	 *	12.Browse Books:
-	 *	13.Add to Waitlist:
-	 *	14.Remove from Waitlist:
-	 *	15. View your Books:
-	 *	16.Individual History of the Book:
-	 *	17.View All Current Issues:
-     *
 	 * 
+	 * The dopost method of the controller servlet in this project is an HTTP servlet which handles request from the jsp pages and provides response to it. The requests that the controller servlet accepts is:
+	 *	<p>
+	 *	1.Login: Accepts user details from the JSP page and calls method check Credentials in DBConnector.If the input is valid, then the user gets redirected to the admin_login or member_login page depending on the user type.
+	 *	<p>
+	 *  2.Logout: Terminates the current session.
+	 *  <p>
+	 *	3.Create Book: Accepts book details from the JSP page and stores those details in the Book object book. It then calls method addBook in DBConnector, which adds the book in the database. If the add is a success, we set attribute <code>success</code> to <code>addBook</code> and redirect to the admin_login page (only admin can add books to the library).
+	 *	<p>
+	 *  4.Create User: Accepts user details from the JSP page and stores those details in the User object obj. It then calls method add User in DBConnector, which adds the user in the database. If the add is a success, we set attribute <code>success</code> to <code>addBook</code> and redirect to the admin_login page (only admin can add users to the library).
+	 *	<p>
+	 *	5.Issue Book: 
+	 *	<p>
+	 *	6.Return Book	
+	 *	<p>
+	 *	7.Edit Book: Accepts the book details of the book that needs to be edited, from the JSP page and stores it in Book object book. It then calls method editBook in DBConnector, which edits that particular book in the database. If the edit is a success, we set attribute <code>success</code> to <code>editBook</code> and redirect to the admin_login page (only admin can edit book details).
+	 *  <p>
+	 *  8.Delete Book: Accepts the book id of the book that needs to be deleted,from the JSP page. It then calls method deleteBook in DBConnector, which deletes that particular book in the database. If the delete is a success, we set attribute <code>success</code> to <code>deleteBook</code> and redirect to the admin_login page (only admin can delete a book).
+	 *	<p>
+	 *	9.Delete user:  Accepts the user id of the user that needs to be deleted, from the JSP page. It then calls method deleteMember in DBConnector, which deletes that particular member in the database only if the member has no book issued currently or is not on waitlist for any particular book. If the delete is a success, the message <code>Removed User from Database</code> is printed and is redirected to edit_accounts.jsp (only admin can delete a user).
+	 *	<p>
+	 *	10.Edit User/Admin Details by Admin : Accepts the user details of the user that needs to be edited, from the JSP page and stores it in User object userToEdit. It then calls method editUserDetails in DBConnector, which edits that particular user details in the database. If the edit is a success, we set attribute <code>success</code> to <code>editUser</code> and redirect to the admin_login page (only admin can edit user details).
+	 *	<p>
+	 *	11.Edit Details by Member: Accepts the three parameters from the JSP page that the member can edit for himself i.e. name,email and password and stores it in User object u. It then calls method editUserDetails in DBConnector, which edits that particular members details in the database. If the edit is a success, the message <code>Edited Details Successfully</code> is printed and the page is redirected to member_login.
+	 *	<p>
+	 *	12.Browse Books:
+	 *	<p>
+	 *	13.Add to Waitlist:
+	 *	<p>
+	 *	14.Remove from Waitlist:
+	 * <p>
+	 *	15. View your Books:
+	 *	<p>
+	 *	16.Individual History of the Book:
+	 *	<p>
+	 *	17.View All Current Issues:
+	 * <p>
 	 * 
 	 * @param email Contains the email address entered by the user
 	 * @param pass Contains the password entered by the user
@@ -111,11 +124,11 @@ public class ControllerServlet extends HttpServlet {
 	 * @param objectlist1 Contains the list of objects of books.
 	 * @param fine Contains the fine a user is supposed to pay while returning the book.
 	 * @return returns a <code>User</code> object with its appropriate details of the user.
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */       
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+	
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();
 		
