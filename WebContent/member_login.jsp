@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,6 +50,52 @@ padding-left:10px;}
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
     <br/>
+    <br/>
+    <c:if test="${not empty borrowSuccess}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book issued successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty borrowFail}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> Book could not be issued.
+    </div>
+    </c:if>
+    <c:if test="${not empty returnBook}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Book returned successfully.
+    </div>
+    </c:if>
+    <c:if test="${not empty fine}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> You must pay a fine of Rs. ${fine}.
+    </div>
+    </c:if>
+    <c:if test="${not empty waitlistFailure}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> Could not add to waitlist.
+    </div>
+    </c:if> 
+    <c:if test="${not empty waitlistSuccess}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> You have been added to the waitlist.
+    </div>
+    </c:if> 
+    <c:if test="${not empty remWaitlistS}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> You have removed yourself from the waitlist.
+    </div>
+    </c:if>
+    <c:if test="${not empty remWaitlistF}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> You could not remove yourself from the waitlist.
+    </div>
+    </c:if>
+    <c:if test="${not empty excess}">
+    <div class="alert alert-error" style="color:red;">
+    <strong>Oops!</strong> You cannot issue more than 2 books.
+    </div>
+    </c:if>
   <div class="py-3">
     <div class="container">
       <div class="row">

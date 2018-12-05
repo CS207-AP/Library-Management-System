@@ -41,7 +41,7 @@ padding-left:10px;}
   <td width="20%"><div class="logout-btn"><form action="ControllerServlet" method="post"><input type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form></div></td>
   </tr></tbody></table>
     <br/>
-  <h5 class="title">Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
+  <h5 align="center" class="title">Viewing history for: <%=request.getAttribute("booktitle")%> </h5>
   <table class="table table-bordered table-striped table-hover">
     <thead>
    
