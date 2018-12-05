@@ -67,9 +67,25 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	
 	/**
-	 * This method has all the functions of the Servlet. It checks if the action is: login,logout,issue book,return book, edit user,
-	 * edit book, delete user, delete book, create user, add book, add on Waitlist, remove from Waitlist, browse books, search book,
-	 * individual book history and view your current and past books.
+	 * The dopost method of the controller servlet in this project is an HTTP servlet which handles request from the jsp pages and provides response to it. The requests that the controller servlet accepts is:
+	 *	1.Login: Accepts user details from the JSP page and calls method check Credentials in DBConnector.If the input is valid, then the user gets redirected to the admin_login or member_login page depending on the user type.
+	 *	2.Logout: Terminates the current session.
+	 *	3.Create Book: Accepts book details from the JSP page and stores those details in the Book object book. It then calls method addBook in DBConnector, which adds the book in the database. If the add is a success, we set attribute “success” to “addBook” and redirect to the admin_login page (only admin can add books to the library).
+	 *	4.Create User: Accepts user details from the JSP page and stores those details in the User object obj. It then calls method add User in DBConnector, which adds the user in the database. If the add is a success, we set attribute “success” to “addBook” and redirect to the admin_login page (only admin can add users to the library).
+	 *	5.Issue Book: 
+	 *	6.Return Book	
+	 *	7.Edit Book: Accepts the book details of the book that needs to be edited, from the JSP page and stores it in Book object book. It then calls method editBook in DBConnector, which edits that particular book in the database. If the edit is a success, we set attribute “success” to “editBook” and redirect to the admin_login page (only admin can edit book details).
+	 *  8.Delete Book: Accepts the book id of the book that needs to be deleted,from the JSP page. It then calls method deleteBook in DBConnector, which deletes that particular book in the database. If the delete is a success, we set attribute “success” to “deleteBook” and redirect to the admin_login page (only admin can delete a book).
+	 *	9.Delete user:  Accepts the user id of the user that needs to be deleted, from the JSP page. It then calls method deleteMember in DBConnector, which deletes that particular member in the database only if the member has no book issued currently or is not on waitlist for any particular book. If the delete is a success, the message “Removed User from Database” is printed and is redirected to edit_accounts.jsp (only admin can delete a user).
+	 *	10.Edit User/Admin Details by Admin : Accepts the user details of the user that needs to be edited, from the JSP page and stores it in User object userToEdit. It then calls method editUserDetails in DBConnector, which edits that particular user details in the database. If the edit is a success, we set attribute “success” to “editUser” and redirect to the admin_login page (only admin can edit user details).
+	 *	11.Edit Details by Member: Accepts the three parameters from the JSP page that the member can edit for himself i.e. name,email and password and stores it in User object u. It then calls method editUserDetails in DBConnector, which edits that particular member’s details in the database. If the edit is a success, the message “Edited Details Successfully” is printed and the page is redirected to member_login.
+	 *	12.Browse Books:
+	 *	13.Add to Waitlist:
+	 *	14.Remove from Waitlist:
+	 *	15. View your Books:
+	 *	16.Individual History of the Book:
+	 *	17.View All Current Issues:
+     *
 	 * 
 	 * 
 	 * @param email Contains the email address entered by the user
@@ -328,7 +344,7 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		
-		else if(action.equalsIgnoreCase("edit_your_details")) { //if user wants to change something
+		else if(action.equalsIgnoreCase("edit_your_details")) { 
 			
 
 			String Name=request.getParameter("name");
@@ -342,7 +358,7 @@ public class ControllerServlet extends HttpServlet {
 			{
 				out.println("Edited details successfully.");
 			}
-			request.getRequestDispatcher("member_login.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("member_login.jsp").include(request, response); 
 		}
 		
 		else if(action.equalsIgnoreCase("calling_edit_your_details"))
@@ -461,7 +477,6 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		else if(action.equalsIgnoreCase("search")) {
-			//System.out.println("Reached search in servlet");
 			String search_title=request.getParameter("search_title");
 			String search_genre=request.getParameter("search_genre");
 			String search_publisher=request.getParameter("search_publisher");
