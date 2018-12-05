@@ -454,16 +454,20 @@ public class ControllerServlet extends HttpServlet {
 		}
 		else if(action.equalsIgnoreCase("logout")) {
 			
-			HttpSession session=request.getSession();  
-			session.invalidate();
-			request.setAttribute("loginResult", null);
 			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 	        response.setHeader("Pragma", "no-cache"); 
 	        response.setDateHeader("Expires", 0);
+			HttpSession session=request.getSession();  
+			//session.invalidate();
+			
+			request.setAttribute("loginResult", null);
+			String username=(String) session.getAttribute("user");
+			if(username==null)
+			{
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
-            
-            out.close();
+			}
+           // out.close();
 			
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
