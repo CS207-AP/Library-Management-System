@@ -31,9 +31,17 @@ padding-left:680px;
 
 }
 
-}
+}</style>
+<script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+    </script>
 
-</style>
 </head>
 
 <body >

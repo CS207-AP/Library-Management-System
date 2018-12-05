@@ -459,14 +459,10 @@ public class ControllerServlet extends HttpServlet {
 			HttpSession session=request.getSession(false);  
 			session.invalidate();
 			
-			request.setAttribute("loginResult", null);
-			String username=(String) session.getAttribute("user");
-			if(username==null)
-			{
+			
 			RequestDispatcher rd = request.getRequestDispatcher("loginPage.jsp");
             rd.forward(request, response);
-			}
-           // out.close();
+			
 			
 		}
 		else if(action.equalsIgnoreCase("calling_browse_books"))
