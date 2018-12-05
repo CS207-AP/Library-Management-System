@@ -59,18 +59,18 @@ For more information refer to the [Authors](#authors) section.
 ## Authors
 
 ### Aastha Amul Shah 
-* **Web Content and GUI design**
+* Web Content and GUI design
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
 * [github](https://github.com/aastha-shah)
 
 ### Nandini Agrawal
-* **Servlet and Objects**
+* Servlet and Objects
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet)
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
 * [github](https://github.com/Nandini18)
 
 ### Reuel John 
-* **Database Management and Query handling**
+* Database Management and Query handling
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao)
 * [github](https://github.com/mojoman11)
 
