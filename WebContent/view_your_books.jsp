@@ -38,7 +38,7 @@ text-align: center;}
   <div class="logout-btn"><form style="float: right;" action="ControllerServlet" method="post"><input style="float: right;" type="hidden" id="action" name="action" value="logout"/><input class="btn btn-link" type="submit" value="Log Out"/></form>
   </div>
   <br/>
-   <h5 class="title">Current Issues:</h5>
+   <h5 align="center" class="title">Current Issues:</h5>
   <table class="table table-bordered table-striped table-hover">
    
     <thead>
@@ -69,7 +69,7 @@ text-align: center;}
    
         </tbody>
     </table>
-     <h5 class="title">Past Issues:</h5>
+     <h5 align="center" class="title">Past Issues:</h5>
     <table class="table table-bordered table-striped table-hover">
     <thead>
    

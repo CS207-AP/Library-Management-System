@@ -402,9 +402,9 @@ public class DBConnector {
  * @param bookId The id of the book the User wants to borrow
  * @return a boolean value to indicate whether the book has been successfully issued or not
  */
-	public boolean borrowBook(int user_id, int bookId)
+	public int borrowBook(int user_id, int bookId)
 	{
-		
+		int noOfBooks=0;
 		Connection connection;
 		int i = 0;
 		try {
@@ -413,12 +413,10 @@ public class DBConnector {
 			String query="SELECT COUNT(user_id) FROM currentlyIssued";			
 			 Statement st = connection.createStatement();         
 	         ResultSet rs = st.executeQuery(query);
-	         int noOfBooks=0;
+	         
 	         while(rs.next()) { noOfBooks=rs.getInt(1);}
 	         
-	         if(noOfBooks>=2) {
-	        	 System.out.println("You cannot issue more than 2 books.");
-	         }
+	         
 	         
 			ps = connection.prepareStatement("UPDATE books SET book_available = (book_available - 1) WHERE book_id = ?");
 			ps.setInt(1, bookId);
@@ -458,14 +456,16 @@ public class DBConnector {
 			e.printStackTrace();
 		}
 		
-		if (i == 1) {
-            return true;
+		if (i == 1 && noOfBooks>=2) 
+            return 2;
+		else if(i==1)
+			return 1;
+		else return 0;
             
-		}else {
-            return false;
+		
 		}
 		
-	}
+	
 /**
  * 	Returns the book with the given user-id and book id
  * @param user_id The id of the user returning the book

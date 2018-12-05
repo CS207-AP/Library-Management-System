@@ -167,7 +167,7 @@ public class ControllerServlet extends HttpServlet {
 		     User obj = mydbConnect.checkCredentials(email, pass);
 	        	if (obj.getMemId()==0)
 	        	{
-	           out.println("Invalid Credentials");
+	          // out.println("Invalid Credentials");
 	           request.setAttribute("loginResult", "Error");
 	           RequestDispatcher rs = request.getRequestDispatcher("loginPage.jsp"); 
 	           rs.include(request, response);
@@ -412,14 +412,14 @@ public class ControllerServlet extends HttpServlet {
 			
 			int book_id=Integer.parseInt(request.getParameter("book-id"));
 			
-			boolean issue=mydbConnect.borrowBook(user_id,book_id);
-			if(issue==true)
-			{
+			int issue=mydbConnect.borrowBook(user_id,book_id);
+			if(issue==2)
+			   request.setAttribute("excess", "yes");
+			else if(issue==1)
 				request.setAttribute("borrowSuccess", "yes");
-			}
-			else {
+			else if(issue==0)
 				request.setAttribute("borrowFail", "yes");
-			}
+			
 			
 			RequestDispatcher rs;
 			if(u.getType().equalsIgnoreCase("admin"))
@@ -531,6 +531,10 @@ public class ControllerServlet extends HttpServlet {
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			int user_id=u.getMemId();
 			objectlist=mydbConnect.searchBooks(toSearch,user_id);
+			if(u.getType().equalsIgnoreCase("admin"))
+			 request.setAttribute("adminBrowsing", "yes");
+			else
+				request.setAttribute("memberBrowsing", "yes");
 		    request.setAttribute("object_list",objectlist);
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
 			

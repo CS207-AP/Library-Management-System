@@ -51,6 +51,7 @@ padding-left:10px;}
   </div>
   
     <br/>
+    <br/>
     <c:if test="${not empty deleteBook}">
     <div class="alert alert-success" style="color:green;">
     <strong>Success!</strong> Book deleted successfully.
