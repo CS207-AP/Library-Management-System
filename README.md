@@ -42,7 +42,7 @@ For more information refer to the [Authors](#authors) section.
 
 ## Project Flow
 
-![flow](https://github.com/CS207-AP/Library-Management-system/blob/master/docs/flow.png)
+![flow](./docs/flow.png)
 
 ## Documentation
 * [JAVA Docs](http://htmlpreview.github.com/?https://github.com/CS207-AP/Library-Management-system/blob/master/docs/overview-summary.html)
