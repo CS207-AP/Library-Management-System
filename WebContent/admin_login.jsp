@@ -82,9 +82,9 @@ padding-left:10px;}
     <strong>Success!</strong> Book issued successfully.
     </div>
     </c:if>
-    <c:if test="${not empty borrowFail}">
-    <div class="alert alert-error" style="color:red;">
-    <strong>Oops!</strong> Book could not be issued.
+    <c:if test="${not empty excess}">
+    <div class="alert alert-danger" style="color:red;">
+    <strong>Oops!</strong> You can only issue 2 books.
     </div>
     </c:if>
     <c:if test="${not empty returnBook}">
@@ -93,12 +93,12 @@ padding-left:10px;}
     </div>
     </c:if>
     <c:if test="${not empty fine}">
-    <div class="alert alert-error" style="color:red;">
+    <div class="alert alert-danger" style="color:red;">
     <strong>Oops!</strong> You must pay a fine of Rs. ${fine}.
     </div>
     </c:if>
     <c:if test="${not empty waitlistFailure}">
-    <div class="alert alert-error" style="color:red;">
+    <div class="alert alert-danger" style="color:red;">
     <strong>Oops!</strong> Could not add to waitlist.
     </div>
     
@@ -114,7 +114,7 @@ padding-left:10px;}
     </div>
     </c:if>
     <c:if test="${not empty remWaitlistF}">
-    <div class="alert alert-error" style="color:red;">
+    <div class="alert alert-danger" style="color:red;">
     <strong>Oops!</strong> You could not remove yourself from the waitlist.
     </div>
     </c:if>

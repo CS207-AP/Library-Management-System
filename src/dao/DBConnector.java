@@ -340,8 +340,10 @@ public class DBConnector {
 		    	
 		    	Object [] issueData = new Object[6];
 		    	issueData[0]=userSet.getString("book_id");
+		    	
 		    	issueData[1]=userSet.getString("user_id");
 		    	issueData[2]=userSet.getString("book_title");
+		    	//System.out.println("printing in getusercurrent"+ issueData[2]);
 		    	issueData[3]=userSet.getString("user_name");
 		    	issueData[4]=userSet.getDate("issue_date");
 		    	issueData[5]=userSet.getDate("due_date");
@@ -603,11 +605,13 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			ps = conn.prepareStatement("SELECT COUNT FROM currentlyIssued WHERE book_id = ?;");
+			ps = conn.prepareStatement("SELECT COUNT(book_id) FROM currentlyIssued WHERE book_id = ?;");
+			ps.setInt(1, bookId);
 			ResultSet rs1=ps.executeQuery();
 			rs1.next();
 			
-			ps = conn.prepareStatement("SELECT COUNT FROM issueHistory WHERE book_id = ?;");
+			ps = conn.prepareStatement("SELECT COUNT(book_id) FROM issueHistory WHERE book_id = ?;");
+			ps.setInt(1, bookId);
 			ResultSet rs2=ps.executeQuery();
 			rs2.next();
 			
@@ -701,7 +705,7 @@ public class DBConnector {
 		}
 		
 		if(x==1) {
-			System.out.println("Edited successfully");
+			//System.out.println("Edited successfully");
 			return true;
 		}else{
 			return false;
@@ -955,13 +959,21 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			  ps = conn.prepareStatement("SELECT * FROM books WHERE LOCATE(?,book_id)>0 OR LOCATE(?,book_title)>0 OR LOCATE(?,book_author)>0 OR LOCATE(?,book_ISBN)>0 OR LOCATE(?,book_publisher)>0");		        
-			  ps.setInt(1, searchBook.getid());
+			  ps = conn.prepareStatement("SELECT * FROM books WHERE IF(?!='',LOCATE(?,book_title)>0,FALSE) OR IF( ?!='',LOCATE(?,book_author)>0,FALSE) OR IF(?!='',LOCATE(?,book_ISBN)>0,FALSE) OR IF(?!='',LOCATE(?,book_publisher)>0,FALSE) OR IF(?!='',LOCATE(?,book_genre)>0,FALSE)");		        
+
+			 
+			  ps.setString(1, searchBook.getTitle());
 			  ps.setString(2, searchBook.getTitle());
 			  System.out.println(searchBook.getTitle());
-			  ps.setString(3, searchBook.getAuthor());
-			  ps.setString(4, searchBook.getISBN());
-			  ps.setString(5, searchBook.getPublisher());
+		      ps.setString(3, searchBook.getAuthor());
+			  System.out.println(searchBook.getAuthor());
+		      ps.setString(4, searchBook.getAuthor());
+			  ps.setString(5, searchBook.getISBN());
+			  ps.setString(6, searchBook.getISBN());
+			  ps.setString(7, searchBook.getPublisher());
+			  ps.setString(8, searchBook.getPublisher());
+			  ps.setString(9, searchBook.getGenre());
+			  ps.setString(10, searchBook.getGenre());
 		      ResultSet bookSet = ps.executeQuery();
 		      
 		      while(bookSet.next()) {

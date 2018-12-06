@@ -55,8 +55,8 @@ text-align: center;}
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
     </tr>
-    <c:forEach items="${objectlist}" var="books"> 
-    <c:forEach items="${books}" var="book"> 
+    <c:forEach items="${current_issues}" var="book"> 
+   
                 <tr>
                     <td><c:out value="${book[0]}" /></td>
                    
@@ -64,7 +64,7 @@ text-align: center;}
                     <td class="idate"><c:out value="${book[3]}" /></td>
                     <td class="ddate"><c:out value="${book[4]}" /></td>
                 </tr>  
-            </c:forEach>
+            
    </c:forEach>
    
         </tbody>
@@ -85,8 +85,8 @@ text-align: center;}
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
     </tr>
-    <c:forEach items="${objectlist1}" var="books"> 
-    <c:forEach items="${books}" var="book"> 
+    <c:forEach items="${past_issues}" var="book"> 
+   
                 <tr>
                     <td><c:out value="${book[0]}" /></td>
                     
@@ -94,7 +94,7 @@ text-align: center;}
                     <td class="idate"><c:out value="${book[3]}" /></td>
                     <td class="ddate"><c:out value="${book[4]}" /></td>
                 </tr>  
-            </c:forEach>
+           
    </c:forEach>
    
         </tbody>

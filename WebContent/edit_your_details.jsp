@@ -49,13 +49,13 @@ padding-left:10px;}
           <form id="edit_details" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="edit_details" type="text" class="form-control" name="name" value=<%=request.getAttribute("name")%>> </div>
+                <input form="edit_details" type="text" class="form-control" name="name" value=<%=request.getAttribute("name2")%>> </div>
                 <%-- <input type="hidden" name="name" value=<%=request.getAttribute("name")%>/> --%>
             </div>
             
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="edit_details" type="text" class="form-control" name="email" value=<%=request.getAttribute("email")%>> </div>
+                <input form="edit_details" type="text" class="form-control" name="email" value=<%=request.getAttribute("email2")%>> </div>
                  <%-- <input type="hidden" name="name" value=<%=request.getAttribute("email")%>/> --%>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>

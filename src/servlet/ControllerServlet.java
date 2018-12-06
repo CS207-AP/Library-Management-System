@@ -293,6 +293,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			String Email=request.getParameter("member-email");
 			userToEdit.setEmail(Email);
+			
 		
 			boolean save=mydbConnect.editUserDetails(userToEdit);
 			
@@ -372,6 +373,7 @@ public class ControllerServlet extends HttpServlet {
 			int memberID=u.getMemId(); 
 			List<Object[]> objectlist = new ArrayList<Object[]>();
 			objectlist=mydbConnect.getUserCurrentIssue(memberID);
+			
 			request.setAttribute("current_issues",objectlist);
 			List<Object[]> objectlist1 = new ArrayList<Object[]>();
 			objectlist1=mydbConnect.getUserIssueHistory(memberID);
@@ -387,22 +389,24 @@ public class ControllerServlet extends HttpServlet {
 			u.setName(Name);
 			String Email=request.getParameter("email");
 			u.setEmail(Email);
-			String Password=request.getParameter("password");
+			String Password=request.getParameter("new_password");
 			u.setPassword(Password);
 			boolean save=mydbConnect.editUserDetails(u);
 			if(save==true)
 			{
-				out.println("Edited details successfully.");
+				request.setAttribute("editedDets", "yes");
 			}
 			request.getRequestDispatcher("member_login.jsp").include(request, response); 
+			System.out.println("PRINTING IN SERVLET"+u.getName());
 		}
 		
 		else if(action.equalsIgnoreCase("calling_edit_your_details"))
 		{
 			String name=u.getName();
-			request.setAttribute("name", name);
+			System.out.println("PRINTING IN calling_edit"+u.getName());
+			request.setAttribute("name2", name);
 			String email=u.getEmail();
-			request.setAttribute("email", email);
+			request.setAttribute("email2", email);
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		  
@@ -537,7 +541,6 @@ public class ControllerServlet extends HttpServlet {
 			if(u.getType().equalsIgnoreCase("admin"))
 			 request.setAttribute("adminBrowsing", "yes");
 			else
-			{
 				request.setAttribute("memberBrowsing", "yes");
 		    request.setAttribute("object_list",objectlist);
 			request.getRequestDispatcher("browse_books.jsp").include(request, response);
@@ -546,5 +549,5 @@ public class ControllerServlet extends HttpServlet {
 		
 	}
 		
-}
+
 
