@@ -41,6 +41,12 @@ For more information refer to the [Authors](#authors) section.
 * Deciding on which table needed what fields in the database as per our requirements (which kept changing as we progressed with the project).
 * Due to the way we split the work, when the time came for our code to work in tandem, debugging was a PAIN and required all three of us to be present at the same place to identify *where* the bug was and squash it accordingly.
 
+## Major Bugs
+
+* Searching: 
+* Logout: We had a lot of problem trying to invalidate and cancel the session and redirect it to the login page without allowing the user to simply click the back button to go back to the homepage. After a lot of research we decided we had to clear the cache whenever the login page is loaded which prevented us from going back once we were logged out.
+* Modals: In edit details of the books and users, we had a lot of problem trying to bring the existent information into the modal so that it is easier for the admin to edit the values. After a lot of time and different jquery and javascript functions we were able to bring the information to display (and later realized that it was because the script tag for jquery after the actual jqeury code!)
+
 ## Project Flow
 
 ![flow](/docs/flow.png)
@@ -57,26 +63,33 @@ For more information refer to the [Authors](#authors) section.
 * [MySQL](https://www.mysql.com/) - Database Management System
 * [Apache Tomcat](https://tomcat.apache.org/download-90.cgi) - Java Servlet Container
 
+## Limitations
+
+* Searching: We could have made it much easier for the users to search for books by categories instead of having to type in the search preferences. We could have also had a sorting procedure for alphabetically displaying the books.
+* Fine system: Made the fine system more formal and more interactive for the user wherein they have to click and pay the fine (in the code we have shared - we have hardcoded the dates in a way that on returning you get a fine for returning the book 4 days after the due date).
+* Database: We could have perhaps populated a larger database to better exhibit the features of the code.
+* Configuration: Perhaps we could have made an executable (of sorts) that would run on less-complex configurations and made the application more portable. 
+
 ## Authors
 
 ### Aastha Shah 
 * Web Content and GUI design
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
 * [github](https://github.com/aastha-shah)
-* Report - Flowchart
+* Report - Flowchart and limitations
 
 ### Nandini Agrawal
 * Servlet and Objects
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet)
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
 * [github](https://github.com/Nandini18)
-* Report - Aim and Solution approach
+* Report - Aims and solutions approach 
 
 ### Reuel John 
 * Database Management and Query Handling
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao)
 * [github](https://github.com/mojoman11)
-* Report - Documentation and Challenges
+* Report - Documentation and challenges
 
 See also the list of [contributors](https://github.com/CS207-AP/Library-Management-system/graphs/contributors) who participated in this project.
 
