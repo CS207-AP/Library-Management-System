@@ -52,7 +52,7 @@ padding-left:10px;}
   
     <th class="col-md-1 text-center">Member ID</th>
     <!-- Use text alignment like text-center or text-right -->
-    <th class="col-md-5 text-center">Book Title</th>
+    <th class="col-md-5 text-center">Member Name</th>
     <th class="text-center">Issue Date</th>
     <th class="text-center">Due Date</th>
     
@@ -60,9 +60,9 @@ padding-left:10px;}
    <c:forEach items="${history}" var="issueData"> 
                 <tr>
                     <td><c:out value="${issueData[0]}" /></td>
-                    <td><c:out value="${issueData[1]}" /></td>
-                    <td class="idate"><c:out value="${issueData[2]}" /></td>
-                    <td class="ddate"><c:out value="${issueData[3]}" /></td>
+                    <td><c:out value="${issueData[2]}" /></td>
+                    <td class="idate"><c:out value="${issueData[3]}" /></td>
+                    <td class="ddate"><c:out value="${issueData[4]}" /></td>
                 </tr>
    </c:forEach>
    

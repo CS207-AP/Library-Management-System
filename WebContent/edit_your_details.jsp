@@ -28,10 +28,18 @@ padding-bottom: 20px;}
 .homepage{
 padding-left:10px;}
 </style>
+<script>
+function changeInput(){
+	var name = request.getAttribute("name2");
+	var email = request.getAttribute("email2");
+	document.getElementById('name').value=name;
+	document.getElementById('email').value=email;
+}
+</script>
 
 </head>
 
-<body >
+<body onload="changeInput();">
  <nav class="navbar navbar-dark bg-dark">
     <div class="container-d-flex-justify-content-center"> <a class="navbar-brand" style="color:white;" href="admin_login.jsp">
         <b> Library Management System</b>
@@ -49,13 +57,13 @@ padding-left:10px;}
           <form id="edit_details" class="" action="ControllerServlet" method="post">
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Name</label>
               <div class="col-10">
-                <input form="edit_details" type="text" class="form-control" name="name" value=<%=request.getAttribute("name2")%>> </div>
+                <input form="edit_details" type="text" class="form-control" id="name" name="name" value="<%=request.getAttribute("name2")%>"> </div>
                 <%-- <input type="hidden" name="name" value=<%=request.getAttribute("name")%>/> --%>
             </div>
             
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">
-                <input form="edit_details" type="text" class="form-control" name="email" value=<%=request.getAttribute("email2")%>> </div>
+                <input form="edit_details" type="text" class="form-control" id="email" name="email" value="<%=request.getAttribute("email2")%>"> </div>
                  <%-- <input type="hidden" name="name" value=<%=request.getAttribute("email")%>/> --%>
             </div>
             <div class="form-group row"> <label for="inputmailh" class="col-2 col-form-label">Password</label>

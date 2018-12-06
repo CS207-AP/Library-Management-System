@@ -77,6 +77,11 @@ padding-left:10px;}
     <strong>Success!</strong> Member added successfully.
     </div>
     </c:if>
+    <c:if test="${not empty delUserSuccess}">
+    <div class="alert alert-success" style="color:green;">
+    <strong>Success!</strong> Member deleted successfully.
+    </div>
+    </c:if>
     <c:if test="${not empty borrowSuccess}">
     <div class="alert alert-success" style="color:green;">
     <strong>Success!</strong> Book issued successfully.
@@ -85,6 +90,11 @@ padding-left:10px;}
     <c:if test="${not empty excess}">
     <div class="alert alert-danger" style="color:red;">
     <strong>Oops!</strong> You can only issue 2 books.
+    </div>
+    </c:if>
+    <c:if test="${not empty delUserFail}">
+    <div class="alert alert-danger" style="color:red;">
+    <strong>Oops!</strong> Member has issued a book or is in a waitlist. Cannot be deleted.
     </div>
     </c:if>
     <c:if test="${not empty returnBook}">

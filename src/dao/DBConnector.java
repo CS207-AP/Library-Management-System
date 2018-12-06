@@ -187,17 +187,19 @@ public class DBConnector {
 		
 		try {
 			conn = dbUtil.getConnection();
-			String query = "SELECT user_id,book_title,issue_date,return_date FROM issueHistory WHERE book_id ="+book_id+";";			
+			String query = "SELECT user_id,book_title,user_name,issue_date,return_date FROM issueHistory WHERE book_id ="+book_id+";";			
 		    Statement st = conn.createStatement();	     	      
 		    ResultSet userSet = st.executeQuery(query);
 		    
 		    while(userSet.next()) {
 		    	
-		    	Object [] issueData = new Object[4];
+		    	Object [] issueData = new Object[5];
 		    	issueData[0]=userSet.getInt("user_id");
 		    	issueData[1]=userSet.getString("book_title");
-		    	issueData[2]=userSet.getDate("issue_date");
-		    	issueData[3]=userSet.getDate("return_date");
+		    	issueData[2]=userSet.getString("user_name");
+		    	issueData[3]=userSet.getDate("issue_date");
+		    	issueData[4]=userSet.getDate("return_date");
+		    	
 		    	issues.add(issueData);
 
 		    }
@@ -648,11 +650,13 @@ public class DBConnector {
 			conn = dbUtil.getConnection();
 			PreparedStatement ps;
 			
-			ps = conn.prepareStatement("SELECT COUNT FROM currentlyIssued WHERE user_id = ?;");
+			ps = conn.prepareStatement("SELECT COUNT(user_id) FROM currentlyIssued WHERE user_id = ?;");
+			ps.setInt(1, user_id);
 			ResultSet rs1=ps.executeQuery();
 			rs1.next();
 			
-			ps = conn.prepareStatement("SELECT COUNT FROM issueHistory WHERE user_id = ?;");
+			ps = conn.prepareStatement("SELECT COUNT(user_id) FROM waitlist WHERE user_id = ?;");
+			ps.setInt(1, user_id);
 			ResultSet rs2=ps.executeQuery();
 			rs2.next();
 			

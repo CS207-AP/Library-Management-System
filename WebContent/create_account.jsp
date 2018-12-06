@@ -32,7 +32,10 @@ padding-top:380px;
 padding-left:780px;}
 .homepage{
 padding-left:10px;}
-
+.input[type="radio"]{
+vertical-align:middle;}
+.radlabel{
+vertical-align:middle;}
 </style>
 
 </head>
@@ -62,8 +65,8 @@ padding-left:10px;}
             </div>
             <div class="form-group row"> <label for="type" class="col-2 col-form-label">Type</label>
               <div class="col-10" style="white-space:nowrap;">
-               <input form="create_user" type="radio" class="form-control" id="type" name="type" value="member" checked="yes">
-                <input form="create_user" type="radio" class="form-control" name="type" value="admin"><br></div>
+               <input form="create_user" type="radio" class="form-control" id="type" name="type" value="member" checked="yes"><label class="radlabel">Regular Member</label>
+                <input form="create_user" type="radio" class="form-control" name="type" value="admin"><label class="radlabel">Admin</label><br></div>
             </div>
             <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Email</label>
               <div class="col-10">

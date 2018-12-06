@@ -325,14 +325,14 @@ public class ControllerServlet extends HttpServlet {
 			deleted=mydbConnect.deleteMember(user_id);
 			if (!deleted)
 			{
-				out.println("User is has borrowed a book or is in a waitlist, cannot delete");
+				request.setAttribute("delUserFail", "yes");
 			}
 			else
 			{
-				out.println("Removed User from Database.");
+				request.setAttribute("delUserSuccess", "yes");
 			}
 			request.setAttribute("user", user_id);
-			request.getRequestDispatcher("edit_accounts.jsp").include(request, response); //wherever it has to get redirected.
+			request.getRequestDispatcher("admin_login.jsp").include(request, response); //wherever it has to get redirected.
 
 			
 		}
@@ -402,11 +402,13 @@ public class ControllerServlet extends HttpServlet {
 		
 		else if(action.equalsIgnoreCase("calling_edit_your_details"))
 		{
-			String name=u.getName();
-			System.out.println("PRINTING IN calling_edit"+u.getName());
-			request.setAttribute("name2", name);
+			int id = u.getMemId();
+			User obj = mydbConnect.getUserDetails(id);
+			
+			request.setAttribute("name2", obj.getName());
 			String email=u.getEmail();
-			request.setAttribute("email2", email);
+			request.setAttribute("email2", obj.getEmail());
+			System.out.println(u.getName());
 			request.getRequestDispatcher("edit_your_details.jsp").include(request, response);	
 		}
 		  
