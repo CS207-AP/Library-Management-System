@@ -591,7 +591,7 @@ public class DBConnector {
 	}
 
 /**
- * 	
+ * Deletes a book from the catalogue
  * @param bookId The id of the book to delete
  * @return boolean value representing whether the book was deleted or not
  */
@@ -893,6 +893,12 @@ public class DBConnector {
 		
 	}
 	
+/**
+ * A simple function to return the number of days between d1 and d2
+ * @param d1 The first date
+ * @param d2 The second date
+ * @return The number of days between d1 and d2
+ */
 	public int daysBetween(Date d1, Date d2){
 		
         return (int)( (d1.getTime() - d2.getTime()) / (1000 * 60 * 60 * 24));
