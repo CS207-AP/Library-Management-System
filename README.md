@@ -45,7 +45,7 @@ For more information refer to the [Authors](#authors) section.
 
 * Searching: 
 * Logout: We had a lot of problem trying to invalidate and cancel the session and redirect it to the login page without allowing the user to simply click the back button to go back to the homepage. After a lot of research we decided we had to clear the cache whenever the login page is loaded which prevented us from going back once we were logged out.
-* Modals: In edit details of the books and users, we had a lot of problem trying to bring the existent information into the modal so that it is easier for the admin to edit the values. After a lot of time and different jquery and javascript functions we were able to bring the information to display (and later realized that it was because the script tag for jquery after the actual jqeury code!)
+* Modals: In edit details of the books and users, we had a lot of problem trying to bring the existent information into the modal so that it is easier for the admin to edit the values. After a lot of time and different jquery and javascript functions we were able to bring the information to display (and later realized that it was because the script tag for jquery was after the actual jqeury code!)
 
 ## Project Flow
 
