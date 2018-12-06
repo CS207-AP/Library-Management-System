@@ -63,7 +63,7 @@ text-align: center;}
                     <td><c:out value="${book[2]}" /></td>
                     <td class="idate"><c:out value="${book[3]}" /></td>
                     <td class="ddate"><c:out value="${book[4]}" /></td>
-                </tr>  
+                </tr>   
             
    </c:forEach>
    
