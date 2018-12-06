@@ -27,7 +27,7 @@ After a lot of back and forth, from trying Java Swing to JavaFx, we finally sett
 * Cross platform uniformity (Windows, OSX and Linux\_64)
 * It looks prettier, unlike Swing which makes you feel like you're using Windows98
 
-Finally, we decided on using Apapche Tomcat v9.0 as the servlet container for the GUI as it was the most easy-to-configure container which worked well out of the box.
+Finally, we decided on using Apache Tomcat v9.0 as the servlet container for the GUI as it was the most easy-to-configure container which worked well out of the box.
 
 For more information about the build tools refer to the [Built With](#built-with) section.
 
