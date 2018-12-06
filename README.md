@@ -63,17 +63,20 @@ For more information refer to the [Authors](#authors) section.
 * Web Content and GUI design
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
 * [github](https://github.com/aastha-shah)
+* Report - Flowchart
 
 ### Nandini Agrawal
 * Servlet and Objects
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/servlet)
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/objects)
 * [github](https://github.com/Nandini18)
+* Report - Aim and Solution approach
 
 ### Reuel John 
 * Database Management and Query Handling
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/src/dao)
 * [github](https://github.com/mojoman11)
+* Report - Documentation and Challenges
 
 See also the list of [contributors](https://github.com/CS207-AP/Library-Management-system/graphs/contributors) who participated in this project.
 
