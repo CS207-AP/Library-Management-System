@@ -1,4 +1,5 @@
 # Library Management System
+Please click [here](https://cs207-ap.github.io/Library-Management-system/) to view the README in proper format.
 
 ## Table of Contents
 
