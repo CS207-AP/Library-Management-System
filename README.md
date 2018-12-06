@@ -63,7 +63,7 @@ For more information refer to the [Authors](#authors) section.
 * [MySQL](https://www.mysql.com/) - Database Management System
 * [Apache Tomcat](https://tomcat.apache.org/download-90.cgi) - Java Servlet Container
 
-## Limitations
+## What could have been better?
 
 * Searching: We could have made it much easier for the users to search for books by categories instead of having to type in the search preferences. We could have also had a sorting procedure for alphabetically displaying the books.
 * Fine system: Made the fine system more formal and more interactive for the user wherein they have to click and pay the fine (in the code we have shared - we have hardcoded the dates in a way that on returning you get a fine for returning the book 4 days after the due date).
@@ -76,7 +76,7 @@ For more information refer to the [Authors](#authors) section.
 * Web Content and GUI design
 * [View Contributions](https://github.com/CS207-AP/Library-Management-system/tree/master/WebContent)
 * [github](https://github.com/aastha-shah)
-* Report - Flowchart and limitations
+* Report - Flowchart and limitations/what could have been better
 
 ### Nandini Agrawal
 * Servlet and Objects
